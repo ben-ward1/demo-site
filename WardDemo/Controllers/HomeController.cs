@@ -26,5 +26,11 @@ namespace WardDemo.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Test()
+        {
+            return Json("some value", JsonRequestBehavior.AllowGet);
+        }
     }
 }
