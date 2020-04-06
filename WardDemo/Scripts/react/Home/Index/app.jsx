@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import BuildBaseUrl from "../../urlHelperFunctions";
+import { BuildBaseUrl } from "../../../urlHelperFunctions";
 
 class App extends React.Component {
   constructor(props) {
@@ -32,19 +32,18 @@ class App extends React.Component {
     //     someValue: e,
     //   });
     // }
-    try {
-      axios({
-        method: "get",
-        url: "/home/test",
-        responseType: "application/json",
-      }).then((response) => {
-        this.setState({ someValue: response.data });
-      });
-    } catch (e) {
-      this.setState({
-        someValue: e.toString(),
-      });
-    }
+
+    // axios({
+    //   method: "get",
+    //   url: "/home/test",
+    //   responseType: "application/json",
+    // }).then((response) => {
+    //   this.setState({ someValue: response.data });
+    // });
+
+    axios.get("home/test").then((response) => {
+      this.setState({ someValue: response.data });
+    });
 
     // this.setState({
     //   someValue: "try this",
