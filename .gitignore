@@ -259,3 +259,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/WardDemo/Scripts/react/Home/About/app.dist.js
+/WardDemo/Scripts/react/Home/app.dist.js
+/WardDemo/Scripts/react/common.dist.js
+/WardDemo/Scripts/react/polyfill.dist.js
+/Infrastructure/Class1.cs

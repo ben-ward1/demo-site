@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Infrastructure.ApiClients;
 
 namespace WardDemo.Controllers
 {
@@ -15,7 +16,7 @@ namespace WardDemo.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "This is a demo site showing off some of the technologies I develop with. See below for more info.";
 
             return View();
         }
@@ -30,7 +31,8 @@ namespace WardDemo.Controllers
         [HttpGet]
         public ActionResult Test()
         {
-            return Json("some value", JsonRequestBehavior.AllowGet);
+            var response = MyApiClient.GetValueAsync().Result;
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

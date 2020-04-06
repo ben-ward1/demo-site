@@ -31,7 +31,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Ben's great demo app</p>
         </footer>
     </div>
 
@@ -39,6 +39,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <script src="~/Scripts/dist/Home/react/bundle.js"></script>
+    <!-- <script src="~/Scripts/dist/Home/react/bundle.js"></script> -->
+    <script src="~/Scripts/react/common.dist.js"></script>
+    <script src="~/Scripts/react/polyfill.dist.js"></script>
 </body>
 </html>
