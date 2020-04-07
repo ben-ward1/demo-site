@@ -11,3 +11,27 @@
     }
   }
 }
+
+.tech-item-container {
+  margin: 12px 5px;
+}
+
+.caret-container-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.caret-container {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.caret.closed {
+  transform: rotate(-90deg);
+  transition: all 0.2s ease-in-out;
+}
+
+.caret.open {
+  transform: rotate(0deg);
+  transition: all 0.2s ease-in-out;
+}

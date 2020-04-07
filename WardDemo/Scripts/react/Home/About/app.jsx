@@ -1,21 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from "axios";
 import { Accordion, Card, Button } from "react-bootstrap";
-import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import { BuildAboutTechInfoObject } from "../../../aboutHelperFunctions";
 import "../../../../Content/styles/app-style.scss";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const techInfo = BuildAboutTechInfoObject();
 
-    axios.defaults.baseURL = BuildBaseUrl();
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      selected: null,
+    };
+
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  buildTechInfoAccordion() {
-    const techInfo = BuildAboutTechInfoObject();
+  handleSelect(index) {
+    this.setState({
+      selected: index === this.state.selected ? null : index,
+    });
+  }
 
+  render() {
     return (
       <Accordion>
         {techInfo.map((x, index) => (
@@ -25,31 +33,34 @@ class App extends React.Component {
                 as={Button}
                 variant="link"
                 eventKey={index.toString()}
+                onClick={() => this.handleSelect(index)}
               >
                 {x.title}
+                <div className="caret-container-wrapper pull-right">
+                  <div className="caret-container">
+                    <span
+                      className={`caret ${
+                        index === this.state.selected ? "open" : "closed"
+                      }`}
+                    />
+                  </div>
+                </div>
               </Accordion.Toggle>
             </Card.Header>
             <Accordion.Collapse eventKey={index.toString()}>
-              <div>
-                <br />
+              <React.Fragment>
                 {x.items.map((y, index) => (
-                  <React.Fragment key={index}>
+                  <div className="tech-item-container" key={index}>
                     <strong>{y.title}: </strong>
                     <span>{y.description}</span>
-                    <br />
-                    <br />
-                  </React.Fragment>
+                  </div>
                 ))}
-              </div>
+              </React.Fragment>
             </Accordion.Collapse>
           </div>
         ))}
       </Accordion>
     );
-  }
-
-  render() {
-    return this.buildTechInfoAccordion();
   }
 }
 
