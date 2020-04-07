@@ -15,39 +15,14 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // try {
-    //   axios.get("/values/5").then((response) => {
-    //     this.setState({
-    //       someValue: "testing agaaaaain",
-    //     });
-
-    //     if (response.data) {
-    //       this.setState({
-    //         someValue: response.data,
-    //       });
-    //     }
-    //   });
-    // } catch (e) {
-    //   this.setState({
-    //     someValue: e,
-    //   });
-    // }
-
-    // axios({
-    //   method: "get",
-    //   url: "/home/test",
-    //   responseType: "application/json",
-    // }).then((response) => {
-    //   this.setState({ someValue: response.data });
-    // });
-
-    axios.get("home/test").then((response) => {
-      this.setState({ someValue: response.data });
-    });
-
-    // this.setState({
-    //   someValue: "try this",
-    // });
+    axios
+      .get("home/test")
+      .then((response) => {
+        this.setState({ someValue: response.data });
+      })
+      .catch((e) => {
+        this.setState({ someValue: "Oops, something went wrong: " + e });
+      });
   }
 
   render() {
@@ -58,17 +33,11 @@ class App extends React.Component {
         {this.state.someValue ? (
           <div>{this.state.someValue}</div>
         ) : (
-          <div>How about this???</div>
+          <div>This is a place holder until the api call returns.</div>
         )}
       </Fragment>
     );
   }
 }
 
-// const App = () => (
-//   <Fragment>
-//     <h1>Here's React</h1>
-//     <div>Hello World</div>
-//   </Fragment>
-// );
 ReactDOM.render(<App />, document.getElementById("app"));
