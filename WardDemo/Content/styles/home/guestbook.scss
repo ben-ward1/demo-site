@@ -1,0 +1,21 @@
+.guestbook-wizard-container {
+  margin: 24px 0px;
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.progress-separator {
+  height: 1px;
+  background-color: #e7e4e4;
+  width: 40%;
+  align-self: center;
+}
+
+.progress-separator.complete {
+  background-color: rgba(81, 201, 11, 0.5);
+  height: 2px;
+}

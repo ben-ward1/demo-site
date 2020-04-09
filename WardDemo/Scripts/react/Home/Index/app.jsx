@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 import SuccessCheckIcon from "../../shared/SuccessCheckIcon";
+import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
 import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import "../../../../Content/styles/app-style.scss";
 
@@ -74,6 +75,8 @@ class App extends React.Component {
             Make another call
           </Button>
         </div>
+
+        <GuestbookWizard />
       </Fragment>
     );
   }
