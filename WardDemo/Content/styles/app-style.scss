@@ -8,17 +8,21 @@
 
 #api-response-container {
   display: flex;
-  justify-content: center;
-  margin: 8px 0px;
+  justify-content: flex-end;
+  margin: 12px 0px 56px;
 }
 
 #response-text {
   height: 100%;
   display: inline-block;
   align-self: center;
-  margin: 0px 12px;
-  width: 145px;
-  text-align: right;
+  width: 120px;
+  text-align: center;
+}
+
+#response-text.connected {
+  font-weight: bold;
+  color: green;
 }
 
 .contact-info-container {
@@ -55,4 +59,8 @@
   100% {
     stroke-dashoffset: -205;
   }
+}
+
+#sync-icon {
+  align-self: center;
 }

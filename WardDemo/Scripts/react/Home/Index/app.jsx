@@ -1,11 +1,15 @@
 import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
-import { Button } from "react-bootstrap";
+import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SuccessCheckIcon from "../../shared/SuccessCheckIcon";
 import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
 import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import "../../../../Content/styles/app-style.scss";
+
+library.add(faSyncAlt);
 
 class App extends React.Component {
   constructor(props) {
@@ -53,20 +57,22 @@ class App extends React.Component {
 
     return (
       <Fragment>
-        <h1>Check out my API</h1>
-        <br />
-
         <div id="api-response-container">
           <SuccessCheckIcon id="api-check" check={someValue !== null} />
-          <div id="response-text">
+          <div id="response-text" class={someValue && "connected"}>
             {errorMsg
               ? errorMsg
               : someValue
-              ? "API response received!"
-              : "Sending request..."}
+              ? "API: Connected!"
+              : "API: Checking..."}
           </div>
+          <FontAwesomeIcon
+            id="sync-icon"
+            icon={faSyncAlt}
+            onClick={this.checkApiConnection}
+          />
         </div>
-        <div id="api-response-container">
+        {/* <div id="api-response-container">
           <Button
             className="primary-button"
             variant="light"
@@ -74,7 +80,7 @@ class App extends React.Component {
           >
             Make another call
           </Button>
-        </div>
+        </div> */}
 
         <GuestbookWizard />
       </Fragment>
