@@ -14,15 +14,13 @@ class GuestbookWizard extends React.Component {
   }
 
   stepCallback(step) {
-    this.setState({
-      step: step,
-    });
+    this.setState({ step });
   }
 
   render() {
     return (
       <div className="guestbook-wizard-container">
-        <ProgressBar lastCompletedStep={this.state.step - 1} />
+        <ProgressBar numSteps={3} lastCompletedStep={this.state.step - 1} />
         <StepContainer stepCallback={this.stepCallback} />
       </div>
     );

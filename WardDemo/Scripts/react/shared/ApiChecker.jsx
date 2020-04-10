@@ -55,7 +55,7 @@ class ApiChecker extends React.Component {
     return (
       <div id="api-response-container">
         <SuccessCheckIcon id="api-check" check={someValue !== null} />
-        <div id="response-text" class={someValue && "connected"}>
+        <div id="response-text" className={someValue && "connected"}>
           {errorMsg
             ? errorMsg
             : someValue

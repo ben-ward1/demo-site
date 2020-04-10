@@ -1,8 +1,6 @@
 import React from "react";
 import SuccessCheckIcon from "../../shared/SuccessCheckIcon";
 
-const numSteps = 3;
-
 class ProgressBar extends React.Component {
   constructor(props) {
     super(props);
@@ -20,11 +18,12 @@ class ProgressBar extends React.Component {
 
   render() {
     const { lastCompletedStep } = this.state;
+    const { numSteps } = this.props;
 
     return (
       <div className="progress-bar-container">
         {[...Array(numSteps)].map((x, index) => (
-          <React.Fragment>
+          <React.Fragment key={index}>
             <SuccessCheckIcon
               id={`check-icon-${index}`}
               className="progress-success-check"

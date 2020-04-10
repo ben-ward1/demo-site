@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import ApiChecker from "../../shared/ApiChecker";
 import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
@@ -11,11 +11,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <Fragment>
+      <React.Fragment>
         <ApiChecker />
         <h2>Sign my guestbook</h2>
         <GuestbookWizard />
-      </Fragment>
+      </React.Fragment>
     );
   }
 }

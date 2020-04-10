@@ -21,6 +21,7 @@
 }
 
 .step-view-container {
+  text-align: -webkit-center;
   margin: 36px 0px;
 }
 
@@ -64,14 +65,15 @@
 
 @media only screen and (max-width: 767px) {
   #entry-input {
-    min-width: 84%;
+    min-width: 100%;
   }
 
   .guestbook-wizard-controls-container {
-    width: 84%;
+    width: 100%;
   }
 
   .step-view-item {
+    width: 84%;
     margin: 12px 0px;
   }
 }
