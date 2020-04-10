@@ -39,7 +39,7 @@ class EntryStep extends React.Component {
   }
 
   render() {
-    const { stepNum, message } = this.props;
+    const { stepNum, message, stepCallback } = this.props;
 
     return (
       <div className="step-view-container">
@@ -63,7 +63,7 @@ class EntryStep extends React.Component {
           <div className="guestbook-wizard-controls-container">
             <Button
               className="guestbook-entry-button primary-button"
-              onClick={() => this.props.stepCallback(stepNum - 1)}
+              onClick={() => stepCallback(stepNum - 1)}
               disabled={this.props.stepNum === 1}
               variant="light"
             >
