@@ -41,8 +41,8 @@ class App extends React.Component {
     return (
       <div>
         <div className="contact-info-container">
-          {contactItems.map((x) => (
-            <div className="contact-item">
+          {contactItems.map((x, index) => (
+            <div key={index} className="contact-item">
               <FontAwesomeIcon color={x.color || "black"} icon={x.icon} />
               <a href={x.link}>{x.text}</a>
             </div>

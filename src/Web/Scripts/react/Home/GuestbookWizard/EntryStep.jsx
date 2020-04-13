@@ -62,7 +62,7 @@ class EntryStep extends React.Component {
         <div className="step-view-item">
           <div className="guestbook-wizard-controls-container">
             <Button
-              className="guestbook-entry-button primary-button"
+              className="guestbook-wizard-button primary-button"
               onClick={() => stepCallback(stepNum - 1)}
               disabled={this.props.stepNum === 1}
               variant="light"
@@ -70,7 +70,7 @@ class EntryStep extends React.Component {
               Back
             </Button>
             <Button
-              className="guestbook-entry-button primary-button"
+              className="guestbook-wizard-button primary-button"
               onClick={this.handleSave}
               variant="light"
             >
