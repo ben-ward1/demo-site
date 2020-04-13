@@ -3,7 +3,6 @@ const glob = require("glob");
 const entryPlus = require("webpack-entry-plus");
 const CleanPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const AssetsPlugin = require("assets-webpack-plugin");
 
 const devMode = true;
 
@@ -64,15 +63,8 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
-    alias: {
-      engage: path.resolve(__dirname, "./src/Web/Scripts/react/shared"),
-    },
   },
   plugins: [
-    new AssetsPlugin({
-      fullPath: false,
-      path: path.join(__dirname, "./src/Web/"),
-    }),
     new CleanPlugin([
       "./src/Web/Scripts/react/**/*.dist.js",
       "./src/Web/Content/styles/**/*.dist.css",
