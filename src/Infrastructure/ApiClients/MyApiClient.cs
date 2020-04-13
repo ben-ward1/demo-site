@@ -10,7 +10,6 @@ namespace Infrastructure.ApiClients
     public class MyApiClient
     {
         const string baseUrl = "http://localhost:81/api/";
-        //static HttpClient client = new HttpClient();
 
         public static async Task<string> GetValueAsync()
         {

@@ -30,9 +30,7 @@ class SuccessCheckIcon extends React.Component {
     this.setState({ toCheck: false, checked: false });
 
     if (toCheck) {
-      this.setState({ toCheck }, () => {
-        this.setState({ checked: true });
-      });
+      this.setState({ toCheck, checked: true });
     }
   }
 
