@@ -27,21 +27,22 @@ class SuccessCheckIcon extends React.Component {
   }
 
   animate(toCheck) {
-    const checkEl = document.querySelector(`#${this.props.id}`);
+    this.setState({ toCheck: false, checked: false });
 
-    if (checkEl) {
-      checkEl.classList.remove("animate");
-
-      if (toCheck) {
-        checkEl.classList.add("animate");
+    if (toCheck) {
+      this.setState({ toCheck }, () => {
         this.setState({ checked: true });
-      }
+      });
     }
   }
 
   render() {
     return (
-      <svg viewBox="0 0 100 100" id={this.props.id} className="success-check">
+      <svg
+        viewBox="0 0 100 100"
+        id={this.props.id}
+        className={`success-check ${this.state.toCheck && "animate"}`}
+      >
         <filter id="dropshadow" height="100%">
           <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
           <feFlood

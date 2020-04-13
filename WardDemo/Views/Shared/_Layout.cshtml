@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/styles/styles.dist.css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/react/polyfill.dist.js"></script>
+    <script src="~/Scripts/react/common.dist.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,8 +42,5 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    <!-- <script src="~/Scripts/dist/Home/react/bundle.js"></script> -->
-    <script src="~/Scripts/react/common.dist.js"></script>
-    <script src="~/Scripts/react/polyfill.dist.js"></script>
 </body>
 </html>
