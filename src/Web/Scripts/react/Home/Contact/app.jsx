@@ -44,9 +44,7 @@ class App extends React.Component {
           {contactItems.map((x) => (
             <div className="contact-item">
               <FontAwesomeIcon color={x.color || "black"} icon={x.icon} />
-              <span>
-                <a href={x.link}>{x.text}</a>
-              </span>
+              <a href={x.link}>{x.text}</a>
             </div>
           ))}
         </div>

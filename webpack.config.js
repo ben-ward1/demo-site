@@ -9,7 +9,7 @@ const devMode = true;
 
 const entryFiles = [
   {
-    entryFiles: glob.sync("./WardDemo/Scripts/react/**/app.jsx"),
+    entryFiles: glob.sync("./src/Web/Scripts/react/**/app.jsx"),
     outputName(item) {
       return item.replace("/app.jsx", "/app");
     },
@@ -17,7 +17,7 @@ const entryFiles = [
 ];
 
 const entryPoints = Object.assign(
-  { "./WardDemo/Scripts/react/polyfill": ["babel-polyfill"] },
+  { "./src/Web/Scripts/react/polyfill": ["babel-polyfill"] },
   entryPlus(entryFiles)
 );
 
@@ -55,7 +55,7 @@ module.exports = {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: "./WardDemo/Scripts/react/common",
+          name: "./src/Web/Scripts/react/common",
           enforce: true,
           chunks: "all",
         },
@@ -65,20 +65,20 @@ module.exports = {
   resolve: {
     extensions: [".js", ".jsx"],
     alias: {
-      engage: path.resolve(__dirname, "./WardDemo/Scripts/react/shared"),
+      engage: path.resolve(__dirname, "./src/Web/Scripts/react/shared"),
     },
   },
   plugins: [
     new AssetsPlugin({
       fullPath: false,
-      path: path.join(__dirname, "./WardDemo/"),
+      path: path.join(__dirname, "./src/Web/"),
     }),
     new CleanPlugin([
-      "./WardDemo/Scripts/react/**/*.dist.js",
-      "./WardDemo/Content/styles/**/*.dist.css",
+      "./src/Web/Scripts/react/**/*.dist.js",
+      "./src/Web/Content/styles/**/*.dist.css",
     ]),
     new MiniCssExtractPlugin({
-      filename: "WardDemo/Content/styles/styles.dist.css",
+      filename: "src/Web/Content/styles/styles.dist.css",
     }),
   ],
 };
