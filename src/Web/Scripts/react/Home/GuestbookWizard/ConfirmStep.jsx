@@ -21,14 +21,14 @@ class ConfirmStep extends React.Component {
         <div className="step-view-item">
           <div className="guestbook-wizard-controls-container">
             <Button
-              className="guestbook-entry-button primary-button"
+              className="guestbook-wizard-button primary-button"
               onClick={() => this.props.stepCallback(this.props.stepNum - 1)}
               variant="light"
             >
               Back
             </Button>
             <Button
-              className="guestbook-entry-button primary-button"
+              className="guestbook-wizard-button primary-button"
               onClick={() => this.props.stepCallback(this.props.stepNum + 1)}
               variant="light"
             >

@@ -13,11 +13,18 @@ class SuccessStep extends React.Component {
         <div className="step-view-item">
           <div className="guestbook-wizard-controls-container">
             <Button
-              className="primary-button success-button"
+              className="guestbook-wizard-button primary-button"
               onClick={() => this.props.stepCallback(1)}
               variant="light"
             >
               Go Again
+            </Button>
+            <Button
+              className="guestbook-wizard-button primary-button"
+              variant="light"
+              href={"Guestbook/Index"}
+            >
+              See Guestbook
             </Button>
           </div>
         </div>

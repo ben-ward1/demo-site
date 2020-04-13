@@ -1,9 +1,14 @@
 @import "./home/about.scss";
-@import "./home/guestbook.scss";
+@import "./home/guestbook-wizard.scss";
+@import "./guestbook.scss";
 
 .primary-button {
   background-color: #f5f5f5;
   border: 1px hsl(0, 4%, 90%) solid;
+}
+
+a.primary-button {
+  color: black;
 }
 
 #api-response-container {

@@ -259,11 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/src/Web/Scripts/react/Home/About/app.dist.js
-/src/Web/Scripts/react/Home/app.dist.js
-/src/Web/Scripts/react/common.dist.js
-/src/Web/Scripts/react/polyfill.dist.js
-/src/Infrastructure/Class1.cs
-/src/Web/Content/styles/styles.dist.css
-/src/Web/Scripts/react/Home/Index/app.dist.js
-/src/Web/Scripts/react/Home/Contact/app.dist.js
+
+*.dist.js
+*.dist.css
