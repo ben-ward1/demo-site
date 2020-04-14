@@ -2,6 +2,8 @@ import React from "react";
 import EntryStep from "./EntryStep";
 import ConfirmStep from "./ConfirmStep";
 import SuccessStep from "./SuccessStep";
+import { BuildBaseUrl } from "../../../urlHelperFunctions";
+import axios from "axios";
 
 const nameMsg = "What's your name?";
 const msgMsg = "Want to leave a message?";
@@ -17,12 +19,33 @@ class StepContainer extends React.Component {
       message: null,
     };
 
+    axios.defaults.baseURL = BuildBaseUrl();
+
     this.renderStep = this.renderStep.bind(this);
     this.stepCallback = this.stepCallback.bind(this);
-    this.confirm = this.confirm.bind(this);
   }
 
   stepCallback(stepNum, entry) {
+    const { name, message } = this.state;
+    if (stepNum === 4) {
+      axios
+        .post("Guestbook/PostEntry", {
+          name: name,
+          message: message,
+        })
+        .then((response) => {
+          if (response.data.success) {
+            this.setState({ name: null, message: null }, () =>
+              this.step(stepNum, entry)
+            );
+          }
+        });
+    } else {
+      this.step(stepNum, entry);
+    }
+  }
+
+  step(stepNum, entry) {
     if (typeof stepNum !== "number" || stepNum < 1 || stepNum > 4) {
       throw "Invalid step number!";
     }
@@ -40,12 +63,6 @@ class StepContainer extends React.Component {
         this.props.stepCallback(this.state.step);
       }
     );
-  }
-
-  confirm(confirm) {
-    if (confirm) {
-      // I'll do something here, not sure what yet.
-    }
   }
 
   renderStep(step) {

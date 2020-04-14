@@ -27,7 +27,7 @@ class App extends React.Component {
   getGuestbookData() {
     axios.get("Guestbook/GetEntries").then((response) => {
       if (response.data) {
-        this.setState({ data: response.data });
+        this.setState({ data: response.data.entries });
       } else {
         this.setState({ error: "No entries response!" });
       }
