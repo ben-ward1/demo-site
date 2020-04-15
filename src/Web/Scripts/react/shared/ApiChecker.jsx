@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Spinner } from "react-bootstrap";
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,14 +16,21 @@ class ApiChecker extends React.Component {
     this.state = {
       someValue: null,
       errorMsg: null,
+      loading: true,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
-    this.checkApiConnection = this.checkApiConnection.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
     this.checkApiConnection();
+  }
+
+  handleClick() {
+    this.setState({ loading: true }, () => {
+      this.checkApiConnection();
+    });
   }
 
   checkApiConnection() {
@@ -38,6 +46,8 @@ class ApiChecker extends React.Component {
             } else {
               throw "No response from api";
             }
+
+            thisComponent.setState({ loading: false });
           })
           .catch(function (e) {
             thisComponent.setState({
@@ -62,11 +72,19 @@ class ApiChecker extends React.Component {
             ? "API: Connected!"
             : "API: Checking..."}
         </div>
-        <FontAwesomeIcon
-          id="sync-icon"
-          icon={faSyncAlt}
-          onClick={this.checkApiConnection}
-        />
+        {this.state.loading ? (
+          <Spinner
+            className="api-checker-spinner"
+            animation="border"
+            size="sm"
+          />
+        ) : (
+          <FontAwesomeIcon
+            id="sync-icon"
+            icon={faSyncAlt}
+            onClick={this.handleClick}
+          />
+        )}
       </div>
     );
   }

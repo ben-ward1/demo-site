@@ -17,6 +17,7 @@ class StepContainer extends React.Component {
       step: 1,
       name: null,
       message: null,
+      loading: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
@@ -27,19 +28,22 @@ class StepContainer extends React.Component {
 
   stepCallback(stepNum, entry) {
     const { name, message } = this.state;
+
     if (stepNum === 4) {
-      axios
-        .post("Guestbook/PostEntry", {
-          name: name,
-          message: message,
-        })
-        .then((response) => {
-          if (response.data.success) {
-            this.setState({ name: null, message: null }, () =>
-              this.step(stepNum, entry)
-            );
-          }
-        });
+      this.setState({ loading: true }, () => {
+        axios
+          .post("Guestbook/PostEntry", {
+            name: name,
+            message: message,
+          })
+          .then((response) => {
+            if (response.data.success) {
+              this.step(stepNum, entry);
+            }
+
+            this.setState({ loading: false });
+          });
+      });
     } else {
       this.step(stepNum, entry);
     }
@@ -87,6 +91,7 @@ class StepContainer extends React.Component {
         return (
           <ConfirmStep
             stepNum={3}
+            loading={this.state.loading}
             message={confirmMsg}
             entryName={this.state.name}
             entryMessage={this.state.message}
