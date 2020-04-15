@@ -1,0 +1,23 @@
+#api-response-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0px 56px;
+}
+
+#response-text {
+  height: 100%;
+  display: inline-block;
+  align-self: center;
+  width: 120px;
+  text-align: center;
+}
+
+#response-text.connected {
+  font-weight: bold;
+  color: rgb(117, 128, 117);
+}
+
+.api-checker-action-container {
+  display: inline-flex;
+  width: 2em;
+}

@@ -1,6 +1,10 @@
+@import "./api-checker.scss";
 @import "./home/about.scss";
 @import "./home/guestbook-wizard.scss";
+@import "./home/contact.scss";
 @import "./guestbook.scss";
+@import "./spinner.scss";
+@import "./success-check.scss";
 
 .primary-button {
   background-color: #f5f5f5;
@@ -11,112 +15,6 @@ a.primary-button {
   color: black;
 }
 
-#api-response-container {
-  display: flex;
-  justify-content: flex-end;
-  margin: 12px 0px 56px;
-}
-
-#response-text {
-  height: 100%;
-  display: inline-block;
-  align-self: center;
-  width: 120px;
-  text-align: center;
-}
-
-#response-text.connected {
-  font-weight: bold;
-  color: green;
-}
-
-.contact-info-container {
-  margin: 12px 0px;
-}
-
-.contact-item {
-  margin: 5px 0px;
-}
-
-.contact-item > svg {
-  font-size: large;
-  margin-right: 5px;
-}
-
-.success-check {
-  align-self: center;
-  width: 25px;
-  height: 25px;
-}
-
-.success-check.animate path {
-  animation: dash 0.75s linear both;
-  animation-delay: 0.1s;
-}
-
-@keyframes dash {
-  0% {
-    stroke-dashoffset: 210;
-  }
-  50% {
-    stroke-dashoffset: -220;
-  }
-  100% {
-    stroke-dashoffset: -205;
-  }
-}
-
 #sync-icon {
   align-self: center;
-}
-
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  height: 20em;
-  align-items: center;
-}
-
-// Spinner stuff lifted from Bootstrap 4
-
-$spinner-width: 3rem !default;
-$spinner-height: $spinner-width !default;
-$spinner-border-width: 0.25em !default;
-
-$spinner-width-sm: 1rem !default;
-$spinner-height-sm: $spinner-width-sm !default;
-$spinner-border-width-sm: 0.2em !default;
-
-@keyframes spinner-border {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinner-border {
-  display: inline-block;
-  width: $spinner-width;
-  height: $spinner-height;
-  vertical-align: text-bottom;
-  border: $spinner-border-width solid currentColor;
-  border-right-color: transparent;
-  border-radius: 50%;
-  animation: spinner-border 0.75s linear infinite;
-}
-
-.spinner-border-sm {
-  width: $spinner-width-sm;
-  height: $spinner-height-sm;
-  border-width: $spinner-border-width-sm;
-}
-
-.api-checker-spinner {
-  width: 1.2em;
-  height: 1.2em;
-  align-self: center;
-}
-
-.api-checker-action-container {
-  display: inline-flex;
-  width: 2em;
 }
