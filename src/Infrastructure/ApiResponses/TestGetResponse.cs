@@ -2,7 +2,7 @@
 
 namespace Infrastructure.ApiResponses
 {
-    public class GuestbookEntryPostResponse : IHttpResponse
+    public class TestGetResponse : IHttpResponse
     {
         [JsonProperty("success")]
         public bool Success { get; set; }

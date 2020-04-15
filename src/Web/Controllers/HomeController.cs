@@ -1,5 +1,8 @@
 ﻿using System.Web.Mvc;
 using Infrastructure.ApiClients;
+using Infrastructure.ApiResponses;
+using Infrastructure.Models.Enums;
+using Newtonsoft.Json;
 
 namespace Web.Controllers
 {
@@ -27,8 +30,9 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult Test()
         {
-            var response = MyApiClient.GetValueAsync().Result;
-            return Json(response, JsonRequestBehavior.AllowGet);
+            var client = new ApiClient();
+            var response = client.AsyncRequest<TestGetResponse>("test", null, HttpMethod.Get).Result;
+            return Content(JsonConvert.SerializeObject(response), "application/json");
         }
     }
 }

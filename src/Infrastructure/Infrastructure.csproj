@@ -36,6 +36,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,11 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiClients\MyApiClient.cs" />
+    <Compile Include="ApiClients\ApiClient.cs" />
+    <Compile Include="ApiRequests\GetRequestExtensions.cs" />
     <Compile Include="ApiRequests\GuestbookEntryPostRequest.cs" />
+    <Compile Include="ApiRequests\IHttpRequest.cs" />
     <Compile Include="ApiResponses\GuestbookEntryPostResponse.cs" />
     <Compile Include="ApiResponses\GuestbookEntryResponse.cs" />
+    <Compile Include="ApiResponses\IHttpResponse.cs" />
+    <Compile Include="ApiResponses\TestGetResponse.cs" />
+    <Compile Include="Models\Enums\HttpMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
