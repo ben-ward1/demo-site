@@ -25,8 +25,15 @@ function BuildAboutTechInfoObject() {
           title: "ASP.NET Core API",
           description:
             "I stood up  an ASP.NET Core API (.NET Core 2.1) that will field requests from the website. Right now it's " +
-            "serving dummy data just to prove that it works. I may consider looking into a free Twilio Sms trial to " +
+            "serving simple GET/POSTs for the guestbook pages. I may consider looking into a free Twilio Sms trial to " +
             "show off a 3rd party integration, do something cool, idk.",
+        },
+        {
+          title: "SQL Server Db",
+          description:
+            "The API has its own 2017 SQL Server Db, which is only storing guestbook entries at this point. The site has " +
+            "no data store of it's own, but rather relies on the API for data persistence. The API uses Dapper ORM to " +
+            "access the SQL data.",
         },
       ],
     },
