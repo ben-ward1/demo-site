@@ -72,19 +72,21 @@ class ApiChecker extends React.Component {
             ? "API: Connected!"
             : "API: Checking..."}
         </div>
-        {this.state.loading ? (
-          <Spinner
-            className="api-checker-spinner"
-            animation="border"
-            size="sm"
-          />
-        ) : (
-          <FontAwesomeIcon
-            id="sync-icon"
-            icon={faSyncAlt}
-            onClick={this.handleClick}
-          />
-        )}
+        <div className="api-checker-action-container">
+          {this.state.loading ? (
+            <Spinner
+              className="api-checker-spinner"
+              animation="border"
+              size="sm"
+            />
+          ) : (
+            <FontAwesomeIcon
+              id="sync-icon"
+              icon={faSyncAlt}
+              onClick={this.handleClick}
+            />
+          )}
+        </div>
       </div>
     );
   }
