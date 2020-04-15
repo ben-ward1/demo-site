@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Accordion, Card, Button } from "react-bootstrap";
 import { BuildAboutTechInfoObject } from "../../../aboutHelperFunctions";
-import "../../../../Content/styles/app-style.scss";
 
 const techInfo = BuildAboutTechInfoObject();
 
