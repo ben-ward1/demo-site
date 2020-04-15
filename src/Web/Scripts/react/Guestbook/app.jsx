@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
+import "../../../Content/styles/app-style.scss";
 
 class App extends React.Component {
   constructor() {

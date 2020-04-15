@@ -115,3 +115,8 @@ $spinner-border-width-sm: 0.2em !default;
   height: 1.2em;
   align-self: center;
 }
+
+.api-checker-action-container {
+  display: inline-flex;
+  width: 2em;
+}
