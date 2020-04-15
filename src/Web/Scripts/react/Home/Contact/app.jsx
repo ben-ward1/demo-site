@@ -4,7 +4,6 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../../../Content/styles/app-style.scss";
 
 library.add(faGithub, faLinkedin, faEnvelope, faPhoneAlt);
 
