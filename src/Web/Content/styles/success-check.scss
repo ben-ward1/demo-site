@@ -1,0 +1,22 @@
+.success-check {
+  align-self: center;
+  width: 25px;
+  height: 25px;
+}
+
+.success-check.animate path {
+  animation: dash 0.75s linear both;
+  animation-delay: 0.1s;
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 210;
+  }
+  50% {
+    stroke-dashoffset: -220;
+  }
+  100% {
+    stroke-dashoffset: -205;
+  }
+}
