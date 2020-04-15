@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Infrastructure.ApiResponses
 {
-    public class GuestbookEntryGetResponse
+    public class GuestbookEntryGetResponse : IHttpResponse
     {
         [JsonProperty("success")]
         public bool Success { get; set; }

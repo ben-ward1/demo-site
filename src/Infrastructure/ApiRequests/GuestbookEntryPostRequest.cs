@@ -2,7 +2,7 @@
 
 namespace Infrastructure.ApiRequests
 {
-    public class GuestbookEntryPostRequest
+    public class GuestbookEntryPostRequest : IHttpRequest
     {
         [JsonProperty("name")]
         public string Name { get; set; }
