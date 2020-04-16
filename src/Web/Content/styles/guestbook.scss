@@ -51,3 +51,30 @@
     white-space: normal;
   }
 }
+
+// Sticky header stuff
+
+$navbar-height: 50px;
+$sticky-cell-height: 36px;
+
+#main-navbar {
+  height: $navbar-height;
+}
+
+.sticky-table-header {
+  th {
+    position: sticky;
+    top: $navbar-height;
+    height: $sticky-cell-height;
+    background: white;
+    z-index: 100;
+  }
+}
+
+#sticky-header-box-shadow.visible {
+  position: fixed;
+  top: $navbar-height + $sticky-cell-height;
+  height: 0px;
+  box-shadow: 0px -1px 8px 3px grey;
+  z-index: 99;
+}
