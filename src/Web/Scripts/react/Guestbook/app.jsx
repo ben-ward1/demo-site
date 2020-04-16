@@ -5,6 +5,7 @@ import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
 import "../../../Content/styles/app-style.scss";
 
+const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
 const navbarHeight = document.getElementById("main-navbar").offsetHeight;
 
 class App extends React.Component {
@@ -26,14 +27,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("resize", this.resizeShadow);
+    if (!isIE) {
+      window.addEventListener("scroll", this.handleScroll);
+      window.addEventListener("resize", this.resizeShadow);
+    }
     this.getGuestbookData();
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("resize", this.resizeShadow);
+    if (!isIE) {
+      window.removeEventListener("scroll", this.handleScroll);
+      window.removeEventListener("resize", this.resizeShadow);
+    }
   }
 
   componentDidUpdate() {
