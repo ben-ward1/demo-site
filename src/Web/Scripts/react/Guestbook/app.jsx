@@ -6,7 +6,7 @@ import { Table, Spinner } from "react-bootstrap";
 import "../../../Content/styles/app-style.scss";
 
 const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
-const navbarHeight = document.getElementById("main-navbar").offsetHeight;
+const navbarHeight = document.getElementById("main-navbar-header").offsetHeight;
 
 class App extends React.Component {
   constructor() {
@@ -24,6 +24,7 @@ class App extends React.Component {
 
     this.handleSelect = this.handleSelect.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.resizeShadow = this.resizeShadow.bind(this);
   }
 
   componentDidMount() {
