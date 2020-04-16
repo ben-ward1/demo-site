@@ -5,6 +5,8 @@ import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
 import "../../../Content/styles/app-style.scss";
 
+const navbarHeight = document.getElementById("main-navbar").offsetHeight;
+
 class App extends React.Component {
   constructor() {
     super();
@@ -14,15 +16,28 @@ class App extends React.Component {
       selected: null,
       error: null,
       loading: true,
+      shouldStick: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
 
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("resize", this.resizeShadow);
     this.getGuestbookData();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("resize", this.resizeShadow);
+  }
+
+  componentDidUpdate() {
+    this.resizeShadow();
   }
 
   getGuestbookData() {
@@ -39,6 +54,31 @@ class App extends React.Component {
     this.setState({ selected: this.state.selected === index ? null : index });
   }
 
+  handleScroll() {
+    if (this.state.data.length > 0) {
+      const headerOffset = document
+        .getElementById("sticky-table-header")
+        .getBoundingClientRect().top;
+
+      this.setState({ shouldStick: headerOffset < navbarHeight });
+    }
+  }
+
+  resizeShadow() {
+    // TODO: Figure out why shadow width is limited to on-screen portion of header in mobile view
+    if (this.state.shouldStick) {
+      const xDiff = 20;
+      const shadow = document.getElementById("sticky-header-box-shadow");
+
+      const headerRect = document
+        .getElementById("sticky-table-header")
+        .getBoundingClientRect();
+
+      shadow.style.left = `${headerRect.left + xDiff / 2}px`;
+      shadow.style.width = `${headerRect.width - xDiff}px`;
+    }
+  }
+
   render() {
     const { data } = this.state;
     return (
@@ -50,7 +90,12 @@ class App extends React.Component {
         ) : (
           <Table>
             <thead>
-              <tr>
+              <tr
+                id="sticky-table-header"
+                className={`${
+                  this.state.shouldStick ? "sticky-table-header" : ""
+                }`}
+              >
                 <th>Name</th>
                 <th>Message</th>
                 <th>Date</th>
@@ -76,6 +121,11 @@ class App extends React.Component {
             </tbody>
           </Table>
         )}
+
+        <div
+          id="sticky-header-box-shadow"
+          className={this.state.shouldStick ? "visible" : ""}
+        />
       </div>
     );
   }
