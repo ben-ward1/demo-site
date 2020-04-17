@@ -5,7 +5,6 @@
 body {
     min-height: 100%;
     padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -54,11 +53,34 @@ textarea {
     }
 }
 
-@media only screen and (max-width: 620px) {
+@media only screen and (max-width: 645px) {
     .page-container {
         margin: 0;
-        margin-bottom: 5em;
         min-width: fit-content;
+    }
+
+    .navbar-background {
+        background-image: url("../img/codeBackgroundDarkSmall.JPG");
+        height: 100%;
+        background-position: left;
+        background-repeat: repeat;
+    }
+
+    .page-background {
+        background-image: none;
+    }
+
+    .navbar-background > .container {
+        background-color: rgb(34, 34, 34, 0.8);
+    }
+
+    .navbar-inverse .navbar-nav > li > a,
+    .navbar-brand {
+        color: white !important;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        font-weight: bold;
     }
 }
 
