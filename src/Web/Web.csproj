@@ -161,6 +161,7 @@
     <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\img\codeBackground.JPG" />
     <Content Include="Content\img\codeBackgroundDark.JPG" />
+    <Content Include="Content\img\codeBackgroundDarkSmall.JPG" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
