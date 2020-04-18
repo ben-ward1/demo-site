@@ -8,7 +8,9 @@ function BuildAboutTechInfoObject() {
           description:
             "I built out a react front-end using npm/webpack/babel and a few other things. Webpack " +
             "uses all files named app.jsx as entry points for the transpiler (babel). For the most part, each page " +
-            "has its own app.dist.js distributable of the transpiled react code.",
+            "has its own app.dist.js distributable of the transpiled react code, making this a multi-page React front-end. " +
+            "The pages were developed mobile-first with cross browser compatibility in mind. Take a look in a few different " +
+            "browsers to see how I did.",
         },
         {
           title: "ASP.NET site",
