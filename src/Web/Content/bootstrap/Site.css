@@ -40,11 +40,12 @@ textarea {
 }
 
 .page-container {
+    position: relative;
     background-color: white;
     margin: 0 9em;
     display: flex;
     box-shadow: 0px 0px 19px 12px black;
-    min-height:100%;
+    min-height: 100%;
 }
 
 @media only screen and (max-width: 767px) {
@@ -93,6 +94,14 @@ textarea {
     .navbar-inverse .navbar-nav > li > a:hover {
         background-color: #222 !important;
     }
+
+    .navbar-background-overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: #222;
+        opacity: 0.7;
+    }
 }
 
 .footer-container {
@@ -100,6 +109,22 @@ textarea {
     bottom: 1em;
     left: 2em;
     right: 2em;
+}
+
+.background-overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #222;
+    opacity: 0.7;
+}
+
+.navbar-brand {
+    position: relative;
+}
+
+.navbar-toggle {
+    background-color: #222;
 }
 
 /*Needed for absolutely positioned footer*/
