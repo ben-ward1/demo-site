@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Modal, Button } from "react-bootstrap";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -7,6 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../../Content/styles/app-style.scss";
 
 library.add(faGithub, faLinkedin, faEnvelope, faPhoneAlt);
+
+// Needed to fix issue with bootstrap modal
+const opacity = { opacity: 1 };
 
 const contactItems = [
   {
@@ -35,6 +39,18 @@ const contactItems = [
 class App extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      showModal: false,
+    };
+
+    this.handleShowModal = this.handleShowModal.bind(this);
+  }
+
+  handleShowModal() {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
   }
 
   render() {
@@ -48,6 +64,24 @@ class App extends React.Component {
             </div>
           ))}
         </div>
+        <Button
+          className="primary-button"
+          onClick={this.handleShowModal}
+          variant="light"
+        >
+          See my resume
+        </Button>
+        <Modal
+          style={opacity}
+          size="lg"
+          show={this.state.showModal}
+          onHide={this.handleShowModal}
+        >
+          <img
+            className="resume-modal-img"
+            src="../../../../Content/img/resume.jpg"
+          />
+        </Modal>
       </div>
     );
   }
