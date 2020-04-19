@@ -40,6 +40,7 @@ class EntryStep extends React.Component {
 
   render() {
     const { stepNum, message, stepCallback } = this.props;
+    const { entry } = this.state;
 
     return (
       <div className="step-view-container">
@@ -72,6 +73,7 @@ class EntryStep extends React.Component {
             <Button
               className="guestbook-wizard-button primary-button"
               onClick={this.handleSave}
+              disabled={!entry || entry.length < 1}
               variant="light"
             >
               Save
