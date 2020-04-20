@@ -60,15 +60,15 @@ textarea {
         min-width: fit-content;
     }
 
-    .navbar-background {
+    .page-background {
+        background-image: none;
+    }
+
+    /*.navbar-background {
         background-image: url("../img/codeBackgroundDarkSmall.JPG");
         height: 100%;
         background-position: left;
         background-repeat: repeat;
-    }
-
-    .page-background {
-        background-image: none;
     }
 
     .navbar-background > .container {
@@ -101,7 +101,7 @@ textarea {
         position: absolute;
         background-color: #222;
         opacity: 0.7;
-    }
+    }*/
 }
 
 .footer-container {
@@ -119,12 +119,19 @@ textarea {
     opacity: 0.7;
 }
 
-.navbar-brand {
+/*.navbar-brand {
     position: relative;
 }
 
 .navbar-toggle {
     background-color: #222;
+}*/
+
+nav.navbar {
+    z-index:1200;
+    background-color: #222;
+    padding: 0 1rem;
+    min-height: 50px;
 }
 
 /*Needed for absolutely positioned footer*/
