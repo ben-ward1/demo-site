@@ -33,3 +33,19 @@
   transform: rotate(0deg);
   transition: all 0.2s ease-in-out;
 }
+
+.logos-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 2em 0;
+}
+
+.tech-logo-img {
+  height: 3em;
+}
+
+@media only screen and (max-width: 875px) {
+  .tech-logo-img {
+    height: 1.5em;
+  }
+}
