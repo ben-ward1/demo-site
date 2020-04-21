@@ -32,7 +32,7 @@ class StepContainer extends React.Component {
     const { name, message } = this.state;
 
     if (stepNum === 4) {
-      this.setState({ loading: true }, () => {
+      this.setState({ loading: true, errorOnPost: false }, () => {
         axios
           .post("Guestbook/PostEntry", {
             name: name,
@@ -40,15 +40,17 @@ class StepContainer extends React.Component {
           })
           .then((response) => {
             if (response.data.success) {
-              this.step({ stepNum, entry });
+              this.step(stepNum, entry);
             }
 
             this.setState({ loading: false });
           })
           .catch((error) => {
-            this.setState({ errorOnPost: true, loading: false }, () => {
-              this.step(stepNum, entry);
-            });
+            if (error) {
+              this.setState({ errorOnPost: true, loading: false }, () => {
+                this.step(stepNum, entry);
+              });
+            }
           });
       });
     } else {
