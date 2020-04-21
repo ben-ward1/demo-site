@@ -19,6 +19,7 @@ class App extends React.Component {
           <a
             className="pull-right"
             href="https://github.com/BenjaminEllisWard/demo-site"
+            style={{ float: "right" }}
           >
             See this site's source code here
           </a>
