@@ -48,6 +48,10 @@ textarea {
     min-height: 100%;
 }
 
+h2.page-header {
+    margin: 1.5rem 0;
+}
+
 @media only screen and (max-width: 767px) {
     .page-container {
         margin: 0 5em;
