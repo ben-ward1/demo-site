@@ -47,13 +47,22 @@ class App extends React.Component {
   }
 
   getGuestbookData() {
-    axios.get("Guestbook/GetEntries").then((response) => {
-      if (response.data) {
-        this.setState({ data: response.data.entries, loading: false });
-      } else {
+    axios
+      .get("Guestbook/GetEntries")
+      .then((response) => {
+        if (response.data) {
+          this.setState({
+            data: response.data.entries,
+            error: null,
+            loading: false,
+          });
+        } else {
+          this.setState({ error: "No entries response!", loading: false });
+        }
+      })
+      .catch((error) => {
         this.setState({ error: "No entries response!", loading: false });
-      }
-    });
+      });
   }
 
   handleSelect(index) {
@@ -86,10 +95,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
-    return (
+    const { data, loading, error, shouldStick, selected } = this.state;
+    return error ? (
+      <h4>Oops, something went wrong. Try again later</h4>
+    ) : (
       <div className="guestbook-container">
-        {this.state.loading ? (
+        {loading ? (
           <div className="spinner-container">
             <Spinner animation="border" />
           </div>
@@ -98,9 +109,7 @@ class App extends React.Component {
             <thead>
               <tr
                 id="sticky-table-header"
-                className={`${
-                  this.state.shouldStick ? "sticky-table-header" : ""
-                }`}
+                className={`${shouldStick ? "sticky-table-header" : ""}`}
               >
                 <th>Name</th>
                 <th>Message</th>
@@ -112,7 +121,7 @@ class App extends React.Component {
                 data.map((x, index) => (
                   <tr
                     key={index}
-                    className={index === this.state.selected ? "selected" : ""}
+                    className={index === selected ? "selected" : ""}
                   >
                     <td>{x.name}</td>
                     <td
@@ -130,7 +139,7 @@ class App extends React.Component {
 
         <div
           id="sticky-header-box-shadow"
-          className={this.state.shouldStick ? "visible" : ""}
+          className={shouldStick ? "visible" : ""}
         />
       </div>
     );
