@@ -11,6 +11,12 @@
   background-color: #ececec;
 }
 
+.primary-button:focus {
+  background-color: #e2e6ea;
+  border-color: blue;
+  color: blue;
+}
+
 a.primary-button {
   color: black;
 }
