@@ -6,8 +6,8 @@ import { Table, Spinner } from "react-bootstrap";
 import "../../../Content/styles/app-style.scss";
 
 const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
-const navbarHeight = document.getElementById("main-navbar-header").offsetHeight;
-
+//const navbarHeight = document.getElementById("main-navbar-header").offsetHeight;
+const navbarHeight = 50;
 class App extends React.Component {
   constructor() {
     super();
