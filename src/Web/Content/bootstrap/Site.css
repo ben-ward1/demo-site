@@ -21,18 +21,19 @@ body {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 .page-background {
     background-image: url("../img/codeBackgroundDark.JPG");
     height: 100%;
     background-position: left;
     background-repeat: repeat;
+}
+
+.background-overlay {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #222;
+    opacity: 0.7;
 }
 
 .container {
@@ -50,6 +51,58 @@ textarea {
 
 h2.page-header {
     margin: 1.5rem 0;
+}
+
+nav.navbar {
+    z-index: 1200;
+    min-height: 50px;
+    padding: 0.4rem 0;
+    background-color: #222;
+    overflow: hidden;
+}
+
+.navbar-brand {
+    padding-left: 1.5rem;
+}
+
+.navbar-toggler {
+    margin-right: 1.5rem;
+    background-color: #222;
+}
+
+    .navbar-toggler:hover {
+        border: 1px #555 solid;
+    }
+
+    .navbar-toggler:focus {
+        outline: 0;
+        border: 1px #555 solid;
+    }
+
+.navbar-collapse {
+    overflow: hidden;
+}
+
+.navbar-background-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.footer-container {
+    position: absolute;
+    bottom: 1em;
+    left: 2em;
+    right: 2em;
+}
+
+@media only screen and (max-width: 992px) {
+    .navbar-brand,
+    .navbar-collapse > ul {
+        padding-left: 1.5rem;
+        background-color: #222;
+        box-shadow: 0px 0px 20px 15px #222;
+    }
 }
 
 @media only screen and (max-width: 815px) {
@@ -92,64 +145,10 @@ h2.page-header {
     }
 }
 
-.navbar-brand {
-    padding-left: 1.5rem;
-}
-
-.navbar-toggler {
-    margin-right: 1.5rem;
-    background-color: #222;
-}
-
-.navbar-toggler:hover {
-    border: 1px #555 solid;
-}
-
-.navbar-toggler:focus {
-    outline: 0;
-    border: 1px #555 solid;
-}
-
-@media only screen and (max-width: 992px) {
-    .navbar-brand,
-    .navbar-collapse > ul {
-        padding-left: 1.5rem;
-        background-color: #222;
-        box-shadow: 0px 0px 20px 15px #222;
+@media only screen and (max-width: 325px) {
+    .navbar-brand {
+        font-size: 1rem;
     }
-}
-
-.navbar-background-overlay {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-.footer-container {
-    position: absolute;
-    bottom: 1em;
-    left: 2em;
-    right: 2em;
-}
-
-.background-overlay {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: #222;
-    opacity: 0.7;
-}
-
-nav.navbar {
-    z-index: 1200;
-    min-height: 50px;
-    padding: 0.4rem 0;
-    background-color: #222;
-    overflow: hidden;
-}
-
-.navbar-collapse {
-    overflow: hidden;
 }
 
 /*Needed for absolutely positioned footer*/

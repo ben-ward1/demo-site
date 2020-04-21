@@ -9,9 +9,6 @@ import "../../../../Content/styles/app-style.scss";
 
 library.add(faGithub, faLinkedin, faEnvelope, faPhoneAlt);
 
-// Needed to fix issue with bootstrap modal
-const opacity = { opacity: 1 };
-
 const contactItems = [
   {
     icon: faEnvelope,
@@ -72,7 +69,7 @@ class App extends React.Component {
           See my resume
         </Button>
         <Modal
-          style={opacity}
+          className="resume-modal"
           size="lg"
           show={this.state.showModal}
           onHide={this.handleShowModal}
