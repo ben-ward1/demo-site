@@ -119,6 +119,12 @@ h2.page-header {
     }
 }
 
+@media only screen and (max-width: 325px) {
+    .navbar-brand {
+        font-size: 1rem;
+    }
+}
+
 .navbar-background-overlay {
     position: absolute;
     top: 0px;
