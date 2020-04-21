@@ -64,28 +64,30 @@ class ApiChecker extends React.Component {
 
     return (
       <div id="api-response-container">
-        <SuccessCheckIcon id="api-check" check={someValue !== null} />
-        <div id="response-text" className={someValue && "connected"}>
-          {errorMsg
-            ? errorMsg
-            : someValue
-            ? "API: Connected!"
-            : "API: Checking..."}
-        </div>
-        <div className="api-checker-action-container">
-          {this.state.loading ? (
-            <Spinner
-              className="api-checker-spinner"
-              animation="border"
-              size="sm"
-            />
-          ) : (
-            <FontAwesomeIcon
-              id="sync-icon"
-              icon={faSyncAlt}
-              onClick={this.handleClick}
-            />
-          )}
+        <div id="api-response-item">
+          <SuccessCheckIcon id="api-check" check={someValue !== null} />
+          <div id="response-text" className={someValue && "connected"}>
+            {errorMsg
+              ? errorMsg
+              : someValue
+              ? "API: Connected!"
+              : "API: Checking..."}
+          </div>
+          <div className="api-checker-action-container">
+            {this.state.loading ? (
+              <Spinner
+                className="api-checker-spinner"
+                animation="border"
+                size="sm"
+              />
+            ) : (
+              <FontAwesomeIcon
+                id="sync-icon"
+                icon={faSyncAlt}
+                onClick={this.handleClick}
+              />
+            )}
+          </div>
         </div>
       </div>
     );
