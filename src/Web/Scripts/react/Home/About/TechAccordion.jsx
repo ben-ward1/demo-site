@@ -1,7 +1,12 @@
 import React from "react";
 import { Accordion, Card, Button } from "react-bootstrap";
 import { BuildAboutTechInfoObject } from "../../../aboutHelperFunctions";
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../../../Content/styles/app-style.scss";
+
+library.add(faCaretRight);
 
 const techInfo = BuildAboutTechInfoObject();
 
@@ -35,12 +40,16 @@ class TechAccordion extends React.Component {
                 onClick={() => this.handleSelect(index)}
               >
                 {x.title}
-                <div className="caret-container-wrapper pull-right">
+                <div
+                  className="caret-container-wrapper"
+                  style={{ float: "right" }}
+                >
                   <div className="caret-container">
-                    <span
+                    <FontAwesomeIcon
                       className={`caret ${
                         index === this.state.selected ? "open" : "closed"
                       }`}
+                      icon={faCaretRight}
                     />
                   </div>
                 </div>
