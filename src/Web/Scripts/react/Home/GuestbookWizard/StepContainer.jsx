@@ -18,12 +18,14 @@ class StepContainer extends React.Component {
       name: null,
       message: null,
       loading: false,
+      errorOnPost: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
 
     this.renderStep = this.renderStep.bind(this);
     this.stepCallback = this.stepCallback.bind(this);
+    this.step = this.step.bind(this);
   }
 
   stepCallback(stepNum, entry) {
@@ -38,10 +40,15 @@ class StepContainer extends React.Component {
           })
           .then((response) => {
             if (response.data.success) {
-              this.step(stepNum, entry);
+              this.step({ stepNum, entry });
             }
 
             this.setState({ loading: false });
+          })
+          .catch((error) => {
+            this.setState({ errorOnPost: true, loading: false }, () => {
+              this.step(stepNum, entry);
+            });
           });
       });
     } else {
@@ -51,7 +58,7 @@ class StepContainer extends React.Component {
 
   step(stepNum, entry) {
     if (typeof stepNum !== "number" || stepNum < 1 || stepNum > 4) {
-      throw "Invalid step number!";
+      throw `Invalid step number: ${stepNum.toString()}`;
     }
 
     const { name, message } = this.state;
@@ -100,10 +107,11 @@ class StepContainer extends React.Component {
         );
       case 4:
         const successMessage = `Thanks, ${this.state.name}! You're entry has been successfully recorded.`;
+        const errorMessage = "Oops! Something went wrong. Try again later.";
         return (
           <SuccessStep
             stepNum={4}
-            message={successMessage}
+            message={this.state.errorOnPost ? errorMessage : successMessage}
             stepCallback={this.stepCallback}
           />
         );

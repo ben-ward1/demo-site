@@ -14,7 +14,7 @@ const popover = (
     <Popover.Title as="h3">Oops!</Popover.Title>
     <Popover.Content>
       We didn't get a valid response from the api. This can happen for a number
-      of reasons, but I've probably just taken it's hosting instance down for
+      of reasons, but I've probably just taken its hosting instance down for
       development purposes.
     </Popover.Content>
   </Popover>
