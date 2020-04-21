@@ -11,6 +11,13 @@
   justify-content: space-between;
 }
 
+#response-text {
+  display: flex;
+  min-width: 8rem;
+  align-items: center;
+  justify-content: space-around;
+}
+
 #response-text.connected {
   font-weight: bold;
   color: rgb(48, 109, 48);
