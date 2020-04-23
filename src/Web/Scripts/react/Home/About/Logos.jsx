@@ -13,6 +13,7 @@ const logos = [
   { file: "c-sharp-logo.svg", title: "C#" },
   { file: "dot-net-logo.svg", title: ".Net" },
   { file: "sql-server-logo.svg", title: "SQL Server" },
+  { file: "aws-logo.svg", title: "Amazon Web Services" },
 ];
 
 class Logos extends React.Component {
@@ -27,15 +28,19 @@ class Logos extends React.Component {
   }
 
   render() {
+    const breakPoint = Math.floor(logos.length / 2);
+
     return (
       <div className="logos-container">
         {logos.map((l, index) => (
-          <img
-            key={index}
-            className="tech-logo-img"
-            src={this.BuildPath(l.file)}
-            title={l.title}
-          />
+          <React.Fragment key={index}>
+            <img
+              className="tech-logo-img"
+              src={this.BuildPath(l.file)}
+              title={l.title}
+            />
+            {index === breakPoint && <div className="flex-break" />}
+          </React.Fragment>
         ))}
       </div>
     );

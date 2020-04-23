@@ -43,18 +43,17 @@ function BuildAboutTechInfoObject() {
       title: "Host",
       items: [
         {
-          title: "Internet Information Services (IIS)",
+          title: "AWS EC2 Windows Server 2016",
           description:
-            "I am hosting all of this stuff on an IIS instance running on my local machine. Hosting the website is as simple as " +
-            "pointing the default site in IIS to the site's project directory. For the API (.NET Core), I've found that " +
-            "an additional publishing step is necessary for it to run on IIS correctly.",
+            "I'm hosting the site and api on a cloud instance of Windows Server through IIS. Right now both the site and the api " +
+            "are on the same box only because that's what I'm currently limited to by the AWS free tier. I plan to " +
+            "migrate the api to a Linux box on Azure just to demonstrate .NET Core capabilities.",
         },
         {
-          title: "ngrok",
+          title: "AWS RDS",
           description:
-            "I'm exposing the site running on IIS through ngrok, a cloud service that relays traffic to my local " +
-            "web service. It's a pretty useful tool to use against locally developed projects for demoing, testing on multiple " +
-            "devices, etc.",
+            "The database is a standalone cloud instance of SQL Server 2017. Only the api communicates with the db. Right now it's " +
+            "only storing data for the guestbook.",
         },
       ],
     },
