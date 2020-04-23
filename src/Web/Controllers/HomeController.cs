@@ -2,6 +2,7 @@
 using Infrastructure.ApiClients;
 using Infrastructure.ApiResponses;
 using Infrastructure.Models.Enums;
+using Infrastructure.Helpers;
 using Newtonsoft.Json;
 
 namespace Web.Controllers
@@ -10,7 +11,13 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            // TODO: Session variable is pulled and flipped as soon as the index page is requested.
+            // In the future, should probably think about only flipping to false based on a response from the client.
+            var isInitialArrivalForSession = Session["_InitialArrivalForSession"];
+            Session["_InitialArrivalForSession"] = false;
+            var jsonModel = new { _isInitialArrivalForSession = isInitialArrivalForSession }.ToIdiomaticJson();
+
+            return View(model: jsonModel);
         }
 
         public ActionResult About()
