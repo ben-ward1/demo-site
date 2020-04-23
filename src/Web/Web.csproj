@@ -172,6 +172,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\bootstrap\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\jquery-3.3.1.js" />
     <Content Include="Scripts\bootstrap\jquery-3.3.1.min.js" />
@@ -183,7 +184,9 @@
     <Content Include="Scripts\bootstrap\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\bootstrap\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\bootstrap\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -215,6 +218,33 @@
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\bootstrap\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\react\Home\Index\app.dist.js" />
+    <Content Include="Scripts\react\Home\About\app.dist.js" />
+    <Content Include="Scripts\react\Home\Contact\app.dist.js" />
+    <Content Include="Scripts\react\Guestbook\app.dist.js" />
+    <Content Include="Scripts\react\common.dist.js " />
+    <Content Include="Scripts\react\polyfill.dist.js" />
+    <Content Include="Content\styles\styles.dist.css " />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\img\codeBackground.jpg" />
+    <Content Include="Content\img\codeBackgroundDark.jpg" />
+    <Content Include="Content\img\codeBackgroundDarkSmall.jpg" />
+    <Content Include="Content\img\resume.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\svg\babel-logo.svg" />
+    <Content Include="Content\svg\bootstrap-logo.svg" />
+    <Content Include="Content\svg\c-sharp-logo.svg" />
+    <Content Include="Content\svg\dot-net-logo.svg" />
+    <Content Include="Content\svg\js-logo.svg" />
+    <Content Include="Content\svg\npm-logo.svg" />
+    <Content Include="Content\svg\react-logo.svg" />
+    <Content Include="Content\svg\sass-logo.svg" />
+    <Content Include="Content\svg\sql-server-logo.svg" />
+    <Content Include="Content\svg\webpack-logo.svg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
