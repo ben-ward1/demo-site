@@ -15,4 +15,139 @@ const firstVisitMessageObject = {
   subText: firstVisitSubtext,
 };
 
-export default firstVisitMessageObject;
+function getCollapsedHeight() {
+  return document.getElementById("notification-container").clientHeight;
+}
+
+function calculateScale() {
+  const fullHeight = document.getElementById("notification-text-container")
+    .clientHeight;
+  const collapsedHeight = getCollapsedHeight();
+
+  return fullHeight / collapsedHeight;
+}
+
+function createKeyFrameAnimation() {
+  const mainScale = calculateScale();
+  const collapsedHeight = getCollapsedHeight();
+  let animation = "";
+  let reverseAnimation = "";
+  let inverseAnimation = "";
+  let inverseReverseAnimation = "";
+  let closeFromOpenAnimation = "";
+  let closeFromClosedAnimation = "";
+  let openPageTopAnimation = "";
+  let closePageTopAnimation = "";
+
+  for (let step = 0; step <= 100; step++) {
+    const factor = step / 100;
+    const scaleY = 1 + (mainScale - 1) * factor;
+    const reverseScaleY = mainScale - (mainScale - 1) * factor;
+    const invScaleY = 1 / scaleY;
+    const invReverseScaleY = 1 / reverseScaleY;
+    const closeScaleOpen = mainScale - mainScale * factor;
+    const closeScaleClosed = 1 - factor;
+    const pageTop = mainScale * collapsedHeight - collapsedHeight;
+    const pageTopExpand = pageTop * factor;
+    const pageTopClose = pageTop - pageTopExpand;
+
+    animation += `
+      ${step}% {
+          transform: scaleY(${scaleY});
+      }`;
+
+    reverseAnimation += `
+      ${step}% {
+          transform: scaleY(${reverseScaleY});
+      }`;
+
+    inverseAnimation += `
+      ${step}% {
+          transform: scaleY(${invScaleY});
+      }`;
+
+    inverseReverseAnimation += `
+      ${step}% {
+          transform: scaleY(${invReverseScaleY});
+      }`;
+
+    closeFromOpenAnimation += `
+        ${step}% {
+            transform: scaleY(${closeScaleOpen});
+        }`;
+
+    closeFromClosedAnimation += `
+          ${step}% {
+              transform: scaleY(${closeScaleClosed});
+          }`;
+
+    openPageTopAnimation += `
+          ${step}% {
+              top: ${pageTopExpand}px
+          }
+          `;
+
+    closePageTopAnimation += `
+          ${step}% {
+              top: ${pageTopClose}px
+          }
+          `;
+  }
+
+  const animationStyleString = `
+    @keyframes notificationAnimation {
+        ${animation}
+    }
+    
+    @keyframes notificationReverseAnimation {
+        ${reverseAnimation}
+    }
+    
+    @keyframes notificationContentsAnimation {
+        ${inverseAnimation}
+    }
+    
+    @keyframes notificationReverseContentsAnimation {
+        ${inverseReverseAnimation}
+    }
+    
+    @keyframes notificationCloseFromOpen {
+        ${closeFromOpenAnimation}
+    }
+    
+    @keyframes notificationCloseFromClosed {
+        ${closeFromClosedAnimation}
+    }
+    
+    @keyframes openPageTop {
+        ${openPageTopAnimation}
+    }
+    
+    @keyframes closePageTop {
+        ${closePageTopAnimation}
+    }`;
+
+  const style = document.createElement("style");
+  style.textContent = animationStyleString;
+  document.head.append(style);
+}
+
+function resetPageTop(isExpanded, isClosed) {
+  const el = document.getElementsByClassName("page-container")[0];
+  const cssString = `
+            animation-name: ${
+              isExpanded && !isClosed ? "openPageTop" : "closePageTop"
+            };
+            animation-duration: 0.25s;
+            animation-timing-function: 0.25s;
+            animation-fill-mode: forwards;
+        `;
+
+  el.style.cssText = cssString;
+}
+
+module.exports = {
+  firstVisitMessageObject,
+  createKeyFrameAnimation,
+  resetPageTop,
+};
