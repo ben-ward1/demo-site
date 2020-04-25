@@ -115,10 +115,15 @@ nav.navbar {
     .page-container {
         margin: 0;
         min-width: fit-content;
+        box-shadow: none;
     }
 
     .page-background {
         background-image: none;
+    }
+
+    .background-overlay {
+        display: none;
     }
 
     .navbar {
