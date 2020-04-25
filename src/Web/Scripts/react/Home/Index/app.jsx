@@ -19,14 +19,14 @@ class App extends React.Component {
   closeNotification() {
     const el = document.getElementById("notification-container");
     const cssString = `
-      height: 0px;
-      transition: height 0.5s
+      max-height: 0px;
+      transition: max-height 0.5s
     `;
     el.style.cssText = cssString;
 
     setTimeout(() => {
       this.setState({ notificationIsOpen: false });
-    }, 250);
+    }, 500);
   }
 
   render() {
