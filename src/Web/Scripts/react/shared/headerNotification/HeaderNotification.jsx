@@ -1,51 +1,54 @@
 import React from "react";
-import { faWindowClose, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeaderNotificationPortal from "./HeaderNotificationPortal";
 import Hn from "./HeaderNotificationStyledComponents";
 import {
-  createKeyFrameAnimation,
+  addAnimations,
   resetPageTop,
+  resizeDisplayText,
+  triggerAnimation,
 } from "../../../notificationHelpers";
 
-library.add(faWindowClose, faAngleRight);
+library.add(faWindowClose, faAngleDown);
 
 class HeaderNotification extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      overflowing: false,
       isExpanded: null,
       isClosed: false,
     };
 
-    this.handleOverflow = this.handleOverflow.bind(this);
     this.toggleNotification = this.toggleNotification.bind(this);
     this.closeSelf = this.closeSelf.bind(this);
-    this.resizeDisplayText = this.resizeDisplayText.bind(this);
     this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    createKeyFrameAnimation();
+    addAnimations();
   }
 
   handleResize() {
-    this.handleOverflow();
-    this.resizeDisplayText();
-  }
+    if (this.state.isExpanded) {
+      this.setState({ isExpanded: false }, () => {
+        const { isExpanded, isClosed } = this.state;
+        resetPageTop(isExpanded, isClosed);
+        resizeDisplayText();
+        addAnimations();
+      });
+    }
 
-  handleOverflow() {
-    const el = document.getElementById("notification-container");
-    const overflowing = el && el.clientHeight < el.scrollHeight;
-    this.setState({ overflowing });
+    resizeDisplayText();
+    addAnimations();
   }
 
   toggleNotification() {
+    triggerAnimation();
     this.setState(
       (previous) => ({
         isExpanded: previous.isExpanded === null ? true : !previous.isExpanded,
@@ -54,7 +57,7 @@ class HeaderNotification extends React.Component {
         const { isExpanded, isClosed } = this.state;
         resetPageTop(isExpanded, isClosed);
         if (!isExpanded) {
-          this.resizeDisplayText();
+          resizeDisplayText();
         }
       }
     );
@@ -72,21 +75,8 @@ class HeaderNotification extends React.Component {
     });
   }
 
-  resizeDisplayText() {
-    const mainContainer = document.getElementById("notification-container");
-    const controlContainer = document.getElementById(
-      "notification-controls-container"
-    );
-    const container = document.getElementById("collapsed-text-container");
-    const width =
-      mainContainer.clientWidth -
-      controlContainer.clientWidth -
-      container.children[0].clientWidth;
-    container.children[1].style.width = `${width}px`;
-  }
-
   render() {
-    const { overflowing, isExpanded, isClosed } = this.state;
+    const { isExpanded, isClosed } = this.state;
     const { displayText, mainText, subText } = this.props.message;
 
     return (
@@ -99,6 +89,7 @@ class HeaderNotification extends React.Component {
           <Hn.Contents isExpanded={isExpanded}>
             <Hn.TextContainer
               id="notification-text-container"
+              className="animate-text"
               isClosed={isClosed}
               isExpanded={isExpanded}
             >
@@ -117,30 +108,31 @@ class HeaderNotification extends React.Component {
                 </div>
               </div>
             </Hn.TextContainer>
-            <Hn.ControlsContainer
-              id="notification-controls-container"
-              overflowing={overflowing}
-            >
+            <Hn.ControlsContainer id="notification-controls-container">
               <FontAwesomeIcon
                 icon={faWindowClose}
                 size="lg"
                 onClick={this.closeSelf}
+                tabIndex={0}
+                onKeyPress={(e) => e.key === "Enter" && this.closeSelf()}
               />
-              {overflowing && (
-                <FontAwesomeIcon
-                  icon={faAngleRight}
-                  onClick={this.toggleNotification}
-                  size="lg"
-                  style={
-                    isExpanded
-                      ? {
-                          transform: "rotate(90deg)",
-                          transition: "transform 0.25s ease-in-out",
-                        }
-                      : { transition: "transform 0.25s ease-in-out" }
-                  }
-                />
-              )}
+              <FontAwesomeIcon
+                icon={faAngleDown}
+                onClick={this.toggleNotification}
+                tabIndex={0}
+                onKeyPress={(e) =>
+                  e.key === "Enter" && this.toggleNotification()
+                }
+                size="lg"
+                style={
+                  isExpanded
+                    ? {
+                        transform: "rotate(180deg)",
+                        transition: "transform 0.25s ease-in-out",
+                      }
+                    : { transition: "transform 0.25s ease-in-out" }
+                }
+              />
             </Hn.ControlsContainer>
           </Hn.Contents>
         </Hn.Container>

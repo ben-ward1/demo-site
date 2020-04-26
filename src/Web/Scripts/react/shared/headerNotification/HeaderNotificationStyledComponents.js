@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: space-between;
   font-weight: 600;
   text-align: justify;
-  background-color: #e60000;
+  background-color: #bd0000;
   color: white;
   overflow: hidden;
   max-height: ${collapsedDisplayHeight};
@@ -54,6 +54,19 @@ const Contents = styled.div`
   display: flex;
   transform-origin: top;
 
+  & > #notification-text-container.animate-text {
+    animation: fadein 1s;
+
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
+
   ${(props) =>
     props.isExpanded !== null && props.isExpanded
       ? css`
@@ -81,16 +94,27 @@ const TextContainer = styled.div`
   height: fit-content;
   transform-origin: top;
 
-  & > div > #main-text-container > .text-item {
-    padding: 1rem;
-  }
-
   @media only screen and (max-width: 960px) {
     font-size: 14px;
   }
 
   @media only screen and (max-width: 689px) {
     font-size: 12px;
+  }
+
+  & > div > #main-text-container {
+    .text-item {
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+
+    .text-item:first-child {
+      padding-top: 1rem;
+    }
+
+    .text-item:last-child {
+      padding-bottom: 1rem;
+    }
   }
 `;
 
@@ -126,16 +150,8 @@ const ControlsContainer = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: ${(props) =>
-    props.overflowing ? "space-between" : "center"};
+  justify-content: space-around;
   padding: 0.3rem 1rem;
-`;
-
-const Control = styled.div`
-  height: 14px;
-  width: 14px;
-  background-color: ${(props) => (props.isExpanded ? "white" : "black")};
-  border: 2px solid black;
 `;
 
 const Hn = {
@@ -145,7 +161,6 @@ const Hn = {
   SubText,
   CollapsedText,
   ControlsContainer,
-  Control,
 };
 
 export default Hn;
