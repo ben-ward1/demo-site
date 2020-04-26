@@ -130,9 +130,23 @@ function createKeyFrameAnimation() {
         ${closePageTopAnimation}
     }`;
 
-  const style = document.createElement("style");
-  style.textContent = animationStyleString;
-  document.head.append(style);
+  // const style = document.createElement("style");
+  // style.textContent = animationStyleString;
+  // document.head.append(style);
+  return animationStyleString;
+}
+
+function addAnimations() {
+  const styleSheet = document.getElementById("animation-stylesheet");
+
+  if (styleSheet == null) {
+    const style = document.createElement("style");
+    style.id = "animation-stylesheet";
+    style.textContent = createKeyFrameAnimation();
+    document.head.append(style);
+  } else {
+    styleSheet.textContent = createKeyFrameAnimation();
+  }
 }
 
 function resetPageTop(isExpanded, isClosed) {
@@ -151,8 +165,31 @@ function resetPageTop(isExpanded, isClosed) {
   }
 }
 
+function resizeDisplayText() {
+  const mainContainer = document.getElementById("notification-container");
+  const controlContainer = document.getElementById(
+    "notification-controls-container"
+  );
+  const container = document.getElementById("collapsed-text-container");
+  const width =
+    mainContainer.clientWidth -
+    controlContainer.clientWidth -
+    container.children[0].clientWidth;
+  container.children[1].style.width = `${width}px`;
+}
+
+function triggerAnimation() {
+  const text = document.getElementById("notification-text-container");
+  text.classList.remove("animate-text");
+  void text.offsetWidth;
+  text.classList.add("animate-text");
+}
+
 module.exports = {
   firstVisitMessageObject,
-  createKeyFrameAnimation,
+  addAnimations,
   resetPageTop,
+  getCollapsedHeight,
+  resizeDisplayText,
+  triggerAnimation,
 };
