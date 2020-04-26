@@ -6,6 +6,9 @@ import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
 import { firstVisitMessageObject } from "../../../notificationHelpers";
 import "../../../../Content/styles/app-style.scss";
 
+// TODO: Add IE support to header notification
+const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +42,7 @@ class App extends React.Component {
         <ApiChecker />
         <h2>Sign my guestbook</h2>
         <GuestbookWizard />
-        {/* {_isInitialArrivalForSession && <HeaderNotification />} */}
-        {notificationIsOpen && (
+        {_isInitialArrivalForSession && notificationIsOpen && !isIE && (
           <HeaderNotification
             closeCallback={this.closeNotification}
             message={firstVisitMessageObject}
