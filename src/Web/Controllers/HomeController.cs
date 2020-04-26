@@ -4,6 +4,7 @@ using Infrastructure.ApiResponses;
 using Infrastructure.Models.Enums;
 using Infrastructure.Helpers;
 using Newtonsoft.Json;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -15,9 +16,17 @@ namespace Web.Controllers
             // In the future, should probably think about only flipping to false based on a response from the client.
             var isInitialArrivalForSession = Session["_InitialArrivalForSession"];
             Session["_InitialArrivalForSession"] = false;
-            var jsonModel = new { _isInitialArrivalForSession = isInitialArrivalForSession }.ToIdiomaticJson();
 
-            return View(model: jsonModel);
+            var firstVisit = isInitialArrivalForSession;
+            var blog = BlogMocker.MockBlog();
+
+            var viewModel = new HomeIndexViewModel
+            {
+                FirstView = (bool)firstVisit,
+                Blog = blog
+            };
+
+            return View(model: viewModel.ToIdiomaticJson());
         }
 
         public ActionResult About()

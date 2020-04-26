@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { _isInitialArrivalForSession } = this.props;
+    const { firstView } = this.props;
     const { notificationIsOpen } = this.state;
 
     return (
@@ -42,7 +42,7 @@ class App extends React.Component {
         <ApiChecker />
         <h2>Sign my guestbook</h2>
         <GuestbookWizard />
-        {_isInitialArrivalForSession && notificationIsOpen && !isIE && (
+        {firstView && notificationIsOpen && !isIE && (
           <HeaderNotification
             closeCallback={this.closeNotification}
             message={firstVisitMessageObject}
