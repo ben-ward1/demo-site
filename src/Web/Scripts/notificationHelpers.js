@@ -1,3 +1,5 @@
+const firstVisitDisplayText = "Message for recruiters and hiring managers.";
+
 const firstVisitText =
   "Thanks for visiting my website! This is a little something I put together to demonstrate " +
   "the technologies I develop with. If you're a recruiter or hiring manager, I'm in the job market after being " +
@@ -11,6 +13,7 @@ const firstVisitText =
 const firstVisitSubtext = "-Ben";
 
 const firstVisitMessageObject = {
+  displayText: firstVisitDisplayText,
   mainText: firstVisitText,
   subText: firstVisitSubtext,
 };
@@ -20,7 +23,7 @@ function getCollapsedHeight() {
 }
 
 function calculateScale() {
-  const fullHeight = document.getElementById("notification-text-container")
+  const fullHeight = document.getElementById("main-text-container")
     .clientHeight;
   const collapsedHeight = getCollapsedHeight();
 
@@ -133,17 +136,19 @@ function createKeyFrameAnimation() {
 }
 
 function resetPageTop(isExpanded, isClosed) {
-  const el = document.getElementsByClassName("page-container")[0];
-  const cssString = `
-            animation-name: ${
-              isExpanded && !isClosed ? "openPageTop" : "closePageTop"
-            };
-            animation-duration: 0.25s;
-            animation-timing-function: 0.25s;
-            animation-fill-mode: forwards;
-        `;
+  if (isExpanded !== null) {
+    const el = document.getElementsByClassName("page-container")[0];
+    const cssString = `
+              animation-name: ${
+                isExpanded && !isClosed ? "openPageTop" : "closePageTop"
+              };
+              animation-duration: 0.25s;
+              animation-timing-function: 0.25s;
+              animation-fill-mode: forwards;
+          `;
 
-  el.style.cssText = cssString;
+    el.style.cssText = cssString;
+  }
 }
 
 module.exports = {

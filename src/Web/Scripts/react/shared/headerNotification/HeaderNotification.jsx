@@ -1,11 +1,15 @@
 import React from "react";
+import { faWindowClose, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeaderNotificationPortal from "./HeaderNotificationPortal";
 import Hn from "./HeaderNotificationStyledComponents";
 import {
-  firstVisitMessageObject,
   createKeyFrameAnimation,
   resetPageTop,
 } from "../../../notificationHelpers";
+
+library.add(faWindowClose, faAngleRight);
 
 class HeaderNotification extends React.Component {
   constructor() {
@@ -18,14 +22,21 @@ class HeaderNotification extends React.Component {
     };
 
     this.handleOverflow = this.handleOverflow.bind(this);
-    this.openNotification = this.openNotification.bind(this);
+    this.toggleNotification = this.toggleNotification.bind(this);
     this.closeSelf = this.closeSelf.bind(this);
+    this.resizeDisplayText = this.resizeDisplayText.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleOverflow);
-    this.handleOverflow();
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
     createKeyFrameAnimation();
+  }
+
+  handleResize() {
+    this.handleOverflow();
+    this.resizeDisplayText();
   }
 
   handleOverflow() {
@@ -34,7 +45,7 @@ class HeaderNotification extends React.Component {
     this.setState({ overflowing });
   }
 
-  openNotification() {
+  toggleNotification() {
     this.setState(
       (previous) => ({
         isExpanded: previous.isExpanded === null ? true : !previous.isExpanded,
@@ -42,21 +53,41 @@ class HeaderNotification extends React.Component {
       () => {
         const { isExpanded, isClosed } = this.state;
         resetPageTop(isExpanded, isClosed);
+        if (!isExpanded) {
+          this.resizeDisplayText();
+        }
       }
     );
   }
 
   closeSelf() {
     this.setState({ isClosed: true }, () => {
-      resetPageTop(this.state.isExpanded, true);
+      const { isExpanded, isClosed } = this.state;
+
+      resetPageTop(isExpanded, isClosed);
+
       setTimeout(() => {
         this.props.closeCallback();
       }, 750);
     });
   }
 
+  resizeDisplayText() {
+    const mainContainer = document.getElementById("notification-container");
+    const controlContainer = document.getElementById(
+      "notification-controls-container"
+    );
+    const container = document.getElementById("collapsed-text-container");
+    const width =
+      mainContainer.clientWidth -
+      controlContainer.clientWidth -
+      container.children[0].clientWidth;
+    container.children[1].style.width = `${width}px`;
+  }
+
   render() {
     const { overflowing, isExpanded, isClosed } = this.state;
+    const { displayText, mainText, subText } = this.props.message;
 
     return (
       <HeaderNotificationPortal>
@@ -72,20 +103,42 @@ class HeaderNotification extends React.Component {
               isExpanded={isExpanded}
             >
               <div>
-                <div>{firstVisitMessageObject.mainText}</div>
-                {firstVisitMessageObject.subText &&
-                  firstVisitMessageObject.subText.length > 0 && (
-                    <Hn.SubText>{firstVisitMessageObject.subText}</Hn.SubText>
+                {!isExpanded && (
+                  <Hn.CollapsedText id="collapsed-text-container">
+                    <strong>{displayText}</strong>
+                    <div>{mainText}</div>
+                  </Hn.CollapsedText>
+                )}
+                <div id="main-text-container">
+                  <div className="text-item">{mainText}</div>
+                  {subText && subText.length > 0 && (
+                    <Hn.SubText className="text-item">{subText}</Hn.SubText>
                   )}
+                </div>
               </div>
             </Hn.TextContainer>
-            <Hn.ControlsContainer overflowing={overflowing}>
-              <Hn.Control onClick={this.closeSelf} />
+            <Hn.ControlsContainer
+              id="notification-controls-container"
+              overflowing={overflowing}
+            >
+              <FontAwesomeIcon
+                icon={faWindowClose}
+                size="lg"
+                onClick={this.closeSelf}
+              />
               {overflowing && (
-                <Hn.Control
-                  id="notification-expand-control"
-                  onClick={this.openNotification}
-                  isExpanded={isExpanded}
+                <FontAwesomeIcon
+                  icon={faAngleRight}
+                  onClick={this.toggleNotification}
+                  size="lg"
+                  style={
+                    isExpanded
+                      ? {
+                          transform: "rotate(90deg)",
+                          transition: "transform 0.25s ease-in-out",
+                        }
+                      : { transition: "transform 0.25s ease-in-out" }
+                  }
                 />
               )}
             </Hn.ControlsContainer>
