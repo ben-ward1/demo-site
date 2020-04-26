@@ -1,17 +1,18 @@
 import styled, { css } from "styled-components";
 
+const collapsedDisplayHeight = "4rem";
+
 const Container = styled.div`
   position: relative;
   z-index: 1199;
   display: flex;
   justify-content: space-between;
-  padding: 0 1rem;
   font-weight: 600;
   text-align: justify;
   background-color: #e60000;
   color: white;
   overflow: hidden;
-  max-height: 4rem;
+  max-height: ${collapsedDisplayHeight};
   transform-origin: top;
 
   ${(props) =>
@@ -74,12 +75,15 @@ const Contents = styled.div`
 `;
 
 const TextContainer = styled.div`
-  padding-right: 1.2rem;
   width: 100%;
   justify-content: center;
   display: flex;
   height: fit-content;
   transform-origin: top;
+
+  & > div > #main-text-container > .text-item {
+    padding: 1rem;
+  }
 
   @media only screen and (max-width: 960px) {
     font-size: 14px;
@@ -95,12 +99,36 @@ const SubText = styled.div`
   justify-content: flex-end;
 `;
 
+const CollapsedText = styled.div`
+  height: ${collapsedDisplayHeight};
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  & > strong {
+    padding: 0 1rem;
+    white-space: nowrap;
+  }
+
+  & > div {
+    padding-right: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media only screen and (max-width: 770px) {
+      display: none;
+    }
+  }
+`;
+
 const ControlsContainer = styled.div`
   display: flex;
   flex-flow: column;
+  align-items: center;
   justify-content: ${(props) =>
     props.overflowing ? "space-between" : "center"};
-  padding: 0.3rem 0;
+  padding: 0.3rem 1rem;
 `;
 
 const Control = styled.div`
@@ -115,6 +143,7 @@ const Hn = {
   Contents,
   TextContainer,
   SubText,
+  CollapsedText,
   ControlsContainer,
   Control,
 };

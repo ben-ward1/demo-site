@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import HeaderNotification from "../../shared/headerNotification/HeaderNotification";
 import ApiChecker from "../../shared/ApiChecker";
 import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
+import { firstVisitMessageObject } from "../../../notificationHelpers";
 import "../../../../Content/styles/app-style.scss";
 
 class App extends React.Component {
@@ -40,7 +41,10 @@ class App extends React.Component {
         <GuestbookWizard />
         {/* {_isInitialArrivalForSession && <HeaderNotification />} */}
         {notificationIsOpen && (
-          <HeaderNotification closeCallback={this.closeNotification} />
+          <HeaderNotification
+            closeCallback={this.closeNotification}
+            message={firstVisitMessageObject}
+          />
         )}
       </React.Fragment>
     );
