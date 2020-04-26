@@ -17,5 +17,10 @@ namespace Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Session_Start(object sender, EventArgs e)
+        {
+            HttpContext.Current.Session.Add("_InitialArrivalForSession", true);
+        }
     }
 }
