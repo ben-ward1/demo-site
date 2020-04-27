@@ -8,11 +8,25 @@ import {
   EntryContent,
   EntryHeader,
   EntryItem,
+  StyleAccent,
 } from "./BlogStyledComponents";
 
 class Blog extends React.Component {
   constructor(props) {
     super(props);
+
+    this.groupEntries = this.groupEntries.bind(this);
+  }
+
+  groupEntries() {
+    const { entries } = this.props;
+    const grouped = [];
+
+    for (let i = 0; i < entries.length; i = i + 2) {
+      grouped.push([entries[i], entries[i + 1]]);
+    }
+
+    return grouped;
   }
 
   render() {
@@ -27,6 +41,7 @@ class Blog extends React.Component {
           <MainEntryContent>
             <EntryItem>Welcome to my website.</EntryItem>
           </MainEntryContent>
+          <StyleAccent index={0} />
         </MainEntryContainer>
         <BlogContainer>
           {entries.map((e, index) => (
@@ -41,6 +56,8 @@ class Blog extends React.Component {
               </EntryContent>
             </EntryContainer>
           ))}
+          <StyleAccent index={1} />
+          <StyleAccent index={2} />
         </BlogContainer>
       </React.Fragment>
     );

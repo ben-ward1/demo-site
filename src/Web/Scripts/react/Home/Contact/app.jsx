@@ -5,6 +5,7 @@ import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Layout } from "../../shared/LayoutStyledComponents";
 import "../../../../Content/styles/app-style.scss";
 
 library.add(faGithub, faLinkedin, faEnvelope, faPhoneAlt);
@@ -52,7 +53,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <Layout>
+        <h2 class="page-header">Contact Me.</h2>
         <div className="contact-info-container">
           {contactItems.map((x, index) => (
             <div key={index} className="contact-item">
@@ -79,7 +81,7 @@ class App extends React.Component {
             src="../../../../Content/img/resume.jpg"
           />
         </Modal>
-      </div>
+      </Layout>
     );
   }
 }
