@@ -234,6 +234,7 @@
     <Content Include="Content\img\codeBackgroundDark.jpg" />
     <Content Include="Content\img\codeBackgroundDarkSmall.jpg" />
     <Content Include="Content\img\resume.jpg" />
+	<Content Include="Content\img\me.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\svg\babel-logo.svg" />
