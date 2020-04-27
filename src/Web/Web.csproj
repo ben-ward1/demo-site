@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GuestbookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -234,7 +236,7 @@
     <Content Include="Content\img\codeBackgroundDark.jpg" />
     <Content Include="Content\img\codeBackgroundDarkSmall.jpg" />
     <Content Include="Content\img\resume.jpg" />
-	<Content Include="Content\img\me.jpg" />
+    <Content Include="Content\img\me.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\svg\babel-logo.svg" />

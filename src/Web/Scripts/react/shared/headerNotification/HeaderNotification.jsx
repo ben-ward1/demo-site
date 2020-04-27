@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import { faWindowClose, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +23,8 @@ class HeaderNotification extends React.Component {
       isExpanded: null,
       isClosed: false,
     };
+
+    axios.defaults.baseURL = BuildBaseUrl();
 
     this.toggleNotification = this.toggleNotification.bind(this);
     this.closeSelf = this.closeSelf.bind(this);
@@ -63,11 +67,27 @@ class HeaderNotification extends React.Component {
     );
   }
 
+  updateSession() {
+    axios
+      .get("Session/AcknowledgeNotification", {
+        params: { acknowledged: true },
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          throw "No success response.";
+        }
+      })
+      .catch((e) => {
+        console.log("Failed notification acknowledgement: " + e);
+      });
+  }
+
   closeSelf() {
     this.setState({ isClosed: true }, () => {
       const { isExpanded, isClosed } = this.state;
 
       resetPageTop(isExpanded, isClosed);
+      this.updateSession();
 
       setTimeout(() => {
         this.props.closeCallback();
