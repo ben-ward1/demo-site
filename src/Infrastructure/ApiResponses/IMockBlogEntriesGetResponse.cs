@@ -21,7 +21,7 @@ namespace Infrastructure.ApiResponses
             {
                 new IMockBlogEntriesGetResponse()
                 {
-                    Title = "Hi, I'm Ben. Nice to meet you.",
+                    Title = "Professionally speaking,",
                     Content =
 @"I created this site because writing a plain old resume is boring (but 
 you can still see mine on the Contact page). I've been a full-stack 
@@ -39,9 +39,9 @@ the About page for a list of some of the languages/tech that I work with."
                     Content =
 @"Birmingham, Alabama has been my home once and then once again when I 
 moved back here about a year ago. I've also lived in Huntsville working 
-for the DoD, spent some time enlisted in the Army, been some places, 
-done some things. Riding my bike on the Lakeshore trail, playing in a 
-pool league, and going to rave concerts now and again gets me out of 
+for the DoD, and before that I spent some time enlisted in the Army. Been 
+some places, done some things. Riding my bike on the Lakeshore trail, playing in a 
+pool league, and going to occasional rave concerts gets me out of 
 the house. I'm casually interested in space and cosmology, spending 
 the occasional weekend binging on PBS Space Time videos and Wikipedia 
 rabbit holes. I try to take 1 - 2 trips per year, but COVID-19 postponed 
@@ -55,8 +55,8 @@ most when this whole thing ends."
 @"I really enjoy working on this site. It would be really cool to add some 
 new functional domain that could make the site useful to visitors. If you 
 have any ideas, don't hesitate to contact me. On the front end, there are 
-some accessibility features that need to be addressed (tabbing in the header 
-notification, for instance). If you come across an accessibility issue, 
+some accessibility features that need to be addressed (need to make a few
+things tabbable, for instance). If you come across an accessibility issue, 
 please let me know so that I can address it."
                 },
                 new IMockBlogEntriesGetResponse()
@@ -64,8 +64,8 @@ please let me know so that I can address it."
                     Title = "Do you need a great developer on your team?",
                     Content =
 @"I know a guy. I've become recently unemployed due to COVID-19 and am 
-looking for my next opportunity, whether you need to hire for your company or 
-are just looking for someone to create a website for your business. See my 
+looking for my next opportunity. Whether you need to hire for your company or 
+are just looking for someone to create a website for your business, see my 
 resume on the Contact page to get in touch with me. I'm based in Birmingham, 
 AL, but am happy to discuss remote work or maybe even relocation. Let's talk 
 about what I can do for you."
