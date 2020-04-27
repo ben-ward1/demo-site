@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 const theme = {
   colorSchemes: [
     { main: "#77c4d3", secondary: "#007373", font: "white" },
-    { main: "#f6f792e6", secondary: "#614561", font: "#222" },
+    { main: "rgba(246, 247, 146, 0.90)", secondary: "#614561", font: "#222" },
     { main: "#df3c57", secondary: "#6fad6f", font: "white" },
     { main: "#ecedee", secondary: "#d09323", font: "#222" },
   ],
@@ -18,31 +18,61 @@ const theme = {
     css`
       height: 60%;
       z-index: 0;
-      background: #74a04c73;
+      background: rgba(116, 160, 76, 0.45);
       position: absolute;
       top: 0;
       width: 45%;
       right: 0;
+
+      @media (max-width: 1024px) {
+        height: 60%;
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 20%;
+      }
     `,
     css`
       height: 45%;
       z-index: 1;
-      background: #8d9bcce6;
+      background: rgba(141, 155, 204, 0.9);
       bottom: 0;
       left: 30%;
       position: absolute;
       top: 20%;
       width: 30%;
+
+      @media (max-width: 1024px) {
+        height: 45%;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        top: -2%;
+        width: 30%;
+      }
     `,
     css`
       height: 108%;
       z-index: 0;
-      background: #d69393e6;
+      background: rgba(214, 147, 147, 0.9);
       bottom: 0px;
       left: 0px;
       position: absolute;
-      /* top: 20%; */
       width: 12%;
+
+      @media (max-width: 1024px) {
+        // TODO: figure out the z-index issue here
+        // height: 40%;
+        // z-index: 0;
+        // bottom: 0;
+        // left: auto;
+        // right: 10%;
+        // position: absolute;
+        // width: 12%;
+        display: none;
+      }
     `,
   ],
 };
@@ -77,6 +107,7 @@ const MainHeaderContainer = styled.div`
   & > h3 {
     font-size: ${theme.fontSizes.xxl};
     justify-content: center;
+    z-index: 1;
   }
 
   & > img {
@@ -106,6 +137,7 @@ const MainEntryContent = styled.div`
   & > div {
     justify-content: center;
     z-index: 1;
+    align-self: center;
   }
 `;
 
@@ -121,6 +153,11 @@ const EntryContainer = styled.div`
       margin-bottom: ${props.index <= 2 ? "auto" : 0};
       margin-left: ${props.index % 2 !== 0 ? "auto" : 0};
       z-index: ${props.index === 2 ? "1" : "2"};
+
+      ${props.index === 0 &&
+      css`
+        position: relative;
+      `}
     `};
 `;
 
@@ -139,11 +176,32 @@ const EntryContent = styled.div`
         @media (max-width: 1126px) {
           width: ${props.index === 2 ? "min-content" : "100%"};
         }
+
+        ${props.index === 1 &&
+        css`
+          @media (max-width: 1024px) {
+            float: right;
+            width: 65%;
+            text-align: end;
+          }
+        `}
       }
 
       &>div: last-child {
         font-size: ${theme.fontSizes.lg};
       }
+
+      ${props.index === 1 &&
+      css`
+        @media (max-width: 1024px) {
+          &::before {
+            content: "filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler filler fillerfiller filler fillerfiller filler filler";
+            width: 32%;
+            float: left;
+            color: transparent;
+          }
+        }
+      `}
     `}
 `;
 
@@ -153,17 +211,13 @@ const EntryHeader = styled.h3`
 `;
 
 const EntryItem = styled.div`
-  width: 100%;
-  display: flex;
+  // width: 100%;
+  // display: flex;
   padding: 0.5rem;
 `;
 
 const StyleAccent = styled.div`
   ${(props) => theme.styleAccents[props.index]}
-
-  @media (max-width: 1024px) {
-    display: none;
-  }
 `;
 
 module.exports = {
