@@ -24,6 +24,55 @@ const BlogContainer = styled.div`
   }
 `;
 
+const MainEntryContainer = styled.div`
+  background-color: #565656;
+  color: white;
+  padding-bottom: 2rem;
+
+  @media (min-width: 1024px) {
+    display: flex;
+  }
+`;
+
+const MainHeaderContainer = styled.div`
+  padding: 1rem;
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: column;
+
+  & > h3 {
+    font-size: ${theme.fontSizes.xxl};
+    justify-content: center;
+  }
+
+  & > img {
+    align-self: center;
+    width: auto;
+    height: 12rem;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    & > img {
+      height: 9rem;
+    }
+  }
+`;
+
+const MainEntryContent = styled.div`
+  padding: 0.5rem;
+  font-size: ${theme.fontSizes.lg};
+  flex-basis: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & > div {
+    justify-content: center;
+  }
+`;
+
 const EntryContainer = styled.div`
   ${(props) =>
     css`
@@ -66,6 +115,9 @@ const EntryItem = styled.div`
 
 module.exports = {
   BlogContainer,
+  MainEntryContainer,
+  MainHeaderContainer,
+  MainEntryContent,
   EntryContainer,
   EntryContent,
   EntryHeader,
