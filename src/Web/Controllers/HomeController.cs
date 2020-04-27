@@ -12,10 +12,7 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            // TODO: Session variable is pulled and flipped as soon as the index page is requested.
-            // In the future, should probably think about only flipping to false based on a response from the client.
             var isInitialArrivalForSession = Session["_InitialArrivalForSession"];
-            Session["_InitialArrivalForSession"] = false;
 
             var firstVisit = isInitialArrivalForSession;
             var blog = BlogMocker.MockBlog();
