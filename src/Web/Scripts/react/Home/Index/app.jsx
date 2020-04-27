@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Layout } from "../../shared/LayoutStyledComponents";
 import Blog from "../../Blog/Blog";
 import HeaderNotification from "../../shared/headerNotification/HeaderNotification";
-import ApiChecker from "../../shared/ApiChecker";
 import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
 import { firstVisitMessageObject } from "../../../notificationHelpers";
 import "../../../../Content/styles/app-style.scss";
@@ -41,15 +41,16 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Blog entries={this.props.blog} />
-        <ApiChecker />
-        <h2>Sign my guestbook</h2>
-        <GuestbookWizard />
-        {firstView && notificationIsOpen && !isIE && (
-          <HeaderNotification
-            closeCallback={this.closeNotification}
-            message={firstVisitMessageObject}
-          />
-        )}
+        <Layout>
+          <h2 style={{ marginTop: "2.5rem" }}>Sign my guestbook</h2>
+          <GuestbookWizard />
+          {firstView && notificationIsOpen && !isIE && (
+            <HeaderNotification
+              closeCallback={this.closeNotification}
+              message={firstVisitMessageObject}
+            />
+          )}
+        </Layout>
       </React.Fragment>
     );
   }

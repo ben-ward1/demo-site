@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
+import { Layout } from "../shared/LayoutStyledComponents";
 import "../../../Content/styles/app-style.scss";
 
 const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
-//const navbarHeight = document.getElementById("main-navbar-header").offsetHeight;
+
 const navbarHeight = 50;
+
 class App extends React.Component {
   constructor() {
     super();
@@ -96,52 +98,59 @@ class App extends React.Component {
 
   render() {
     const { data, loading, error, shouldStick, selected } = this.state;
-    return error ? (
-      <h4>Oops, something went wrong. Try again later</h4>
-    ) : (
-      <div className="guestbook-container">
-        {loading ? (
-          <div className="spinner-container">
-            <Spinner animation="border" />
-          </div>
+    return (
+      <Layout>
+        <h2 class="page-header">Guestbook.</h2>
+        {error ? (
+          <h4>Oops, something went wrong. Try again later</h4>
         ) : (
-          <Table>
-            <thead>
-              <tr
-                id="sticky-table-header"
-                className={`${shouldStick ? "sticky-table-header" : ""}`}
-              >
-                <th>Name</th>
-                <th>Message</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data.map((x, index) => (
+          <div className="guestbook-container">
+            {loading ? (
+              <div className="spinner-container">
+                <Spinner animation="border" />
+              </div>
+            ) : (
+              <Table>
+                <thead>
                   <tr
-                    key={index}
-                    className={index === selected ? "selected" : ""}
+                    id="sticky-table-header"
+                    className={`${shouldStick ? "sticky-table-header" : ""}`}
                   >
-                    <td>{x.name}</td>
-                    <td
-                      title={x.message}
-                      onClick={() => this.handleSelect(index)}
-                    >
-                      {x.message}
-                    </td>
-                    <td>{new Date(x.date).toDateString().split(/ (.+)/)[1]}</td>
+                    <th>Name</th>
+                    <th>Message</th>
+                    <th>Date</th>
                   </tr>
-                ))}
-            </tbody>
-          </Table>
-        )}
+                </thead>
+                <tbody>
+                  {data &&
+                    data.map((x, index) => (
+                      <tr
+                        key={index}
+                        className={index === selected ? "selected" : ""}
+                      >
+                        <td>{x.name}</td>
+                        <td
+                          title={x.message}
+                          onClick={() => this.handleSelect(index)}
+                        >
+                          {x.message}
+                        </td>
+                        <td>
+                          {new Date(x.date).toDateString().split(/ (.+)/)[1]}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
+            )}
 
-        <div
-          id="sticky-header-box-shadow"
-          className={shouldStick ? "visible" : ""}
-        />
-      </div>
+            <div
+              id="sticky-header-box-shadow"
+              className={shouldStick ? "visible" : ""}
+            />
+          </div>
+        )}
+      </Layout>
     );
   }
 }
