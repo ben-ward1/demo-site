@@ -53,6 +53,7 @@
     <Compile Include="ApiResponses\GuestbookEntryPostResponse.cs" />
     <Compile Include="ApiResponses\GuestbookEntryResponse.cs" />
     <Compile Include="ApiResponses\IHttpResponse.cs" />
+    <Compile Include="ApiResponses\IMockBlogEntriesGetResponse.cs" />
     <Compile Include="ApiResponses\TestGetResponse.cs" />
     <Compile Include="Helpers\SerializationHelper.cs" />
     <Compile Include="Models\Enums\HttpMethod.cs" />
