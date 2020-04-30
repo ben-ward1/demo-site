@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { firstView } = this.props;
+    const { firstView, captcha } = this.props;
     const { notificationIsOpen } = this.state;
 
     return (
@@ -43,7 +43,7 @@ class App extends React.Component {
         <Blog entries={this.props.blog} />
         <Layout>
           <h2 style={{ marginTop: "2.5rem" }}>Sign my guestbook</h2>
-          <GuestbookWizard />
+          <GuestbookWizard captcha={captcha} />
           {firstView && notificationIsOpen && !isIE && (
             <HeaderNotification
               closeCallback={this.closeNotification}

@@ -3,13 +3,14 @@ using Infrastructure.ApiRequests;
 using Infrastructure.ApiResponses;
 using Infrastructure.Models.Enums;
 using Newtonsoft.Json;
+using System.Configuration;
 using System.Web.Mvc;
 
 namespace Web.Controllers
 {
     public class GuestbookController : Controller
     {
-        private readonly ApiClient client = new ApiClient();
+        private readonly ApiClient client = new ApiClient(ConfigurationManager.AppSettings["ApiBaseUrl"]);
 
         public ActionResult Index()
         {

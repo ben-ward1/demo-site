@@ -5,6 +5,7 @@ using Infrastructure.Models.Enums;
 using Infrastructure.Helpers;
 using Newtonsoft.Json;
 using Web.Models;
+using System.Configuration;
 
 namespace Web.Controllers
 {
@@ -20,7 +21,8 @@ namespace Web.Controllers
             var viewModel = new HomeIndexViewModel
             {
                 FirstView = (bool)firstVisit,
-                Blog = blog
+                Blog = blog,
+                CaptchaKey = ConfigurationManager.AppSettings["CaptchaSiteKey"]
             };
 
             return View(model: viewModel.ToIdiomaticJson());
@@ -43,7 +45,7 @@ namespace Web.Controllers
         [HttpGet]
         public ActionResult Test()
         {
-            var client = new ApiClient();
+            var client = new ApiClient(ConfigurationManager.AppSettings["ApiBaseUrl"]);
             var response = client.AsyncRequest<TestGetResponse>("test", null, HttpMethod.Get).Result;
             return Content(JsonConvert.SerializeObject(response), "application/json");
         }

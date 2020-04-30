@@ -21,7 +21,10 @@ class GuestbookWizard extends React.Component {
     return (
       <div className="guestbook-wizard-container">
         <ProgressBar numSteps={3} lastCompletedStep={this.state.step - 1} />
-        <StepContainer stepCallback={this.stepCallback} />
+        <StepContainer
+          stepCallback={this.stepCallback}
+          captcha={this.props.captcha}
+        />
       </div>
     );
   }

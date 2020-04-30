@@ -11,5 +11,8 @@ namespace Web.Models
 
         [JsonProperty("blog")]
         public IEnumerable<IMockBlogEntriesGetResponse> Blog { get; set; }
+
+        [JsonProperty("captcha")]
+        public string CaptchaKey { get; set; }
     }
 }
