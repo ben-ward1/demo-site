@@ -3,7 +3,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.ApiRequests;
 using Infrastructure.ApiResponses;
-using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using HttpMethod = Infrastructure.Models.Enums.HttpMethod;
@@ -13,7 +12,12 @@ namespace Infrastructure.ApiClients
 {
     public class ApiClient
     {
-        private readonly string baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+        private readonly string _baseUrl;
+
+        public ApiClient(string baseUrl)
+        {
+            _baseUrl = baseUrl;
+        }
 
         public async Task<T> AsyncRequest<T>(string url, IHttpRequest request, HttpMethod method) where T : IHttpResponse
         {
@@ -70,7 +74,7 @@ namespace Infrastructure.ApiClients
         private HttpClient NewClient()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(baseUrl);
+            client.BaseAddress = new Uri(_baseUrl);
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             return client;

@@ -105,6 +105,7 @@ class StepContainer extends React.Component {
             entryName={this.state.name}
             entryMessage={this.state.message}
             stepCallback={this.stepCallback}
+            captcha={this.props.captcha}
           />
         );
       case 4:
