@@ -27,8 +27,17 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult PostEntry(GuestbookEntryPostRequest request)
         {
-            var response = client.AsyncRequest<GuestbookEntryPostResponse>("guestbook", request, HttpMethod.Post).Result;
-            return Content(JsonConvert.SerializeObject(response), "application/json");
+            var captchaClient = new CaptchaClient();
+            
+            if (captchaClient.VerifyCaptcha(request.Token).Success)
+            {
+                var response = client.AsyncRequest<GuestbookEntryPostResponse>("guestbook", request, HttpMethod.Post).Result;
+                return Content(JsonConvert.SerializeObject(response), "application/json");
+            }
+            else
+            {
+                return Content(JsonConvert.SerializeObject(new { success = false }), "application/json");
+            }
         }
     }
 }

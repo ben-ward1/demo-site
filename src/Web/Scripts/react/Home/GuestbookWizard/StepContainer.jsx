@@ -28,15 +28,16 @@ class StepContainer extends React.Component {
     this.step = this.step.bind(this);
   }
 
-  stepCallback(stepNum, entry) {
+  stepCallback(stepNum, entry, token) {
     const { name, message } = this.state;
 
     if (stepNum === 4) {
       this.setState({ loading: true, errorOnPost: false }, () => {
         axios
           .post("Guestbook/PostEntry", {
-            name: name,
-            message: message,
+            name,
+            message,
+            token,
           })
           .then((response) => {
             if (response.data.success) {

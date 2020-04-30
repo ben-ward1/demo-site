@@ -11,6 +11,7 @@ class ConfirmStep extends React.Component {
     this.state = {
       loading: this.props.loading,
       captchaSuccess: false,
+      captchaToken: null,
       error: null,
     };
 
@@ -27,25 +28,13 @@ class ConfirmStep extends React.Component {
   }
 
   handleCaptcha(value) {
-    axios
-      .post("captcha/verify", { token: value })
-      .then((response) => {
-        if (response.data.success) {
-          this.setState({ captchaSuccess: true, error: null });
-        } else {
-          throw "Cannot verify captcha.";
-        }
-      })
-      .catch((e) => {
-        this.setState({ error: "Cannot verify captcha!" });
-        console.log("Failed submission: " + e);
-      });
+    this.setState({ captchaSuccess: value !== null, captchaToken: value });
   }
 
   handleSubmit() {
     const { stepCallback, stepNum } = this.props;
     if (this.state.captchaSuccess) {
-      stepCallback(stepNum + 1);
+      stepCallback(stepNum + 1, "", this.state.captchaToken);
     } else {
       this.setState({ error: "Cannot submit without captcha!" });
     }
@@ -59,6 +48,7 @@ class ConfirmStep extends React.Component {
       entryMessage,
       captcha,
       stepCallback,
+      stepNum,
     } = this.props;
 
     return (
