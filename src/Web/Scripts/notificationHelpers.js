@@ -130,9 +130,6 @@ function createKeyFrameAnimation() {
         ${closePageTopAnimation}
     }`;
 
-  // const style = document.createElement("style");
-  // style.textContent = animationStyleString;
-  // document.head.append(style);
   return animationStyleString;
 }
 
@@ -178,7 +175,7 @@ function resizeDisplayText() {
   container.children[1].style.width = `${width}px`;
 }
 
-function triggerAnimation() {
+function fadeInText() {
   const text = document.getElementById("notification-text-container");
   text.classList.remove("animate-text");
   void text.offsetWidth;
@@ -191,5 +188,5 @@ module.exports = {
   resetPageTop,
   getCollapsedHeight,
   resizeDisplayText,
-  triggerAnimation,
+  fadeInText,
 };

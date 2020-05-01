@@ -10,7 +10,7 @@ import {
   addAnimations,
   resetPageTop,
   resizeDisplayText,
-  triggerAnimation,
+  fadeInText,
 } from "../../../notificationHelpers";
 
 library.add(faWindowClose, faAngleDown);
@@ -43,16 +43,15 @@ class HeaderNotification extends React.Component {
         const { isExpanded, isClosed } = this.state;
         resetPageTop(isExpanded, isClosed);
         resizeDisplayText();
-        addAnimations();
       });
     }
 
-    resizeDisplayText();
     addAnimations();
+    resizeDisplayText();
   }
 
   toggleNotification() {
-    triggerAnimation();
+    fadeInText();
     this.setState(
       (previous) => ({
         isExpanded: previous.isExpanded === null ? true : !previous.isExpanded,
@@ -135,6 +134,7 @@ class HeaderNotification extends React.Component {
                 onClick={this.closeSelf}
                 tabIndex={0}
                 onKeyPress={(e) => e.key === "Enter" && this.closeSelf()}
+                style={{ cursor: "pointer" }}
               />
               <FontAwesomeIcon
                 icon={faAngleDown}
@@ -149,8 +149,12 @@ class HeaderNotification extends React.Component {
                     ? {
                         transform: "rotate(180deg)",
                         transition: "transform 0.25s ease-in-out",
+                        cursor: "pointer",
                       }
-                    : { transition: "transform 0.25s ease-in-out" }
+                    : {
+                        transition: "transform 0.25s ease-in-out",
+                        cursor: "pointer",
+                      }
                 }
               />
             </Hn.ControlsContainer>
