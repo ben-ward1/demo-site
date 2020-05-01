@@ -148,16 +148,18 @@ const EntryContainer = styled.div`
       flex-basis: ${(props.index + 1) % 4 > 1 ? "43%" : "52%"};
       padding: ${theme.paddingOpts[props.index]};
       background-color: ${theme.colorSchemes[props.index % 4].secondary};
-      margin-top: ${props.index > 2 ? "auto" : 0};
+      // margin-top: ${props.index > 2 ? "auto" : 0};
       margin-right: ${props.index % 2 === 0 ? "auto" : 0};
       margin-bottom: ${props.index <= 2 ? "auto" : 0};
       margin-left: ${props.index % 2 !== 0 ? "auto" : 0};
       z-index: ${props.index === 2 ? "1" : "2"};
 
-      ${props.index === 0 &&
-      css`
-        position: relative;
-      `}
+      ${
+        props.index === 0 &&
+        css`
+          position: relative;
+        `
+      }
     `};
 `;
 
