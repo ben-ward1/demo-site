@@ -1,18 +1,35 @@
-import React from "react";
+import * as React from "react";
 import { Button, Spinner } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import { BuildBaseUrl } from "../../../urlHelperFunctions";
 
-class ConfirmStep extends React.Component {
+interface IProps {
+  stepNum: number;
+  loading: boolean;
+  message: string;
+  entryName: string;
+  entryMessage: string;
+  stepCallback: Function;
+  captcha: string;
+}
+
+interface IState {
+  loading: boolean;
+  captchaSuccess: boolean;
+  captchaToken: string;
+  error: string;
+}
+
+class ConfirmStep extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: this.props.loading,
       captchaSuccess: false,
-      captchaToken: null,
-      error: null,
+      captchaToken: "",
+      error: "",
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
@@ -33,11 +50,15 @@ class ConfirmStep extends React.Component {
 
   handleSubmit() {
     const { stepCallback, stepNum } = this.props;
+    let errorMsg = "";
+
     if (this.state.captchaSuccess) {
       stepCallback(stepNum + 1, "", this.state.captchaToken);
     } else {
-      this.setState({ error: "Cannot submit without captcha!" });
+      errorMsg = "Cannot submit without captcha!";
     }
+
+    this.setState({ error: errorMsg });
   }
 
   render() {
@@ -59,7 +80,9 @@ class ConfirmStep extends React.Component {
           </div>
         ) : (
           <React.Fragment>
-            <div className="step-view-item">{error ? error : message}</div>
+            <div className="step-view-item">
+              {error.length > 0 ? error : message}
+            </div>
             <div className="step-view-item">
               <strong>Name: </strong>
               {entryName}

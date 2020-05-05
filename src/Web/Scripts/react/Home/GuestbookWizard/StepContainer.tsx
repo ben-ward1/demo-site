@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import EntryStep from "./EntryStep";
 import ConfirmStep from "./ConfirmStep";
 import SuccessStep from "./SuccessStep";
@@ -9,14 +9,27 @@ const nameMsg = "What's your name?";
 const msgMsg = "Want to leave a message?";
 const confirmMsg = "Confirm your name and message.";
 
-class StepContainer extends React.Component {
+interface IProps {
+  stepCallback: Function;
+  captcha: string;
+}
+
+interface IState {
+  step: number;
+  name: string;
+  message: string;
+  loading: boolean;
+  errorOnPost: boolean;
+}
+
+class StepContainer extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
     this.state = {
       step: 1,
-      name: null,
-      message: null,
+      name: "",
+      message: "",
       loading: false,
       errorOnPost: false,
     };
@@ -114,7 +127,6 @@ class StepContainer extends React.Component {
         const errorMessage = "Oops! Something went wrong. Try again later.";
         return (
           <SuccessStep
-            stepNum={4}
             message={this.state.errorOnPost ? errorMessage : successMessage}
             stepCallback={this.stepCallback}
           />

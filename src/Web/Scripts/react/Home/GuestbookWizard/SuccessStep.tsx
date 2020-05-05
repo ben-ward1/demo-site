@@ -1,7 +1,14 @@
-import React from "react";
+import * as React from "react";
 import { Button } from "react-bootstrap";
 
-class SuccessStep extends React.Component {
+interface IProps {
+  message: string;
+  stepCallback: Function;
+}
+
+interface IState {}
+
+class SuccessStep extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
   }

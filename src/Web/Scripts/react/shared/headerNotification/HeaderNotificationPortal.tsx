@@ -1,10 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 const parentElement = document.getElementsByClassName("page-background")[0];
 const pageElement = document.getElementsByClassName("page-container")[0];
 
-class HeaderNotificationPortal extends React.Component {
+interface IProps {
+  children: any;
+}
+
+interface IState {}
+
+class HeaderNotificationPortal extends React.Component<IProps, IState> {
+  rootNode: HTMLDivElement;
+
   constructor(props) {
     super(props);
 

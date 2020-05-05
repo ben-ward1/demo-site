@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Accordion, Card, Button } from "react-bootstrap";
 import { BuildAboutTechInfoObject } from "../../../aboutHelperFunctions";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +10,9 @@ library.add(faCaretRight);
 
 const techInfo = BuildAboutTechInfoObject();
 
-class TechAccordion extends React.Component {
-  constructor() {
-    super();
+class TechAccordion extends React.Component<{}, any> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       selected: null,
