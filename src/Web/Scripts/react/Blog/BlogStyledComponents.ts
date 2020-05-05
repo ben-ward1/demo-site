@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+interface IProps {
+  index: number;
+}
+
 const theme = {
   colorSchemes: [
     { main: "#77c4d3", secondary: "#007373", font: "white" },
@@ -141,7 +145,7 @@ const MainEntryContent = styled.div`
   }
 `;
 
-const EntryContainer = styled.div`
+const EntryContainer = styled.div<IProps>`
   z-index: 2;
   ${(props) =>
     css`
@@ -163,14 +167,13 @@ const EntryContainer = styled.div`
     `};
 `;
 
-const EntryContent = styled.div`
+const EntryContent = styled.div<IProps>`
   padding: 0.5rem;
 
   ${(props) =>
     css`
       background-color: ${theme.colorSchemes[props.index % 4].main};
       color: ${theme.colorSchemes[props.index % 4].font};
-      font-family: ${theme.colorSchemes[props.index % 4].family};
 
       & > h3:first-child {
         font-size: ${theme.fontSizes.xxl};
@@ -218,18 +221,16 @@ const EntryItem = styled.div`
   padding: 0.5rem;
 `;
 
-const StyleAccent = styled.div`
+const StyleAccent = styled.div<IProps>`
   ${(props) => theme.styleAccents[props.index]}
 `;
 
-module.exports = {
-  BlogContainer,
-  MainEntryContainer,
-  MainHeaderContainer,
-  MainEntryContent,
-  EntryContainer,
-  EntryContent,
-  EntryHeader,
-  EntryItem,
-  StyleAccent,
-};
+export { BlogContainer };
+export { MainEntryContainer };
+export { MainHeaderContainer };
+export { MainEntryContent };
+export { EntryContainer };
+export { EntryContent };
+export { EntryHeader };
+export { EntryItem };
+export { StyleAccent };

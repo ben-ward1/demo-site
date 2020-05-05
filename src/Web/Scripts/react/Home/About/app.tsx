@@ -1,20 +1,20 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import Logos from "./Logos";
 import TechAccordion from "./TechAccordion";
 import { Layout } from "../../shared/LayoutStyledComponents";
 import Footer from "../../shared/Footer";
 import "../../../../Content/styles/app-style.scss";
 
-class App extends React.Component {
-  constructor() {
-    super();
+class App extends React.Component<{}, {}> {
+  constructor(props) {
+    super(props);
   }
 
   render() {
     return (
       <Layout>
-        <h2 class="page-header">About.</h2>
+        <h2 className="page-header">About.</h2>
         <h4>
           This is a demo site showing off some of the technologies I develop
           with. See below for more info.

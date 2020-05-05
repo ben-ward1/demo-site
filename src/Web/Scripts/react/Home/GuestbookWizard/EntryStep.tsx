@@ -1,12 +1,22 @@
-import React from "react";
+import * as React from "react";
 import { Button } from "react-bootstrap";
 
-class EntryStep extends React.Component {
+interface IProps {
+  stepNum: number;
+  message: string;
+  stepCallback: Function;
+}
+
+interface IState {
+  entry: string;
+}
+
+class EntryStep extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
     this.state = {
-      entry: null,
+      entry: "",
     };
 
     this.handleInput = this.handleInput.bind(this);
@@ -17,19 +27,19 @@ class EntryStep extends React.Component {
     // This is a hack. Need to investigate why textarea does not clear when
     // EntryStep component is re-rendered in StepContainer.
     if (nextProps.stepNum !== this.props.stepNum) {
-      document.getElementById("entry-input").value = "";
-      this.setState({ entry: null });
+      (document.getElementById("entry-input") as HTMLInputElement).value = "";
+      this.setState({ entry: "" });
     }
   }
 
   handleInput(event) {
     const input = event.currentTarget.value;
-    this.setState({ entry: input.length > 0 ? input : null });
+    this.setState({ entry: input.length > 0 ? input : "" });
   }
 
   handleSave() {
     const { entry } = this.state;
-    if (entry === null || entry.length < 1) {
+    if (entry.length < 1) {
       throw "Entry is empty!";
     }
 
@@ -73,7 +83,7 @@ class EntryStep extends React.Component {
             <Button
               className="guestbook-wizard-button primary-button"
               onClick={this.handleSave}
-              disabled={!entry || entry.length < 1}
+              disabled={entry.length < 1}
               variant="light"
             >
               Save

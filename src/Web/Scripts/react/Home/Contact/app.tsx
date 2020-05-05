@@ -1,6 +1,6 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Modal, Button } from "react-bootstrap";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import { Button, Modal } from "react-bootstrap";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -34,9 +34,9 @@ const contactItems = [
   },
 ];
 
-class App extends React.Component {
-  constructor() {
-    super();
+class App extends React.Component<{}, any> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       showModal: false,
@@ -54,7 +54,7 @@ class App extends React.Component {
   render() {
     return (
       <Layout>
-        <h2 class="page-header">Contact Me.</h2>
+        <h2 className="page-header">Contact Me.</h2>
         <div className="contact-info-container">
           {contactItems.map((x, index) => (
             <div key={index} className="contact-item">

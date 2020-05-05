@@ -1,10 +1,18 @@
-import React from "react";
+import * as React from "react";
 import ProgressBar from "./ProgressBar";
 import StepContainer from "./StepContainer";
 
-class GuestbookWizard extends React.Component {
-  constructor() {
-    super();
+interface IProps {
+  captcha: string;
+}
+
+interface IState {
+  step: number;
+}
+
+class GuestbookWizard extends React.Component<IProps, IState> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       step: 1,

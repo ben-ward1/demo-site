@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import axios from "axios";
 import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import { faWindowClose, faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -15,9 +15,25 @@ import {
 
 library.add(faWindowClose, faAngleDown);
 
-class HeaderNotification extends React.Component {
-  constructor() {
-    super();
+type messageType = {
+  displayText: string;
+  mainText: string;
+  subText: string;
+};
+
+interface IProps {
+  closeCallback: Function;
+  message: messageType;
+}
+
+interface IState {
+  isExpanded: boolean | null;
+  isClosed: boolean;
+}
+
+class HeaderNotification extends React.Component<IProps, IState> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       isExpanded: null,

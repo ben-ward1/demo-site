@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {
   BlogContainer,
   MainEntryContainer,
@@ -11,7 +11,16 @@ import {
   StyleAccent,
 } from "./BlogStyledComponents";
 
-class Blog extends React.Component {
+type blogItem = {
+  title: string;
+  content: string;
+};
+
+interface IProps {
+  entries: Array<blogItem>;
+}
+
+class Blog extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
   }

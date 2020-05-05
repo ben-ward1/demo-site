@@ -1,10 +1,20 @@
-import React from "react";
+import * as React from "react";
 
 const style = {
   filter: "url(#dropshadow)",
 };
 
-class SuccessCheckIcon extends React.Component {
+interface IProps {
+  id: string;
+  check: boolean;
+}
+
+interface IState {
+  toCheck: boolean;
+  checked: boolean;
+}
+
+class SuccessCheckIcon extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
