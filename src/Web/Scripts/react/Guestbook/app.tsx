@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import axios from "axios";
 import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
@@ -10,9 +10,9 @@ const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
 
 const navbarHeight = 50;
 
-class App extends React.Component {
-  constructor() {
-    super();
+class App extends React.Component<{}, any> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       data: null,
@@ -74,7 +74,7 @@ class App extends React.Component {
   handleScroll() {
     if (this.state.data.length > 0) {
       const headerOffset = document
-        .getElementById("sticky-table-header")
+        .getElementById("sticky-table-header")!
         .getBoundingClientRect().top;
 
       this.setState({ shouldStick: headerOffset < navbarHeight });
@@ -85,10 +85,10 @@ class App extends React.Component {
     // TODO: Figure out why shadow width is limited to on-screen portion of header in mobile view
     if (this.state.shouldStick) {
       const xDiff = 20;
-      const shadow = document.getElementById("sticky-header-box-shadow");
+      const shadow = document.getElementById("sticky-header-box-shadow")!;
 
       const headerRect = document
-        .getElementById("sticky-table-header")
+        .getElementById("sticky-table-header")!
         .getBoundingClientRect();
 
       shadow.style.left = `${headerRect.left + xDiff / 2}px`;
@@ -100,7 +100,7 @@ class App extends React.Component {
     const { data, loading, error, shouldStick, selected } = this.state;
     return (
       <Layout>
-        <h2 class="page-header">Guestbook.</h2>
+        <h2 className="page-header">Guestbook.</h2>
         {error ? (
           <h4>Oops, something went wrong. Try again later</h4>
         ) : (

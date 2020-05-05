@@ -4,13 +4,13 @@ const entryPlus = require("webpack-entry-plus");
 const CleanPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const devMode = true;
+const devMode = false;
 
 const entryFiles = [
   {
-    entryFiles: glob.sync("./src/Web/Scripts/react/**/app.jsx"),
+    entryFiles: glob.sync("./src/Web/Scripts/react/**/app.tsx"),
     outputName(item) {
-      return item.replace("/app.jsx", "/app");
+      return item.replace("/app.tsx", "/app");
     },
   },
 ];
@@ -23,20 +23,21 @@ const entryPoints = Object.assign(
 module.exports = {
   mode: devMode ? "developement" : "production",
   entry: entryPoints,
-  devtool: "inline-source-map",
+  devtool: "source-map",
   output: {
     path: path.resolve(__dirname),
-    filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
+    //filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
+    filename: "[name].dist.js",
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
-        options: {
-          presets: ["env", "react"],
-        },
+        loader: "ts-loader",
+        // options: {
+        //   presets: ["env", "react"],
+        // },
       },
       {
         test: /\.s[c|a]ss$/,
@@ -46,6 +47,12 @@ module.exports = {
           "postcss-loader",
           "sass-loader",
         ],
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "source-map-loader",
       },
     ],
   },
@@ -62,7 +69,7 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
     new CleanPlugin([

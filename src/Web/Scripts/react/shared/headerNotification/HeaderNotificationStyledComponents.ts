@@ -1,8 +1,13 @@
 import styled, { css } from "styled-components";
 
+interface IProps {
+  isExpanded?: boolean | null;
+  isClosed?: boolean;
+}
+
 const collapsedDisplayHeight = "4rem";
 
-const Container = styled.div`
+const Container = styled.div<IProps>`
   position: relative;
   z-index: 1199;
   display: flex;
@@ -50,7 +55,7 @@ const Container = styled.div`
       : ``}
 `;
 
-const Contents = styled.div`
+const Contents = styled.div<IProps>`
   display: flex;
   transform-origin: top;
 
@@ -87,7 +92,7 @@ const Contents = styled.div`
       : ``}
 `;
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<IProps>`
   width: 100%;
   justify-content: center;
   display: flex;

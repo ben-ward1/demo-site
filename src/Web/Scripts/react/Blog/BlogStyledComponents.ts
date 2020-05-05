@@ -1,5 +1,9 @@
 import styled, { css } from "styled-components";
 
+interface IProps {
+  index: number;
+}
+
 const theme = {
   colorSchemes: [
     { main: "#77c4d3", secondary: "#007373", font: "white" },
@@ -141,34 +145,35 @@ const MainEntryContent = styled.div`
   }
 `;
 
-const EntryContainer = styled.div`
+const EntryContainer = styled.div<IProps>`
   z-index: 2;
   ${(props) =>
     css`
       flex-basis: ${(props.index + 1) % 4 > 1 ? "43%" : "52%"};
       padding: ${theme.paddingOpts[props.index]};
       background-color: ${theme.colorSchemes[props.index % 4].secondary};
-      margin-top: ${props.index > 2 ? "auto" : 0};
+      // margin-top: ${props.index > 2 ? "auto" : 0};
       margin-right: ${props.index % 2 === 0 ? "auto" : 0};
       margin-bottom: ${props.index <= 2 ? "auto" : 0};
       margin-left: ${props.index % 2 !== 0 ? "auto" : 0};
       z-index: ${props.index === 2 ? "1" : "2"};
 
-      ${props.index === 0 &&
-      css`
-        position: relative;
-      `}
+      ${
+        props.index === 0 &&
+        css`
+          position: relative;
+        `
+      }
     `};
 `;
 
-const EntryContent = styled.div`
+const EntryContent = styled.div<IProps>`
   padding: 0.5rem;
 
   ${(props) =>
     css`
       background-color: ${theme.colorSchemes[props.index % 4].main};
       color: ${theme.colorSchemes[props.index % 4].font};
-      font-family: ${theme.colorSchemes[props.index % 4].family};
 
       & > h3:first-child {
         font-size: ${theme.fontSizes.xxl};
@@ -216,18 +221,16 @@ const EntryItem = styled.div`
   padding: 0.5rem;
 `;
 
-const StyleAccent = styled.div`
+const StyleAccent = styled.div<IProps>`
   ${(props) => theme.styleAccents[props.index]}
 `;
 
-module.exports = {
-  BlogContainer,
-  MainEntryContainer,
-  MainHeaderContainer,
-  MainEntryContent,
-  EntryContainer,
-  EntryContent,
-  EntryHeader,
-  EntryItem,
-  StyleAccent,
-};
+export { BlogContainer };
+export { MainEntryContainer };
+export { MainHeaderContainer };
+export { MainEntryContent };
+export { EntryContainer };
+export { EntryContent };
+export { EntryHeader };
+export { EntryItem };
+export { StyleAccent };
