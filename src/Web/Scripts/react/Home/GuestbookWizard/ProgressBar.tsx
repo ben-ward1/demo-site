@@ -1,7 +1,16 @@
-import React from "react";
+import * as React from "react";
 import SuccessCheckIcon from "../../shared/SuccessCheckIcon";
 
-class ProgressBar extends React.Component {
+interface IProps {
+  lastCompletedStep: number;
+  numSteps: number;
+}
+
+interface IState {
+  lastCompletedStep: number;
+}
+
+class ProgressBar extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -26,7 +35,6 @@ class ProgressBar extends React.Component {
           <React.Fragment key={index}>
             <SuccessCheckIcon
               id={`check-icon-${index}`}
-              className="progress-success-check"
               check={index < lastCompletedStep}
             />
             {index < numSteps - 1 && (

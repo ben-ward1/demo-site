@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 const path = "../../../Content/svg/";
 
@@ -16,9 +16,9 @@ const logos = [
   { file: "aws-logo.svg", title: "Amazon Web Services" },
 ];
 
-class Logos extends React.Component {
-  constructor() {
-    super();
+class Logos extends React.Component<{}, any> {
+  constructor(props) {
+    super(props);
 
     this.BuildPath = this.BuildPath.bind(this);
   }
