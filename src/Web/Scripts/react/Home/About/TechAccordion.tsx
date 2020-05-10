@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Accordion, Card, Button } from "react-bootstrap";
-import { BuildAboutTechInfoObject } from "../../../aboutHelperFunctions";
+import { AboutTechInfoObject } from "../../../aboutHelperFunctions";
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import "../../../../Content/styles/app-style.scss";
 
 library.add(faCaretRight);
 
-const techInfo = BuildAboutTechInfoObject();
+const techInfo = AboutTechInfoObject;
 
 class TechAccordion extends React.Component<{}, any> {
   constructor(props) {

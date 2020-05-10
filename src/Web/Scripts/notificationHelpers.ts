@@ -12,18 +12,18 @@ const firstVisitText =
 
 const firstVisitSubtext = "-Ben";
 
-const firstVisitMessageObject = {
+export const firstVisitMessageObject = {
   displayText: firstVisitDisplayText,
   mainText: firstVisitText,
   subText: firstVisitSubtext,
 };
 
-function getCollapsedHeight() {
-  return document.getElementById("notification-container").clientHeight;
+export function getCollapsedHeight() {
+  return document.getElementById("notification-container")!.clientHeight;
 }
 
 function calculateScale() {
-  const fullHeight = document.getElementById("main-text-container")
+  const fullHeight = document.getElementById("main-text-container")!
     .clientHeight;
   const collapsedHeight = getCollapsedHeight();
 
@@ -133,7 +133,7 @@ function createKeyFrameAnimation() {
   return animationStyleString;
 }
 
-function addAnimations() {
+export function addAnimations() {
   const styleSheet = document.getElementById("animation-stylesheet");
 
   if (styleSheet == null) {
@@ -146,7 +146,7 @@ function addAnimations() {
   }
 }
 
-function resetPageTop(isExpanded, isClosed) {
+export function resetPageTop(isExpanded, isClosed) {
   if (isExpanded !== null) {
     const el = document.getElementsByClassName("page-container")[0];
     const cssString = `
@@ -158,35 +158,26 @@ function resetPageTop(isExpanded, isClosed) {
               animation-fill-mode: forwards;
           `;
 
-    el.style.cssText = cssString;
+    (el as HTMLElement).style.cssText = cssString;
   }
 }
 
-function resizeDisplayText() {
-  const mainContainer = document.getElementById("notification-container");
+export function resizeDisplayText() {
+  const mainContainer = document.getElementById("notification-container")!;
   const controlContainer = document.getElementById(
     "notification-controls-container"
-  );
-  const container = document.getElementById("collapsed-text-container");
+  )!;
+  const container = document.getElementById("collapsed-text-container")!;
   const width =
     mainContainer.clientWidth -
     controlContainer.clientWidth -
     container.children[0].clientWidth;
-  container.children[1].style.width = `${width}px`;
+  (container.children[1] as HTMLElement).style.width = `${width}px`;
 }
 
-function fadeInText() {
-  const text = document.getElementById("notification-text-container");
+export function fadeInText() {
+  const text = document.getElementById("notification-text-container")!;
   text.classList.remove("animate-text");
   void text.offsetWidth;
   text.classList.add("animate-text");
 }
-
-module.exports = {
-  firstVisitMessageObject,
-  addAnimations,
-  resetPageTop,
-  getCollapsedHeight,
-  resizeDisplayText,
-  fadeInText,
-};
