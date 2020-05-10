@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 
 interface IProps {
   message: string;
-  stepCallback: Function;
+  resetWizard: Function;
 }
 
 interface IState {}
@@ -21,7 +21,7 @@ class SuccessStep extends React.Component<IProps, IState> {
           <div className="guestbook-wizard-controls-container">
             <Button
               className="guestbook-wizard-button primary-button"
-              onClick={() => this.props.stepCallback(1)}
+              onClick={() => this.props.resetWizard()}
               variant="light"
             >
               Go Again

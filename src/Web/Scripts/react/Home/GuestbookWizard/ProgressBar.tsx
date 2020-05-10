@@ -1,32 +1,39 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import { IAppState } from "../Index/store";
 import SuccessCheckIcon from "../../shared/SuccessCheckIcon";
 
 interface IProps {
-  lastCompletedStep: number;
   numSteps: number;
 }
+
+interface IStateProps {
+  step: number;
+}
+
+type Props = IProps & IStateProps;
 
 interface IState {
   lastCompletedStep: number;
 }
 
-class ProgressBar extends React.Component<IProps, IState> {
+class ProgressBar extends React.Component<Props, IState> {
   constructor(props) {
     super(props);
 
-    this.state = {
-      lastCompletedStep: props,
-    };
+    // this.state = {
+    //   lastCompletedStep: props,
+    // };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.lastCompletedStep !== this.state.lastCompletedStep) {
-      this.setState({ lastCompletedStep: nextProps.lastCompletedStep });
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.lastCompletedStep !== this.state.lastCompletedStep) {
+  //     this.setState({ lastCompletedStep: nextProps.lastCompletedStep });
+  //   }
+  // }
 
   render() {
-    const { lastCompletedStep } = this.state;
+    const lastCompletedStep = this.props.step - 1;
     const { numSteps } = this.props;
 
     return (
@@ -51,4 +58,12 @@ class ProgressBar extends React.Component<IProps, IState> {
   }
 }
 
-export default ProgressBar;
+export const mapStateToProps = (state: IAppState) => {
+  return {
+    step: state.app.step,
+  };
+};
+
+export default connect<IStateProps>(mapStateToProps)(ProgressBar);
+
+//export default ProgressBar;

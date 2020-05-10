@@ -6,11 +6,10 @@ import { BuildBaseUrl } from "../../../urlHelperFunctions";
 
 interface IProps {
   stepNum: number;
-  loading: boolean;
   message: string;
   entryName: string;
   entryMessage: string;
-  stepCallback: Function;
+  changeStep: Function;
   captcha: string;
 }
 
@@ -26,7 +25,7 @@ class ConfirmStep extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      loading: this.props.loading,
+      loading: false,
       captchaSuccess: false,
       captchaToken: "",
       error: "",
@@ -38,27 +37,40 @@ class ConfirmStep extends React.Component<IProps, IState> {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.loading !== this.props.loading) {
-      this.setState({ loading: nextProps.loading });
-    }
-  }
-
   handleCaptcha(value) {
     this.setState({ captchaSuccess: value !== null, captchaToken: value });
   }
 
   handleSubmit() {
-    const { stepCallback, stepNum } = this.props;
+    const { entryName, entryMessage, stepNum } = this.props;
+    const { captchaSuccess, captchaToken } = this.state;
     let errorMsg = "";
 
-    if (this.state.captchaSuccess) {
-      stepCallback(stepNum + 1, "", this.state.captchaToken);
-    } else {
-      errorMsg = "Cannot submit without captcha!";
-    }
+    this.setState({ loading: true }, () => {
+      if (captchaSuccess) {
+        axios
+          .post("Guestbook/PostEntry", {
+            name: entryName,
+            message: entryMessage,
+            token: captchaToken,
+          })
+          .then((response) => {
+            if (response.data.success) {
+              this.props.changeStep(stepNum + 1);
+            }
 
-    this.setState({ error: errorMsg });
+            this.setState({ error: "", loading: false });
+          })
+          .catch((error) => {
+            errorMsg =
+              "Oops, there was a problem submitting your request. Try again later.";
+            this.setState({ error: errorMsg, loading: false });
+          });
+      } else {
+        errorMsg = "Cannot submit without captcha!";
+        this.setState({ error: errorMsg, loading: false });
+      }
+    });
   }
 
   render() {
@@ -67,8 +79,8 @@ class ConfirmStep extends React.Component<IProps, IState> {
       message,
       entryName,
       entryMessage,
+      changeStep,
       captcha,
-      stepCallback,
       stepNum,
     } = this.props;
 
@@ -102,7 +114,7 @@ class ConfirmStep extends React.Component<IProps, IState> {
               <div className="guestbook-wizard-controls-container">
                 <Button
                   className="guestbook-wizard-button primary-button"
-                  onClick={() => stepCallback(stepNum - 1)}
+                  onClick={() => changeStep(stepNum - 1)}
                   variant="light"
                 >
                   Back
