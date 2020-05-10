@@ -1,4 +1,14 @@
 import * as React from "react";
+import { Dispatch } from "react";
+import { connect } from "react-redux";
+import { IAppState } from "../Index/store";
+import {
+  SetName,
+  SetMessage,
+  ChangeStep,
+  ResetWizard,
+  IAction,
+} from "../Index/actions";
 import EntryStep from "./EntryStep";
 import ConfirmStep from "./ConfirmStep";
 import SuccessStep from "./SuccessStep";
@@ -14,23 +24,34 @@ interface IProps {
   captcha: string;
 }
 
-interface IState {
-  step: number;
+interface IStateProps {
   name: string;
   message: string;
-  loading: boolean;
+  step: number;
+}
+
+interface IDispatchProps {
+  setName: Function;
+  setMessage: Function;
+  changeStep: Function;
+  resetWizard: Function;
+}
+
+type Props = IProps & IStateProps & IDispatchProps;
+
+interface IState {
+  name: string;
+  message: string;
   errorOnPost: boolean;
 }
 
-class StepContainer extends React.Component<IProps, IState> {
+class StepContainer extends React.Component<Props, IState> {
   constructor(props) {
     super(props);
 
     this.state = {
-      step: 1,
       name: "",
       message: "",
-      loading: false,
       errorOnPost: false,
     };
 
@@ -38,14 +59,17 @@ class StepContainer extends React.Component<IProps, IState> {
 
     this.renderStep = this.renderStep.bind(this);
     this.stepCallback = this.stepCallback.bind(this);
-    this.step = this.step.bind(this);
   }
 
-  stepCallback(stepNum, entry, token) {
+  stepCallback(stepNum, token) {
+    if (typeof stepNum !== "number" || stepNum < 1 || stepNum > 4) {
+      throw `Invalid step number: ${stepNum.toString()}`;
+    }
+
     const { name, message } = this.state;
 
     if (stepNum === 4) {
-      this.setState({ loading: true, errorOnPost: false }, () => {
+      this.setState({ errorOnPost: false }, () => {
         axios
           .post("Guestbook/PostEntry", {
             name,
@@ -54,81 +78,72 @@ class StepContainer extends React.Component<IProps, IState> {
           })
           .then((response) => {
             if (response.data.success) {
-              this.step(stepNum, entry);
+              this.props.changeStep(stepNum);
             }
-
-            this.setState({ loading: false });
           })
           .catch((error) => {
             if (error) {
-              this.setState({ errorOnPost: true, loading: false }, () => {
-                this.step(stepNum, entry);
+              this.setState({ errorOnPost: true }, () => {
+                this.props.changeStep(stepNum);
               });
             }
           });
       });
     } else {
-      this.step(stepNum, entry);
+      this.props.changeStep(stepNum);
     }
-  }
-
-  step(stepNum, entry) {
-    if (typeof stepNum !== "number" || stepNum < 1 || stepNum > 4) {
-      throw `Invalid step number: ${stepNum.toString()}`;
-    }
-
-    const { name, message } = this.state;
-
-    this.setState(
-      {
-        step: stepNum,
-        name: stepNum === 2 && entry ? entry : stepNum === 1 ? null : name,
-        message:
-          stepNum === 3 && entry ? entry : stepNum === 2 ? null : message,
-      },
-      () => {
-        this.props.stepCallback(this.state.step);
-      }
-    );
   }
 
   renderStep(step) {
+    const {
+      name,
+      message,
+      setName,
+      setMessage,
+      changeStep,
+      resetWizard,
+      captcha,
+    } = this.props;
+
     switch (step) {
       case 1:
         return (
           <EntryStep
-            stepNum={1}
+            stepNum={step}
+            value={name}
             message={nameMsg}
-            stepCallback={this.stepCallback}
+            handleSubmit={setName}
+            changeStep={changeStep}
           />
         );
       case 2:
         return (
           <EntryStep
-            stepNum={2}
+            stepNum={step}
+            value={message}
             message={msgMsg}
-            stepCallback={this.stepCallback}
+            handleSubmit={setMessage}
+            changeStep={changeStep}
           />
         );
       case 3:
         return (
           <ConfirmStep
-            stepNum={3}
-            loading={this.state.loading}
+            stepNum={step}
             message={confirmMsg}
-            entryName={this.state.name}
-            entryMessage={this.state.message}
-            stepCallback={this.stepCallback}
-            captcha={this.props.captcha}
+            entryName={name}
+            entryMessage={message}
+            changeStep={changeStep}
+            captcha={captcha}
           />
         );
       case 4:
-        const successMessage = `Thanks, ${this.state.name}! You're entry has been successfully recorded.`;
+        const successMessage = `Thanks, ${name}! You're entry has been successfully recorded.`;
         const errorMessage = "Oops! Something went wrong. Try again later.";
         return (
           <SuccessStep
             message={this.state.errorOnPost ? errorMessage : successMessage}
-            stepCallback={this.stepCallback}
+            resetWizard={resetWizard}
           />
         );
       default:
@@ -137,8 +152,28 @@ class StepContainer extends React.Component<IProps, IState> {
   }
 
   render() {
-    return this.renderStep(this.state.step);
+    return this.renderStep(this.props.step);
   }
 }
 
-export default StepContainer;
+export const mapStateToProps = (state: IAppState) => {
+  return {
+    name: state.app.name,
+    message: state.app.message,
+    step: state.app.step,
+  };
+};
+
+export const mapDispatchToProps = (dispatch: Dispatch<IAction>) => {
+  return {
+    setName: (name: string) => dispatch(SetName(name)),
+    setMessage: (message: string) => dispatch(SetMessage(message)),
+    changeStep: (step: number) => dispatch(ChangeStep(step)),
+    resetWizard: () => dispatch(ResetWizard()),
+  };
+};
+
+export default connect<IStateProps, IDispatchProps, IProps, {}>(
+  mapStateToProps,
+  mapDispatchToProps
+)(StepContainer);
