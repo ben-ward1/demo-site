@@ -3,8 +3,10 @@ import { Button } from "react-bootstrap";
 
 interface IProps {
   stepNum: number;
+  value: string;
   message: string;
-  stepCallback: Function;
+  handleSubmit: Function;
+  changeStep: Function;
 }
 
 interface IState {
@@ -16,19 +18,20 @@ class EntryStep extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      entry: "",
+      entry: this.props.value,
     };
 
     this.handleInput = this.handleInput.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IProps) {
     // This is a hack. Need to investigate why textarea does not clear when
     // EntryStep component is re-rendered in StepContainer.
     if (nextProps.stepNum !== this.props.stepNum) {
-      (document.getElementById("entry-input") as HTMLInputElement).value = "";
-      this.setState({ entry: "" });
+      (document.getElementById("entry-input") as HTMLInputElement).value =
+        nextProps.value;
+      this.setState({ entry: nextProps.value });
     }
   }
 
@@ -39,17 +42,20 @@ class EntryStep extends React.Component<IProps, IState> {
 
   handleSave() {
     const { entry } = this.state;
+
     if (entry.length < 1) {
       throw "Entry is empty!";
     }
 
-    const { stepCallback, stepNum } = this.props;
+    this.props.handleSubmit(entry);
 
-    stepCallback(stepNum + 1, entry);
+    const { changeStep, stepNum } = this.props;
+
+    changeStep(stepNum + 1);
   }
 
   render() {
-    const { stepNum, message, stepCallback } = this.props;
+    const { stepNum, message, changeStep } = this.props;
     const { entry } = this.state;
 
     return (
@@ -60,6 +66,7 @@ class EntryStep extends React.Component<IProps, IState> {
               id="entry-input"
               type="text"
               placeholder={message}
+              value={entry}
               onChange={this.handleInput}
             />
           ) : (
@@ -67,6 +74,7 @@ class EntryStep extends React.Component<IProps, IState> {
               id="entry-input"
               onChange={this.handleInput}
               placeholder={message}
+              value={entry}
             />
           )}
         </div>
@@ -74,7 +82,7 @@ class EntryStep extends React.Component<IProps, IState> {
           <div className="guestbook-wizard-controls-container">
             <Button
               className="guestbook-wizard-button primary-button"
-              onClick={() => stepCallback(stepNum - 1)}
+              onClick={() => changeStep(stepNum - 1)}
               disabled={this.props.stepNum === 1}
               variant="light"
             >

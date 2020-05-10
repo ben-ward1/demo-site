@@ -262,4 +262,6 @@ __pycache__/
 
 *.dist.js
 *.dist.css
+*.dist.js.map
+*.dist.css.map
 /src/Web/Properties/PublishProfiles/CustomProfile.pubxml

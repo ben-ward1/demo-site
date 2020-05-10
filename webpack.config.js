@@ -74,7 +74,9 @@ module.exports = {
   plugins: [
     new CleanPlugin([
       "./src/Web/Scripts/react/**/*.dist.js",
+      "./src/Web/Scripts/react/**/*.dist.js.map",
       "./src/Web/Content/styles/**/*.dist.css",
+      "./src/Web/Content/styles/**/*.dist.css.map",
     ]),
     new MiniCssExtractPlugin({
       filename: "src/Web/Content/styles/styles.dist.css",
