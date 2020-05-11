@@ -11,8 +11,18 @@
   margin-right: 5px;
 }
 
+.modal-content {
+  align-items: center;
+  background: none;
+  border: none;
+}
+
 .resume-modal {
   top: 50px;
+}
+
+.annotationLayer {
+  height: 12px;
 }
 
 .resume-modal-img {

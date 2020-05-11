@@ -224,6 +224,7 @@
     <Content Include="Content\img\codeBackgroundDarkSmall.jpg" />
     <Content Include="Content\img\resume.jpg" />
     <Content Include="Content\img\me.jpg" />
+    <Content Include="Content\pdf\wardResume2020-full.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\svg\babel-logo.svg" />
