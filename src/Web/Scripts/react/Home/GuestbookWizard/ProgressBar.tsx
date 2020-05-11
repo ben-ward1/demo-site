@@ -20,17 +20,7 @@ interface IState {
 class ProgressBar extends React.Component<Props, IState> {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   lastCompletedStep: props,
-    // };
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.lastCompletedStep !== this.state.lastCompletedStep) {
-  //     this.setState({ lastCompletedStep: nextProps.lastCompletedStep });
-  //   }
-  // }
 
   render() {
     const lastCompletedStep = this.props.step - 1;
@@ -65,5 +55,3 @@ export const mapStateToProps = (state: IAppState) => {
 };
 
 export default connect<IStateProps>(mapStateToProps)(ProgressBar);
-
-//export default ProgressBar;
