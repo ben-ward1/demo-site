@@ -1,16 +1,16 @@
-import React from "react";
+import * as React from "react";
 import axios from "axios";
 import { Spinner, Popover, OverlayTrigger } from "react-bootstrap";
 import { faSyncAlt, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SuccessCheckIcon from "../shared/SuccessCheckIcon";
+import SuccessCheckIcon from "./SuccessCheckIcon";
 import { BuildBaseUrl } from "../../urlHelperFunctions";
 
 library.add(faSyncAlt, faQuestionCircle);
 
 const popover = (
-  <Popover>
+  <Popover id="api-checker-popover">
     <Popover.Title as="h3">Oops!</Popover.Title>
     <Popover.Content>
       We didn't get a valid response from the api. This can happen for a number
@@ -20,13 +20,21 @@ const popover = (
   </Popover>
 );
 
-class ApiChecker extends React.Component {
+interface IProps {}
+
+interface IState {
+  connected: boolean;
+  errorMsg: string;
+  loading: boolean;
+}
+
+class ApiChecker extends React.Component<IProps, IState> {
   constructor(props) {
     super(props);
 
     this.state = {
-      connected: null,
-      errorMsg: null,
+      connected: false,
+      errorMsg: "",
       loading: true,
     };
 
@@ -47,7 +55,7 @@ class ApiChecker extends React.Component {
   checkApiConnection() {
     const thisComponent = this;
 
-    this.setState({ connected: null, errorMsg: null }, () => {
+    this.setState({ connected: false, errorMsg: "" }, () => {
       setTimeout(function () {
         axios
           .get("home/test")
@@ -72,7 +80,7 @@ class ApiChecker extends React.Component {
   }
 
   BuildResponseText(connected, errorMsg) {
-    if (!errorMsg) {
+    if (errorMsg.length < 1) {
       return (
         <div id="response-text" className={connected && "connected"}>
           {connected ? "API: Connected!" : "API: Checking..."}
