@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EntryPointHelper.cs" />
     <Compile Include="Models\HomeIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -174,7 +175,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -192,6 +192,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Guestbook\Index.cshtml" />
+    <Content Include="webpack-assets.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -210,12 +211,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\react\Home\Index\app.dist.js" />
-    <Content Include="Scripts\react\Home\About\app.dist.js" />
-    <Content Include="Scripts\react\Home\Contact\app.dist.js" />
-    <Content Include="Scripts\react\Guestbook\app.dist.js" />
-    <Content Include="Scripts\react\common.dist.js " />
-    <Content Include="Scripts\react\polyfill.dist.js" />
+    <Content Include="Scripts\react\Home\Index\app.*.dist.js" />
+    <Content Include="Scripts\react\Home\About\app.*.dist.js" />
+    <Content Include="Scripts\react\Home\Contact\app.*.dist.js" />
+    <Content Include="Scripts\react\Guestbook\app.*.dist.js" />
+    <Content Include="Scripts\react\common.*.dist.js " />
+    <Content Include="Scripts\react\polyfill.*.dist.js" />
     <Content Include="Content\styles\styles.dist.css " />
   </ItemGroup>
   <ItemGroup>

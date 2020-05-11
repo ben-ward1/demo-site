@@ -3,8 +3,9 @@ const glob = require("glob");
 const entryPlus = require("webpack-entry-plus");
 const CleanPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const AssetsPlugin = require("assets-webpack-plugin");
 
-const devMode = false;
+const devMode = process.env.NODE_ENV !== "production";
 
 const entryFiles = [
   {
@@ -21,13 +22,12 @@ const entryPoints = Object.assign(
 );
 
 module.exports = {
-  mode: devMode ? "developement" : "production",
+  mode: devMode ? "development" : "production",
   entry: entryPoints,
   devtool: "source-map",
   output: {
     path: path.resolve(__dirname),
-    //filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
-    filename: "[name].dist.js",
+    filename: "[name].[chunkhash:8].dist.js",
   },
   module: {
     rules: [
@@ -35,9 +35,6 @@ module.exports = {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         loader: "ts-loader",
-        // options: {
-        //   presets: ["env", "react"],
-        // },
       },
       {
         test: /\.s[c|a]ss$/,
@@ -72,6 +69,10 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
+    new AssetsPlugin({
+      fullPath: false,
+      path: path.join(__dirname, "./src/Web/"),
+    }),
     new CleanPlugin([
       "./src/Web/Scripts/react/**/*.dist.js",
       "./src/Web/Scripts/react/**/*.dist.js.map",

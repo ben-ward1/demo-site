@@ -1,4 +1,5 @@
-﻿@model string
+﻿@using Web.Helpers
+@model string
 
 @{
     ViewBag.Title = "Home Page";
@@ -8,4 +9,4 @@
 
 <div id="app"></div>
 
-<script src="~/Scripts/react/Home/Index/app.dist.js"></script>
+@EntryPointHelper.ReactEntryPoint("~/Scripts/react/Home/Index/app.tsx")

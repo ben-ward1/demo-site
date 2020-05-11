@@ -1,7 +1,8 @@
-﻿@{
+﻿@using Web.Helpers
+@{
     ViewBag.Title = "Contact Me";
 }
 
 <div id="app" />
 
-@Scripts.Render("~/Scripts/react/Home/Contact/app.dist.js")
+@EntryPointHelper.ReactEntryPoint("~/Scripts/react/Home/Contact/app.tsx")

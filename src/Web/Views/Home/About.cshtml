@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Web.Helpers
+
+@{
     ViewBag.Title = "About";
 }
 
 <div id="app"/>
 
-<script src="~/Scripts/react/Home/About/app.dist.js"></script>
+@EntryPointHelper.ReactEntryPoint("~/Scripts/react/Home/About/app.tsx")

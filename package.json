@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "build": "webpack"
+    "build": "webpack --mode production"
   },
   "devDependencies": {
     "@types/react-redux": "^7.1.8",
