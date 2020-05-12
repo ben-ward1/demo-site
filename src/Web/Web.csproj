@@ -148,6 +148,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Controllers\DownloadsController.cs" />
     <Compile Include="Controllers\GuestbookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
@@ -198,6 +199,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Captcha\" />
+    <Folder Include="Views\Downloads\" />
     <Folder Include="Views\Session\" />
   </ItemGroup>
   <ItemGroup>
@@ -212,13 +214,22 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+  <!-- This section for release chunkhashed files -->
     <Content Include="Scripts\react\Home\Index\app.*.dist.js" />
     <Content Include="Scripts\react\Home\About\app.*.dist.js" />
     <Content Include="Scripts\react\Home\Contact\app.*.dist.js" />
     <Content Include="Scripts\react\Guestbook\app.*.dist.js" />
     <Content Include="Scripts\react\common.*.dist.js " />
     <Content Include="Scripts\react\polyfill.*.dist.js" />
-    <Content Include="Content\styles\styles.dist.css " />
+    <Content Include="Content\styles\styles.*.dist.css " />
+    <!-- This section needed for development build -->
+	<!-- <Content Include="Scripts\react\Home\Index\app.dist.js" />
+    <Content Include="Scripts\react\Home\About\app.dist.js" />
+    <Content Include="Scripts\react\Home\Contact\app.dist.js" />
+    <Content Include="Scripts\react\Guestbook\app.dist.js" />
+    <Content Include="Scripts\react\common.dist.js " />
+    <Content Include="Scripts\react\polyfill.dist.js" />
+    <Content Include="Content\styles\styles.dist.css " /> -->
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\img\codeBackground.jpg" />

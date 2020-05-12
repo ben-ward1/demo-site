@@ -4,6 +4,10 @@
     ViewBag.Title = "About";
 }
 
-<div id="app"/>
+@section head {
+    @EntryPointHelper.StyleEntryPoint("~/Scripts/react/Home/About/app.tsx")
+}
+
+<div id="app" />
 
 @EntryPointHelper.ReactEntryPoint("~/Scripts/react/Home/About/app.tsx")

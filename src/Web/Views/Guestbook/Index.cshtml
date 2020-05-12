@@ -3,6 +3,10 @@
     ViewBag.Title = "Guestbook";
 }
 
+@section head {
+    @EntryPointHelper.StyleEntryPoint("~/Scripts/react/Guestbook/app.tsx")
+}
+
 <div id="app" />
 
 @EntryPointHelper.ReactEntryPoint("~/Scripts/react/Guestbook/app.tsx")

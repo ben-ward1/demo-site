@@ -27,7 +27,7 @@ module.exports = {
   devtool: "source-map",
   output: {
     path: path.resolve(__dirname),
-    filename: "[name].[chunkhash:8].dist.js",
+    filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
   },
   module: {
     rules: [
@@ -80,7 +80,9 @@ module.exports = {
       "./src/Web/Content/styles/**/*.dist.css.map",
     ]),
     new MiniCssExtractPlugin({
-      filename: "src/Web/Content/styles/styles.dist.css",
+      filename: devMode
+        ? "./src/Web/Content/styles/styles.dist.css"
+        : "./src/Web/Content/styles/styles.[chunkhash:8].dist.css",
     }),
   ],
 };
