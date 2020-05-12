@@ -4,7 +4,7 @@ const path = "../../../Content/svg/";
 
 const logos = [
   { file: "react-logo.svg", title: "React" },
-  { file: "js-logo.svg", title: "Javascript" },
+  { file: "ts-logo.svg", title: "TypeScript" },
   { file: "babel-logo.svg", title: "Babel" },
   { file: "sass-logo.svg", title: "Sass" },
   { file: "webpack-logo.svg", title: "Webpack" },
@@ -16,15 +16,13 @@ const logos = [
   { file: "aws-logo.svg", title: "Amazon Web Services" },
 ];
 
+const BuildPath = (fileName) => {
+  return path + fileName;
+};
+
 class Logos extends React.Component<{}, any> {
   constructor(props) {
     super(props);
-
-    this.BuildPath = this.BuildPath.bind(this);
-  }
-
-  BuildPath(fileName) {
-    return path + fileName;
   }
 
   render() {
@@ -36,7 +34,7 @@ class Logos extends React.Component<{}, any> {
           <React.Fragment key={index}>
             <img
               className="tech-logo-img"
-              src={this.BuildPath(l.file)}
+              src={BuildPath(l.file)}
               title={l.title}
             />
             {index === breakPoint && <div className="flex-break" />}

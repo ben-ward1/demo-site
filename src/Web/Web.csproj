@@ -168,6 +168,7 @@
     <Content Include="Content\img\codeBackgroundDarkSmall.JPG" />
     <Content Include="Content\img\resume.jpg" />
     <Content Include="Content\svg\aws-logo.svg" />
+    <Content Include="Content\svg\ts-logo.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
