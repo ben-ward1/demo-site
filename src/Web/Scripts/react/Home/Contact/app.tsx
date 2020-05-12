@@ -10,8 +10,30 @@ import "../../../../Content/styles/app-style.scss";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import axios from "axios";
+import { BuildBaseUrl } from "../../../urlHelperFunctions";
 
 library.add(faGithub, faLinkedin, faEnvelope, faPhoneAlt);
+
+axios.defaults.baseURL = BuildBaseUrl();
+
+const downloadResume = () => {
+  axios({ url: "Downloads/Resume", method: "GET", responseType: "blob" }).then(
+    (response) => {
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        const blob = new Blob([response.data]);
+        window.navigator.msSaveOrOpenBlob(blob, "wardResume2020-full.pdf");
+      } else {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "wardResume2020-full.pdf");
+        document.body.appendChild(link);
+        link.click();
+      }
+    }
+  );
+};
 
 const contactItems = [
   {
@@ -92,21 +114,32 @@ class App extends React.Component<{}, IState> {
     return (
       <Layout>
         <h2 className="page-header">Contact Me.</h2>
-        <div className="contact-info-container">
-          {contactItems.map((x, index) => (
-            <div key={index} className="contact-item">
-              <FontAwesomeIcon color={x.color || "black"} icon={x.icon} />
-              <a href={x.link}>{x.text}</a>
-            </div>
-          ))}
+        <div className="contact-page-content">
+          <div className="contact-info-container">
+            {contactItems.map((x, index) => (
+              <div key={index} className="contact-item">
+                <FontAwesomeIcon color={x.color || "black"} icon={x.icon} />
+                <a href={x.link}>{x.text}</a>
+              </div>
+            ))}
+          </div>
+          <div className="resume-controls-container">
+            <Button
+              className="primary-button"
+              onClick={this.handleShowModal}
+              variant="light"
+            >
+              See my resume
+            </Button>
+            <Button
+              className="primary-button"
+              onClick={downloadResume}
+              variant="light"
+            >
+              Download my resume
+            </Button>
+          </div>
         </div>
-        <Button
-          className="primary-button"
-          onClick={this.handleShowModal}
-          variant="light"
-        >
-          See my resume
-        </Button>
         <Modal
           className="resume-modal"
           show={showModal}
