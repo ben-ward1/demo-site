@@ -167,6 +167,7 @@
     <Content Include="Content\img\codeBackground.JPG" />
     <Content Include="Content\img\codeBackgroundDark.JPG" />
     <Content Include="Content\img\codeBackgroundDarkSmall.JPG" />
+    <Content Include="Content\img\me-small.jpg" />
     <Content Include="Content\img\resume.jpg" />
     <Content Include="Content\svg\aws-logo.svg" />
     <Content Include="Content\svg\ts-logo.svg" />
@@ -214,7 +215,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-  <!-- This section for release chunkhashed files -->
+    <!-- This section for release chunkhashed files -->
     <Content Include="Scripts\react\Home\Index\app.*.dist.js" />
     <Content Include="Scripts\react\Home\About\app.*.dist.js" />
     <Content Include="Scripts\react\Home\Contact\app.*.dist.js" />
@@ -223,7 +224,7 @@
     <Content Include="Scripts\react\polyfill.*.dist.js" />
     <Content Include="Content\styles\styles.*.dist.css " />
     <!-- This section needed for development build -->
-	<!-- <Content Include="Scripts\react\Home\Index\app.dist.js" />
+    <!-- <Content Include="Scripts\react\Home\Index\app.dist.js" />
     <Content Include="Scripts\react\Home\About\app.dist.js" />
     <Content Include="Scripts\react\Home\Contact\app.dist.js" />
     <Content Include="Scripts\react\Guestbook\app.dist.js" />

@@ -32,7 +32,7 @@ class Blog extends React.Component<IProps, {}> {
         <MainEntryContainer>
           <MainHeaderContainer>
             <EntryHeader>Hi, I'm Ben. Nice to meet you.</EntryHeader>
-            <img src="../../../Content/img/me.JPG" />
+            <img src="../../../Content/img/me-small.JPG" />
           </MainHeaderContainer>
           <MainEntryContent>
             <EntryItem>Welcome to my website.</EntryItem>
