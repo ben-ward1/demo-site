@@ -9,7 +9,7 @@ const devMode = process.env.NODE_ENV !== "production";
 
 const entryFiles = [
   {
-    entryFiles: glob.sync("./src/Web/Scripts/react/**/app.tsx"),
+    entryFiles: glob.sync("./src/PersonalSite.Web/Scripts/react/**/app.tsx"),
     outputName(item) {
       return item.replace("/app.tsx", "/app");
     },
@@ -17,7 +17,7 @@ const entryFiles = [
 ];
 
 const entryPoints = Object.assign(
-  { "./src/Web/Scripts/react/polyfill": ["babel-polyfill"] },
+  { "./src/PersonalSite.Web/Scripts/react/polyfill": ["babel-polyfill"] },
   entryPlus(entryFiles)
 );
 
@@ -26,7 +26,9 @@ module.exports = {
   entry: entryPoints,
   devtool: "source-map",
   output: {
-    path: path.resolve(__dirname),
+    path: path
+      .resolve(__dirname)
+      .replace("PersonalSite.Web/", "PersonalSite.Web/wwwroot/"),
     filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
   },
   module: {
@@ -58,7 +60,7 @@ module.exports = {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: "./src/Web/Scripts/react/common",
+          name: "./src/PersonalSite.Web/Scripts/react/common",
           enforce: true,
           chunks: "all",
         },
@@ -71,18 +73,18 @@ module.exports = {
   plugins: [
     new AssetsPlugin({
       fullPath: false,
-      path: path.join(__dirname, "./src/Web/"),
+      path: path.join(__dirname, "./src/PersonalSite.Web/"),
     }),
     new CleanPlugin([
-      "./src/Web/Scripts/react/**/*.dist.js",
-      "./src/Web/Scripts/react/**/*.dist.js.map",
-      "./src/Web/Content/styles/**/*.dist.css",
-      "./src/Web/Content/styles/**/*.dist.css.map",
+      "./src/PersonalSite.Web/wwwroot/Scripts/react/**/*.dist.js",
+      "./src/PersonalSite.Web/wwwroot/Scripts/react/**/*.dist.js.map",
+      "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css",
+      "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css.map",
     ]),
     new MiniCssExtractPlugin({
       filename: devMode
-        ? "./src/Web/Content/styles/styles.dist.css"
-        : "./src/Web/Content/styles/styles.[chunkhash:8].dist.css",
+        ? "./src/PersonalSite.Web/wwwroot/Content/styles/styles.dist.css"
+        : "./src/PersonalSite.Web/wwwroot/Content/styles/styles.[chunkhash:8].dist.css",
     }),
   ],
 };
