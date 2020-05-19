@@ -6,7 +6,7 @@ namespace Web.Controllers
     {
         public ActionResult Resume()
         {
-            return File("../Content/pdf/wardResume2020-full.pdf", "application/pdf");
+            return File("~/Content/pdf/wardResume2020-full.pdf", "application/pdf");
         }
     }
 }

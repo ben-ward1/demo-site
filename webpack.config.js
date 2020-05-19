@@ -17,7 +17,7 @@ const entryFiles = [
 ];
 
 const entryPoints = Object.assign(
-  { "./src/PersonalSite.Web/Scripts/react/polyfill": ["babel-polyfill"] },
+  { polyfill: ["babel-polyfill"] },
   entryPlus(entryFiles)
 );
 
@@ -26,10 +26,8 @@ module.exports = {
   entry: entryPoints,
   devtool: "source-map",
   output: {
-    path: path
-      .resolve(__dirname)
-      .replace("PersonalSite.Web/", "PersonalSite.Web/wwwroot/"),
-    filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
+    path: path.resolve(__dirname),
+    filename: "./src/PersonalSite.Web/wwwroot/[chunkhash:8].dist.js",
   },
   module: {
     rules: [
@@ -60,7 +58,7 @@ module.exports = {
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: "./src/PersonalSite.Web/Scripts/react/common",
+          name: "common",
           enforce: true,
           chunks: "all",
         },
@@ -76,8 +74,8 @@ module.exports = {
       path: path.join(__dirname, "./src/PersonalSite.Web/"),
     }),
     new CleanPlugin([
-      "./src/PersonalSite.Web/wwwroot/Scripts/react/**/*.dist.js",
-      "./src/PersonalSite.Web/wwwroot/Scripts/react/**/*.dist.js.map",
+      "./src/PersonalSite.Web/wwwroot/*.dist.js",
+      "./src/PersonalSite.Web/wwwroot/*.dist.js.map",
       "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css",
       "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css.map",
     ]),

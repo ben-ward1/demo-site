@@ -33,7 +33,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostEntry(GuestbookEntryPostRequest request)
+        public ActionResult PostEntry([FromBody]GuestbookEntryPostRequest request)
         {
             if (_captchaClient.VerifyCaptcha(request.Token).Success)
             {
@@ -42,6 +42,7 @@ namespace Web.Controllers
             }
             else
             {
+                // TODO : Need to handle this in front-end
                 return Content(JsonConvert.SerializeObject(new { success = false }), "application/json");
             }
         }
