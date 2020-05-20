@@ -14,7 +14,7 @@ export const AboutTechInfoObject = [
       {
         title: "ASP.NET site",
         description:
-          "This is an ASP.NET MVC site targeting .NET Framework v4.6. The actual server code for the site " +
+          "This is an ASP.NET Core MVC site targeting .NET Core 3.1. The actual server code for the site " +
           "doesn't do much other than make calls to a separate API (mentioned below) and serve up the pages.",
       },
     ],
