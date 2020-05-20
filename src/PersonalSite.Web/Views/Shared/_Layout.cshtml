@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - builtbybenward.com</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Content/styles/Site.css" />
+    @RenderSection("head", false)
+</head>
+<body class="page-background">
+    <div class="background-overlay"></div>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+        @Html.ActionLink("builtbybenward.com", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <div class="navbar-background-overlay"></div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Guestbook", "Index", "Guestbook", new { area = "" }, new { @class = "nav-link" })
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-container">
+        <div class="body-content">
+            @RenderBody()
+            <div class="footer-container">
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - builtbybenward.com</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
