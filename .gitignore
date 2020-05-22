@@ -269,3 +269,5 @@ __pycache__/
 /src/PersonalSite.Web/appsettings.json
 /src/PersonalSite.Web/appsettings.Development.json
 /src/PersonalSite.Web/webpack-assets.json
+
+/.vscode/

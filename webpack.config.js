@@ -9,13 +9,13 @@ const entryFiles = [
   {
     entryFiles: glob.sync("./src/PersonalSite.Web/Scripts/react/**/app.tsx"),
     outputName(item) {
-      return item.replace("/app.tsx", "/app");
+      return item.replace("/app.tsx", "/app").replace(".Web/", ".Web/wwwroot/");
     },
   },
 ];
 
 const entryPoints = Object.assign(
-  { polyfill: ["babel-polyfill"] },
+  { "./src/PersonalSite.Web/wwwroot/polyfill": ["babel-polyfill"] },
   entryPlus(entryFiles)
 );
 
@@ -28,7 +28,7 @@ module.exports = (env, argv) => {
     devtool: "source-map",
     output: {
       path: path.resolve(__dirname),
-      filename: "./src/PersonalSite.Web/wwwroot/[chunkhash:8].dist.js",
+      filename: devMode ? "[name].dist.js" : "[name].[chunkhash:8].dist.js",
     },
     module: {
       rules: [
@@ -59,7 +59,7 @@ module.exports = (env, argv) => {
         cacheGroups: {
           vendors: {
             test: /[\\/]node_modules[\\/]/,
-            name: "common",
+            name: "./src/PersonalSite.Web/wwwroot/common",
             enforce: true,
             chunks: "all",
           },
@@ -75,10 +75,10 @@ module.exports = (env, argv) => {
         path: path.join(__dirname, "./src/PersonalSite.Web/"),
       }),
       new CleanPlugin([
-        "./src/PersonalSite.Web/wwwroot/*.dist.js",
-        "./src/PersonalSite.Web/wwwroot/*.dist.js.map",
-        "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css",
-        "./src/PersonalSite.Web/wwwroot/Content/styles/**/*.dist.css.map",
+        "./src/PersonalSite.Web/wwwroot/**/*.dist.js",
+        "./src/PersonalSite.Web/wwwroot/**/*.dist.js.map",
+        "./src/PersonalSite.Web/wwwroot/**/*.dist.css",
+        "./src/PersonalSite.Web/wwwroot/**/*.dist.css.map",
       ]),
       new MiniCssExtractPlugin({
         filename: devMode
