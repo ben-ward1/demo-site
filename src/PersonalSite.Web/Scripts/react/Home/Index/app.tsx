@@ -22,6 +22,7 @@ type modelType = {
 declare global {
   interface Window {
     MODEL: modelType;
+    Modernizr: any;
   }
 }
 

@@ -21,10 +21,17 @@ body {
 }
 
 .page-background {
-    background-image: url("../img/codeBackgroundDark.JPG");
     height: 100%;
     background-position: left;
     background-repeat: repeat;
+}
+
+.no-webp .page-background {
+    background-image: url("../img/codeBackgroundDark.JPG");
+}
+
+.webp .page-background {
+    background-image: url("../img/codeBackgroundDark.webp");
 }
 
 .background-overlay {
@@ -126,10 +133,17 @@ nav.navbar {
     }
 
     .navbar {
-        background-image: url("../img/codeBackgroundDarkSmall.JPG");
         background-position: left;
         background-repeat: repeat;
         padding: 0;
+    }
+
+    .no-webp .navbar {
+        background-image: url("../img/codeBackgroundDarkSmall.JPG");
+    }
+
+    .webp .navbar {
+        background-image: url("../img/codeBackgroundDarkSmall.webp");
     }
 
     .navbar-background-overlay {

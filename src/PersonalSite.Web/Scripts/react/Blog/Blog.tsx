@@ -21,18 +21,33 @@ interface IProps {
 }
 
 class Blog extends React.Component<IProps, {}> {
+  canWebp: boolean;
+
   constructor(props) {
     super(props);
+
+    this.canWebp = window.Modernizr.webp;
+  }
+
+  componentDidMount() {
+    this.setState({
+      webp: window.Modernizr.webp,
+    });
   }
 
   render() {
     const { entries } = this.props;
+
     return (
       <React.Fragment>
         <MainEntryContainer>
           <MainHeaderContainer>
             <EntryHeader>Hi, I'm Ben. Nice to meet you.</EntryHeader>
-            <img src="../../../Content/img/me-small.JPG" />
+            <img
+              src={`../../../Content/img/me-small.${
+                this.canWebp ? "webp" : "JPG"
+              }`}
+            />
           </MainHeaderContainer>
           <MainEntryContent>
             <EntryItem>Welcome to my website.</EntryItem>
