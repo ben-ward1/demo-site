@@ -29,12 +29,6 @@ class Blog extends React.Component<IProps, {}> {
     this.canWebp = window.Modernizr.webp;
   }
 
-  componentDidMount() {
-    this.setState({
-      webp: window.Modernizr.webp,
-    });
-  }
-
   render() {
     const { entries } = this.props;
 
