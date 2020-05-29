@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PersonalSite.Infrastructure.Models;
+using PersonalSite.Infrastructure.Chat;
 
 namespace PersonalSite.Web
 {
@@ -21,6 +22,7 @@ namespace PersonalSite.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -59,6 +61,8 @@ namespace PersonalSite.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChatHub>("/chatHub");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

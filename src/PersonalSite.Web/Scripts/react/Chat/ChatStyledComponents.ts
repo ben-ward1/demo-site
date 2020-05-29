@@ -1,0 +1,64 @@
+import styled from "styled-components";
+
+const WindowContainer = styled.div`
+  position: fixed;
+  z-index: 1201;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  //min-height: 100vh;
+  background: rgb(241, 241, 241);
+  padding: 1rem;
+
+  @media (max-width: 792px) {
+    width: 100%;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+`;
+
+const MessageBoard = styled.div`
+  height: 72vh;
+  background: white;
+  padding: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
+
+const UserPanel = styled.div`
+  height: 72vh;
+  background: rgb(241, 241, 241);
+  padding: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const IconContainer = styled.div`
+  display: flex;
+  width: 2.5rem;
+  justify-content: space-between;
+`;
+
+const ChatSC = {
+  WindowContainer,
+  Container,
+  MessageBoard,
+  UserPanel,
+  Header,
+  IconContainer,
+};
+
+export default ChatSC;

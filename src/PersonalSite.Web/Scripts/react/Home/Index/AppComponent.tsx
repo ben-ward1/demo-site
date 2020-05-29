@@ -2,6 +2,7 @@ import * as React from "react";
 import { Layout } from "../../shared/LayoutStyledComponents";
 import Blog from "../../Blog/Blog";
 import HeaderNotification from "../../shared/headerNotification/HeaderNotification";
+import ChatComponent from "../../Chat/ChatComponent";
 import GuestbookWizard from "../GuestbookWizard/GuestbookWizard";
 import { firstVisitMessageObject } from "../../../notificationHelpers";
 import "../../../../Content/styles/app-style.scss";
@@ -65,6 +66,7 @@ class AppComponent extends React.Component<IProps, IState> {
             />
           )}
         </Layout>
+        <ChatComponent captcha={captcha} />
       </React.Fragment>
     );
   }
