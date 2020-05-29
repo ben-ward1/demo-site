@@ -1,4 +1,7 @@
-export const RegisterEvents = (connection, name: string) => {
+export const RegisterEvents = (
+  connection: signalR.HubConnection,
+  name: string
+) => {
   connection.on("ReceiveMessage", (user: string, message: string) => {
     var label = user + " says: ";
     var p = document.createElement("p");
@@ -27,6 +30,18 @@ export const RegisterEvents = (connection, name: string) => {
     msgBoard.scrollTop = msgBoard.scrollHeight;
   });
 
+  connection.on("UserLeft", (user: string) => {
+    const message = user + " left the chat.";
+    const msgBoard = document.getElementById("messageBoard")!;
+    const p = document.createElement("p");
+    const i = document.createElement("i");
+    i.textContent = message;
+    p.appendChild(i);
+    p.style.marginBottom = "0.5rem";
+    msgBoard.appendChild(p);
+    msgBoard.scrollTop = msgBoard.scrollHeight;
+  });
+
   connection.on("ReceiveUsers", (users: Array<string>) => {
     const userPanel = document.getElementById("userPanel")!;
     userPanel.innerHTML = "";
@@ -42,6 +57,19 @@ export const RegisterEvents = (connection, name: string) => {
       p.textContent = u;
       userPanel.appendChild(p);
     });
+  });
+
+  connection.onclose(() => {
+    setTimeout(() => {
+      connection
+        .start()
+        .then(() => {
+          newUser(connection, name);
+        })
+        .catch((err) => {
+          return console.error(err.toString());
+        });
+    }, 5000);
   });
 
   connection

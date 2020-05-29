@@ -40,6 +40,7 @@ namespace PersonalSite.Infrastructure.Chat
             string user;
             Users.TryRemove(Context.ConnectionId, out user);
             Clients.All.SendAsync("ReceiveUsers", Users.Values);
+            Clients.All.SendAsync("UserLeft", user);
             return base.OnDisconnectedAsync(exception);
         }
     }
