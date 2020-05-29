@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Layout } from "../../shared/LayoutStyledComponents";
+import axios from "axios";
+import { BuildBaseUrl } from "../../../urlHelperFunctions";
 import Blog from "../../Blog/Blog";
 import HeaderNotification from "../../shared/headerNotification/HeaderNotification";
 import ChatComponent from "../../Chat/ChatComponent";
@@ -20,6 +22,7 @@ interface IProps {
 
 interface IState {
   notificationIsOpen: boolean;
+  chatIsActive: boolean;
 }
 
 // TODO: Add IE support to header notification
@@ -31,9 +34,18 @@ class AppComponent extends React.Component<IProps, IState> {
 
     this.state = {
       notificationIsOpen: true,
+      chatIsActive: false,
     };
 
+    axios.defaults.baseURL = BuildBaseUrl();
+
     this.closeNotification = this.closeNotification.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get("Utility/IsChatActive").then((response) => {
+      this.setState({ chatIsActive: response.data.success });
+    });
   }
 
   closeNotification() {
@@ -51,7 +63,7 @@ class AppComponent extends React.Component<IProps, IState> {
 
   render() {
     const { firstView, captcha, blog } = this.props;
-    const { notificationIsOpen } = this.state;
+    const { notificationIsOpen, chatIsActive } = this.state;
 
     return (
       <React.Fragment>
@@ -66,7 +78,7 @@ class AppComponent extends React.Component<IProps, IState> {
             />
           )}
         </Layout>
-        <ChatComponent captcha={captcha} />
+        {chatIsActive && <ChatComponent captcha={captcha} />}
       </React.Fragment>
     );
   }
