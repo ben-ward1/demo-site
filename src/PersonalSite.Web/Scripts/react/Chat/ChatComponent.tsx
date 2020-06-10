@@ -54,10 +54,6 @@ class ChatComponent extends React.Component<IProps, IState> {
     window.addEventListener("resize", () => {
       SizeWindow();
     });
-
-    this.connection.invoke("GetUsers").catch((err) => {
-      console.log(err.toString());
-    });
   }
 
   componentDidUpdate() {

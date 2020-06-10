@@ -9,7 +9,6 @@ body {
 
 body.chat-open {
     left: 30%;
-    position: relative;
     width: 70%;
 }
 
@@ -149,9 +148,15 @@ nav.navbar {
     }
 }
 
-@media only screen and (max-width: 792px) {
+@media only screen and (max-width: 1020px) {
     .chat-open {
         overflow: hidden;
+    }
+}
+
+@media only screen and (min-width: 1019px) {
+    .chat-open {
+        position: relative;
     }
 }
 

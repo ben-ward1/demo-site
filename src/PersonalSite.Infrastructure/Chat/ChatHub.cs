@@ -21,11 +21,6 @@ namespace PersonalSite.Infrastructure.Chat
             await Clients.All.SendAsync("ReceiveUsers", Users.Values);
         }
 
-        public async Task GetUsers()
-        {
-            await Clients.Caller.SendAsync("ReceiveUsers", Users.Values);
-        }
-
         public override Task OnConnectedAsync()
         {
             var id = Context.ConnectionId;
@@ -37,8 +32,7 @@ namespace PersonalSite.Infrastructure.Chat
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            string user;
-            Users.TryRemove(Context.ConnectionId, out user);
+            Users.TryRemove(Context.ConnectionId, out string user);
             Clients.All.SendAsync("ReceiveUsers", Users.Values);
             Clients.All.SendAsync("UserLeft", user);
             return base.OnDisconnectedAsync(exception);

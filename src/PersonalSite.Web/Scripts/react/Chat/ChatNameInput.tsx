@@ -1,7 +1,12 @@
 import * as React from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Button } from "react-bootstrap";
-import styled from "styled-components";
+import { ToggleChat } from "./ChatHelperFunctions";
+import {
+  ChatNameInputContainer,
+  NameInputControlsContainer,
+  RecaptchaContainer,
+} from "./ChatStyledComponents";
 
 const recaptchaRef = React.createRef<ReCAPTCHA>();
 
@@ -41,13 +46,16 @@ class ChatNameInput extends React.Component<IProps, {}> {
     } else {
       nameEl.disabled = true;
     }
-    return;
   }
 
   handleExpire() {
     (document.getElementById(
       "chat-name-input"
     ) as HTMLInputElement).disabled = false;
+
+    (document.getElementById(
+      "enter-chat-button"
+    ) as HTMLButtonElement).disabled = true;
   }
 
   handleSubmit() {
@@ -60,41 +68,39 @@ class ChatNameInput extends React.Component<IProps, {}> {
   render() {
     const { captcha } = this.props;
 
-    const ChatNameInputContainer = styled.div`
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      justify-content: center;
-    `;
-
     return (
       <ChatNameInputContainer>
-        <input
-          id="chat-name-input"
-          type="text"
-          maxLength={20}
-          placeholder="What is your name?"
-        />
-
-        <div className="step-view-item">
-          <div className="recaptcha-container">
+        <NameInputControlsContainer>
+          <input
+            id="chat-name-input"
+            type="text"
+            maxLength={20}
+            placeholder="What is your name?"
+          />
+          <RecaptchaContainer>
             <ReCAPTCHA
               ref={recaptchaRef}
               sitekey={captcha}
               onChange={this.handleCaptcha}
               onExpired={this.handleExpire}
             />
-          </div>
-        </div>
-
-        <Button
-          variant="light"
-          className="primary-button"
-          id="enter-chat-button"
-          onClick={this.handleSubmit}
-        >
-          Enter Chat
-        </Button>
+          </RecaptchaContainer>
+          <Button
+            variant="light"
+            className="primary-button"
+            id="enter-chat-button"
+            onClick={this.handleSubmit}
+          >
+            Enter Chat
+          </Button>
+          <Button
+            variant="light"
+            className="primary-button"
+            onClick={ToggleChat}
+          >
+            Back
+          </Button>
+        </NameInputControlsContainer>
       </ChatNameInputContainer>
     );
   }

@@ -12,7 +12,7 @@ const WindowContainer = styled.div`
   background: rgb(241, 241, 241);
   padding: 1rem;
 
-  @media (max-width: 792px) {
+  @media (max-width: 1020px) {
     width: 100%;
   }
 `;
@@ -50,6 +50,29 @@ const IconContainer = styled.div`
   display: flex;
   width: 2.5rem;
   justify-content: space-between;
+`;
+
+export const NameInputControlsContainer = styled.div`
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  height: 50%;
+  justify-content: space-around;
+`;
+
+export const ChatNameInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+`;
+
+export const RecaptchaContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
 `;
 
 const ChatSC = {
