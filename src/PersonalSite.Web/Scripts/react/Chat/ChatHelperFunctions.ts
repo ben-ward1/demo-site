@@ -119,6 +119,44 @@ export const ToggleChat = () => {
   }
 };
 
+export const AddPopoverListeners = (callback) => {
+  const els = document.getElementsByClassName("chat-icon");
+
+  for (let i = 0; i < els.length; i++) {
+    (els[i] as HTMLElement).addEventListener("mouseover", () => callback(true));
+    (els[i] as HTMLElement).addEventListener("mouseout", () => callback(false));
+    (els[i] as HTMLElement).addEventListener("focus", () => callback(true));
+    (els[i] as HTMLElement).addEventListener("blur", () => callback(false));
+  }
+};
+
+export const RemovePopoverListeners = (
+  callback: (makeVisible: boolean) => void
+) => {
+  const els = document.getElementsByClassName("chat-icon");
+
+  for (let i = 0; i < els.length; i++) {
+    (els[i] as HTMLElement).removeEventListener("mouseover", () =>
+      callback(true)
+    );
+    (els[i] as HTMLElement).removeEventListener("mouseout", () =>
+      callback(false)
+    );
+    (els[i] as HTMLElement).removeEventListener("focus", () => callback(true));
+    (els[i] as HTMLElement).removeEventListener("blur", () => callback(false));
+  }
+};
+
+export const ToggleChatIconBorder = (makeVisible: boolean) => {
+  const els = document.getElementsByClassName("chat-icon-container");
+
+  for (let i = 0; i < els.length; i++) {
+    (els[i] as HTMLElement).style["background-color"] = makeVisible
+      ? "green"
+      : "#222";
+  }
+};
+
 const newUser = (connection, name: string) => {
   const user = name;
   connection.invoke("NewUser", user).catch((err) => {

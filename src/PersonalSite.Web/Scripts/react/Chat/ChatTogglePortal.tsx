@@ -21,7 +21,10 @@ class ChatTogglePortal extends React.Component<IProps, IState> {
     this.rootNode.style.paddingRight = "1rem";
 
     this.clone = this.rootNode.cloneNode(true) as HTMLDivElement;
-    this.clone.id = "expanded-chat-icon";
+    this.clone.id = "expanded-chat-icon-container";
+    this.clone.style.paddingRight = "2rem";
+
+    this.rootNode.id = "collapsed-chat-icon-container";
   }
 
   componentDidMount() {

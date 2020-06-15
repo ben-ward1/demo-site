@@ -1,218 +1,228 @@
 ﻿html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    min-height: 100%;
-    padding-top: 50px;
+  min-height: 100%;
+  padding-top: 50px;
 }
 
 body.chat-open {
-    left: 30%;
-    width: 70%;
+  left: 30%;
+  width: 70%;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
 .dl-horizontal dt {
-    white-space: normal;
+  white-space: normal;
 }
 
 .page-background {
-    height: 100%;
-    background-position: left;
-    background-repeat: repeat;
+  height: 100%;
+  background-position: left;
+  background-repeat: repeat;
 }
 
 .no-webp .page-background {
-    background-image: url("../img/codeBackgroundDark.JPG");
+  background-image: url("../img/codeBackgroundDark.JPG");
 }
 
 .webp .page-background {
-    background-image: url("../img/codeBackgroundDark.webp");
+  background-image: url("../img/codeBackgroundDark.webp");
 }
 
 .background-overlay {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: #222;
-    opacity: 0.7;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #222;
+  opacity: 0.7;
 }
 
 .container {
-    width: 100%;
+  width: 100%;
 }
 
 .page-container {
-    position: relative;
-    background-color: white;
-    margin: 0 9em;
-    display: flex;
-    box-shadow: 0px 0px 19px 12px black;
-    min-height: 100%;
+  position: relative;
+  background-color: white;
+  margin: 0 9em;
+  display: flex;
+  box-shadow: 0px 0px 19px 12px black;
+  min-height: 100%;
 }
 
 .chat-open .page-container {
-    margin: 0;
+  margin: 0;
 }
 
 h2.page-header {
-    margin: 1.5rem 0;
+  margin: 1.5rem 0;
 }
 
 nav.navbar {
-    z-index: 1200;
-    min-height: 50px;
-    padding: 0.4rem 0;
-    background-color: #222;
-    overflow: hidden;
+  z-index: 1200;
+  min-height: 50px;
+  padding: 0.4rem 0;
+  background-color: #222;
+  overflow: hidden;
 }
 
 .chat-open nav.navbar {
-    left: 30%;
+  left: 30%;
 }
 
 .navbar-brand {
-    padding-left: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .navbar-toggler {
-    margin-right: 1.5rem;
-    background-color: #222;
+  margin-right: 1.5rem;
+  background-color: #222;
 }
 
-    .navbar-toggler:hover {
-        border: 1px #555 solid;
-    }
+.navbar-toggler:hover {
+  border: 1px #555 solid;
+}
 
-    .navbar-toggler:focus {
-        outline: 0;
-        border: 1px #555 solid;
-    }
+.navbar-toggler:focus {
+  outline: 0;
+  border: 1px #555 solid;
+}
 
 .navbar-collapse {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .navbar-background-overlay {
-    position: absolute;
-    top: 0px;
-    left: 0px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 .footer-container {
-    position: absolute;
-    bottom: 1em;
-    left: 2em;
-    right: 2em;
+  position: absolute;
+  bottom: 1em;
+  left: 2em;
+  right: 2em;
 }
 
 #nav-icon-container {
-    display: flex;
-    align-items: center;
-    padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+#expanded-chat-icon-container {
+  padding: 0 1rem;
 }
 
 @media (min-width: 992px) {
-    #nav-icon-container {
-        display: none;
-    }
+  #nav-icon-container {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    .navbar-brand,
-    .navbar-collapse > ul {
-        padding-left: 1.5rem;
-        background-color: #222;
-        box-shadow: 0px 0px 20px 15px #222;
-    }
+  .navbar-brand,
+  .navbar-collapse > ul {
+    padding-left: 1.5rem;
+    background-color: #222;
+    box-shadow: 0px 0px 20px 15px #222;
+  }
 }
 
 @media only screen and (max-width: 991px) {
-    #expanded-chat-icon {
-        display: none;
-    }
+  #expanded-chat-icon-container {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 815px) {
-    .page-container {
-        margin: 0 5em;
-    }
+  .page-container {
+    margin: 0 5em;
+  }
 }
 
 @media only screen and (max-width: 1020px) {
-    .chat-open {
-        overflow: hidden;
-    }
+  .chat-open {
+    overflow: hidden;
+  }
 }
 
 @media only screen and (min-width: 1019px) {
-    .chat-open {
-        position: relative;
-    }
+  .chat-open {
+    position: relative;
+  }
 }
 
 @media only screen and (max-width: 690px) {
-    .page-container {
-        margin: 0;
-        min-width: fit-content;
-        box-shadow: none;
-    }
+  .page-container {
+    margin: 0;
+    min-width: fit-content;
+    box-shadow: none;
+  }
 
-    .page-background {
-        background-image: none;
-    }
+  .page-background {
+    background-image: none;
+  }
 
-    .background-overlay {
-        display: none;
-    }
+  .background-overlay {
+    display: none;
+  }
 
-    .navbar {
-        background-position: left;
-        background-repeat: repeat;
-        padding: 0;
-    }
+  .navbar {
+    background-position: left;
+    background-repeat: repeat;
+    padding: 0;
+  }
 
-    .no-webp .navbar {
-        background-image: url("../img/codeBackgroundDarkSmall.JPG");
-    }
+  .no-webp .navbar {
+    background-image: url("../img/codeBackgroundDarkSmall.JPG");
+  }
 
-    .webp .navbar {
-        background-image: url("../img/codeBackgroundDarkSmall.webp");
-    }
+  .webp .navbar {
+    background-image: url("../img/codeBackgroundDarkSmall.webp");
+  }
 
-    .navbar-background-overlay {
-        width: 100%;
-        height: 100%;
-        background-color: #222;
-        opacity: 0.7;
-        z-index: -1;
-    }
+  .navbar-background-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #222;
+    opacity: 0.7;
+    z-index: -1;
+  }
 
-    .navbar-brand {
-        max-width: 16rem;
-    }
+  .navbar-brand {
+    max-width: 16rem;
+  }
 
-    .navbar-collapse.show > ul {
-        max-width: 9rem;
-    }
+  .navbar-collapse.show > ul {
+    max-width: 9rem;
+  }
+}
+
+@media only screen and (max-width: 369px) {
+  .navbar-brand {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 325px) {
-    .navbar-brand {
-        font-size: 1rem;
-    }
+  .navbar-brand {
+    font-size: 1rem;
+  }
 }
 
 /*Needed for absolutely positioned footer*/
 #app {
-    padding-bottom: 8em;
+  padding-bottom: 8em;
 }

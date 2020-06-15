@@ -11,12 +11,17 @@ import {
   SizeWindow,
   ToggleUserPanel,
   ToggleChat,
+  AddPopoverListeners,
+  RemovePopoverListeners,
+  ToggleChatIconBorder,
 } from "./ChatHelperFunctions";
 import {
   faWindowClose,
   faUser,
   faComment,
 } from "@fortawesome/free-regular-svg-icons";
+import { Popover } from "../shared/Popover";
+import Collapse from "@material-ui/core/Collapse";
 
 library.add(faWindowClose, faUser, faComment);
 
@@ -27,6 +32,7 @@ interface IProps {
 interface IState {
   chatOpen: boolean;
   name: string;
+  popoverIsOpen: boolean;
 }
 
 class ChatComponent extends React.Component<IProps, IState> {
@@ -38,6 +44,7 @@ class ChatComponent extends React.Component<IProps, IState> {
     this.state = {
       chatOpen: false,
       name: "",
+      popoverIsOpen: false,
     };
 
     this.connection = new signalR.HubConnectionBuilder()
@@ -46,6 +53,9 @@ class ChatComponent extends React.Component<IProps, IState> {
 
     this.sendMessage = this.sendMessage.bind(this);
     this.enterChatCallback = this.enterChatCallback.bind(this);
+    this.togglePopover = this.togglePopover.bind(this);
+    this.isPopoverVisible = this.isPopoverVisible.bind(this);
+    this.openChat = this.openChat.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +64,8 @@ class ChatComponent extends React.Component<IProps, IState> {
     window.addEventListener("resize", () => {
       SizeWindow();
     });
+
+    this.showPopover();
   }
 
   componentDidUpdate() {
@@ -62,9 +74,36 @@ class ChatComponent extends React.Component<IProps, IState> {
 
   componentWillUnmount() {
     this.connection.stop();
+    RemovePopoverListeners(this.togglePopover);
   }
 
-  enterChatCallback(name) {
+  isPopoverVisible() {
+    const body = document.getElementsByTagName("body")[0];
+    const chatIsOpen = body.classList.contains("chat-open");
+    return this.state.popoverIsOpen && !chatIsOpen;
+  }
+
+  openChat() {
+    this.togglePopover(false);
+    ToggleChat();
+  }
+
+  showPopover() {
+    this.setState({ popoverIsOpen: true }, () => {
+      setTimeout(() => {
+        this.setState({ popoverIsOpen: false });
+        ToggleChatIconBorder(false);
+        AddPopoverListeners(this.togglePopover);
+      }, 6000);
+    });
+  }
+
+  togglePopover(makeVisible: boolean) {
+    this.setState({ popoverIsOpen: makeVisible });
+    ToggleChatIconBorder(makeVisible);
+  }
+
+  enterChatCallback(name: string) {
     this.setState({ chatOpen: true, name }, () => {
       (document.getElementById(
         "sendChatMsgBtn"
@@ -96,14 +135,16 @@ class ChatComponent extends React.Component<IProps, IState> {
   }
 
   render() {
+    const { name, chatOpen } = this.state;
+
     return (
       <React.Fragment>
         <ChatSC.WindowContainer id="chatWindowContainer">
-          {this.state.chatOpen ? (
+          {chatOpen ? (
             <ChatSC.Container>
               <ChatSC.Header>
                 <span>
-                  User: <b>{this.state.name}</b>
+                  User: <b>{name}</b>
                 </span>
                 <ChatSC.IconContainer>
                   <FontAwesomeIcon
@@ -158,7 +199,23 @@ class ChatComponent extends React.Component<IProps, IState> {
             />
           )}
         </ChatSC.WindowContainer>
-        <ChatToggle clickCallback={ToggleChat} />
+        <ChatToggle clickCallback={this.openChat} />
+        <div
+          style={{
+            // TODO: this positioning is dependent on chat icon
+            position: "fixed",
+            top: "46px",
+            right: "47px",
+            zIndex: 1222,
+          }}
+        >
+          <Collapse in={this.isPopoverVisible()}>
+            <Popover
+              id="chat-toggle-popover"
+              message="Ben is online! Click here to chat."
+            />
+          </Collapse>
+        </div>
       </React.Fragment>
     );
   }

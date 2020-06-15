@@ -271,3 +271,4 @@ __pycache__/
 /src/PersonalSite.Web/webpack-assets.json
 
 /.vscode/
+/run-iis.bat
