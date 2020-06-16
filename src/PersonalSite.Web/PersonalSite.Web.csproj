@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Content\styles\Site.css" />
+    <None Include="wwwroot\Content\styles\Sitev2.css" />
   </ItemGroup>
 
 </Project>

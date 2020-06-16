@@ -30,6 +30,10 @@ const MessageBoard = styled.div`
   padding: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;
+
+  & > p {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const UserPanel = styled.div`
@@ -38,6 +42,11 @@ const UserPanel = styled.div`
   padding: 0.5rem;
   overflow-x: hidden;
   overflow-y: auto;
+
+  & > p {
+    margin-bottom: 0.5rem;
+    text-align: right;
+  }
 `;
 
 const Header = styled.div`

@@ -21,9 +21,20 @@ import {
   faComment,
 } from "@fortawesome/free-regular-svg-icons";
 import { Popover } from "../shared/Popover";
-import Collapse from "@material-ui/core/Collapse";
+import { Select, MenuItem, Collapse } from "@material-ui/core";
+import { BuildBaseUrl } from "../../urlHelperFunctions";
 
 library.add(faWindowClose, faUser, faComment);
+
+type User = {
+  id: string;
+  name: string;
+};
+
+type Message = {
+  type: string;
+  content: string;
+};
 
 interface IProps {
   captcha: string;
@@ -33,6 +44,10 @@ interface IState {
   chatOpen: boolean;
   name: string;
   popoverIsOpen: boolean;
+  users: Array<User>;
+  messages: Array<Message>;
+  isMod: boolean;
+  selectedUser?: User;
 }
 
 class ChatComponent extends React.Component<IProps, IState> {
@@ -45,10 +60,14 @@ class ChatComponent extends React.Component<IProps, IState> {
       chatOpen: false,
       name: "",
       popoverIsOpen: false,
+      users: [],
+      messages: [],
+      isMod: false,
+      selectedUser: undefined,
     };
 
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl("chatHub")
+      .withUrl(BuildBaseUrl() + "chatHub")
       .build();
 
     this.sendMessage = this.sendMessage.bind(this);
@@ -56,6 +75,45 @@ class ChatComponent extends React.Component<IProps, IState> {
     this.togglePopover = this.togglePopover.bind(this);
     this.isPopoverVisible = this.isPopoverVisible.bind(this);
     this.openChat = this.openChat.bind(this);
+    this.userCallback = this.userCallback.bind(this);
+    this.messageCallback = this.messageCallback.bind(this);
+    this.getUsersCallback = this.getUsersCallback.bind(this);
+    this.modCallback = this.modCallback.bind(this);
+    this.selectUser = this.selectUser.bind(this);
+  }
+
+  messageCallback(msg: Message) {
+    this.setState({ messages: this.state.messages.concat(msg) }, () => {
+      const msgBoard = document.getElementById("messageBoard")!;
+      msgBoard.scrollTop = msgBoard.scrollHeight;
+    });
+  }
+
+  userCallback(toAdd: boolean, user: User) {
+    this.setState({
+      users: toAdd
+        ? this.state.users.concat(user)
+        : this.state.users.filter((x) => x.id !== user.id),
+    });
+
+    const msg: Message = {
+      type: "system",
+      content: `${user.name} ${toAdd ? "joined" : "left"} the chat.${
+        toAdd ? " Say hi." : ""
+      }`,
+    };
+
+    this.messageCallback(msg);
+  }
+
+  getUsersCallback(users: Array<User>) {
+    if (users.length !== 0) {
+      this.setState({ users });
+    }
+  }
+
+  modCallback(isMod: boolean) {
+    this.setState({ isMod });
   }
 
   componentDidMount() {
@@ -109,12 +167,20 @@ class ChatComponent extends React.Component<IProps, IState> {
         "sendChatMsgBtn"
       ) as HTMLButtonElement).disabled = true;
 
-      RegisterEvents(this.connection, this.state.name);
+      RegisterEvents(
+        this.connection,
+        this.state.name,
+        this.messageCallback,
+        this.userCallback,
+        this.getUsersCallback,
+        this.modCallback
+      );
     });
   }
 
   sendMessage(event) {
     const user = this.state.name;
+    const { isMod, selectedUser } = this.state;
 
     const messageEl = document.getElementById(
       "messageInput"
@@ -125,17 +191,31 @@ class ChatComponent extends React.Component<IProps, IState> {
       return;
     }
 
-    this.connection.invoke("SendMessage", user, message).catch((err) => {
-      return console.error(err.toString());
-    });
+    const targetId = isMod && selectedUser ? selectedUser.id : " ";
+
+    if (targetId) {
+      this.connection
+        .invoke("SendMessage", user, message, targetId)
+        .catch((err) => {
+          return console.error(err.toString());
+        });
+    }
 
     event.preventDefault();
 
     messageEl.value = "";
   }
 
+  selectUser(e) {
+    const selectedUser = this.state.users.filter(
+      (u) => u.id === e.target.value
+    )[0];
+
+    this.setState({ selectedUser });
+  }
+
   render() {
-    const { name, chatOpen } = this.state;
+    const { name, chatOpen, messages, users, selectedUser, isMod } = this.state;
 
     return (
       <React.Fragment>
@@ -146,6 +226,24 @@ class ChatComponent extends React.Component<IProps, IState> {
                 <span>
                   User: <b>{name}</b>
                 </span>
+                {isMod && (
+                  <Select
+                    value={selectedUser ? selectedUser.id : "Select a user"}
+                    onChange={this.selectUser}
+                    displayEmpty
+                  >
+                    <MenuItem value="" disabled>
+                      Select a user
+                    </MenuItem>
+                    {users.map((u, i) => {
+                      return (
+                        <MenuItem value={u.id} key={`user-select-item-${i}`}>
+                          {u.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                )}
                 <ChatSC.IconContainer>
                   <FontAwesomeIcon
                     id="user-panel-icon"
@@ -175,8 +273,41 @@ class ChatComponent extends React.Component<IProps, IState> {
               <ChatSC.MessageBoard
                 id="messageBoard"
                 style={{ display: "block" }}
-              />
-              <ChatSC.UserPanel id="userPanel" style={{ display: "none" }} />
+              >
+                {messages &&
+                  messages.map((m, i) => {
+                    return (
+                      <p key={`chat-message-${i}`}>
+                        {m.type === "system" ? (
+                          <i>{m.content}</i>
+                        ) : (
+                          <>
+                            <b>
+                              {m.content.substring(
+                                0,
+                                m.content.indexOf(":") + 1
+                              )}
+                            </b>
+                            <span>
+                              {" " +
+                                m.content.substring(
+                                  m.content.indexOf(":") + 2,
+                                  m.content.length
+                                )}
+                            </span>
+                          </>
+                        )}
+                      </p>
+                    );
+                  })}
+              </ChatSC.MessageBoard>
+              <ChatSC.UserPanel id="userPanel" style={{ display: "none" }}>
+                <h5>Connected Users</h5>
+                {users &&
+                  users.map((u, i) => {
+                    return <p key={`user-panel-entry-${i}`}>{u.name}</p>;
+                  })}
+              </ChatSC.UserPanel>
               <input
                 type="text"
                 id="messageInput"

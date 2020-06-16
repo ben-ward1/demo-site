@@ -1,62 +1,54 @@
+type User = {
+  id: string;
+  name: string;
+};
+
+type Message = {
+  type: string;
+  content: string;
+};
+
 export const RegisterEvents = (
   connection: signalR.HubConnection,
-  name: string
+  name: string,
+  messageCallback: (msg: Message) => void,
+  userCallback: (toAdd: boolean, user: User) => void,
+  getUsersCallback: (users: Array<User>) => void,
+  modCallback: (isMod: boolean) => void
 ) => {
   connection.on("ReceiveMessage", (user: string, message: string) => {
-    var label = user + " says: ";
-    var p = document.createElement("p");
-    var b = document.createElement("b");
-    var sp = document.createElement("span");
-    b.textContent = label;
-    sp.textContent = message;
-    p.appendChild(b);
-    p.appendChild(sp);
-    p.style.marginBottom = "0.5rem";
+    const msg: Message = {
+      type: "user",
+      content: message,
+    };
 
-    const msgBoard = document.getElementById("messageBoard")!;
-    msgBoard.appendChild(p);
-    msgBoard.scrollTop = msgBoard.scrollHeight;
+    messageCallback(msg);
   });
 
-  connection.on("ReceiveNewUser", (user: string) => {
-    const message = user + " joined the chat. Say hi.";
-    const msgBoard = document.getElementById("messageBoard")!;
-    const p = document.createElement("p");
-    const i = document.createElement("i");
-    i.textContent = message;
-    p.appendChild(i);
-    p.style.marginBottom = "0.5rem";
-    msgBoard.appendChild(p);
-    msgBoard.scrollTop = msgBoard.scrollHeight;
+  connection.on("ReceiveNewUser", (id: string, user: string) => {
+    const usr: User = {
+      id,
+      name: user,
+    };
+
+    userCallback(true, usr);
   });
 
-  connection.on("UserLeft", (user: string) => {
-    const message = user + " left the chat.";
-    const msgBoard = document.getElementById("messageBoard")!;
-    const p = document.createElement("p");
-    const i = document.createElement("i");
-    i.textContent = message;
-    p.appendChild(i);
-    p.style.marginBottom = "0.5rem";
-    msgBoard.appendChild(p);
-    msgBoard.scrollTop = msgBoard.scrollHeight;
+  connection.on("UserLeft", (id: string, user: string) => {
+    const usr: User = {
+      id,
+      name: user,
+    };
+
+    userCallback(false, usr);
   });
 
-  connection.on("ReceiveUsers", (users: Array<string>) => {
-    const userPanel = document.getElementById("userPanel")!;
-    userPanel.innerHTML = "";
+  connection.on("ReceiveUsers", (users: Array<User>) => {
+    getUsersCallback(users);
+  });
 
-    const h = document.createElement("h5");
-    h.textContent = "Connected users:";
-    userPanel.appendChild(h);
-
-    users.forEach((u) => {
-      const p = document.createElement("p");
-      p.style.marginBottom = "0.5rem";
-      p.style.textAlign = "right";
-      p.textContent = u;
-      userPanel.appendChild(p);
-    });
+  connection.on("GrantMod", (isMod: boolean) => {
+    modCallback(isMod);
   });
 
   connection.onclose(() => {
@@ -64,7 +56,7 @@ export const RegisterEvents = (
       connection
         .start()
         .then(() => {
-          newUser(connection, name);
+          newUser(connection, name, messageCallback);
         })
         .catch((err) => {
           return console.error(err.toString());
@@ -79,7 +71,7 @@ export const RegisterEvents = (
         "sendChatMsgBtn"
       ) as HTMLButtonElement).disabled = false;
 
-      newUser(connection, name);
+      newUser(connection, name, messageCallback);
     })
     .catch((err) => {
       return console.error(err.toString());
@@ -157,9 +149,31 @@ export const ToggleChatIconBorder = (makeVisible: boolean) => {
   }
 };
 
-const newUser = (connection, name: string) => {
+const newUser = (
+  connection: signalR.HubConnection,
+  name: string,
+  callback: (msg: Message) => void
+) => {
   const user = name;
-  connection.invoke("NewUser", user).catch((err) => {
-    return console.error(err.toString());
-  });
+  connection
+    .invoke("NewUser", user)
+    .then(() => {
+      const msg: Message = {
+        type: "system",
+        content: `${user} joined the chat. Say hi.`,
+      };
+
+      callback(msg);
+    })
+    .catch((err) => {
+      const msg: Message = {
+        type: "system",
+        content: `I had trouble logging you in. Sorry about that, this feature is still being worked on. 
+          Feel free to refresh the page to try again or come back later.`,
+      };
+
+      callback(msg);
+
+      return console.error(err.toString());
+    });
 };

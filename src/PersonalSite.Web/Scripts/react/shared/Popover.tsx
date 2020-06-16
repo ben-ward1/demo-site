@@ -3,9 +3,6 @@ import styled from "styled-components";
 
 const Container = styled.div`
   max-width: 16rem;
-  // position: fixed;
-  // top: 46px;
-  // right: 47px;
   z-index: 1222;
 `;
 

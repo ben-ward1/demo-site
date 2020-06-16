@@ -216,10 +216,12 @@ nav.navbar {
   }
 }
 
-@media only screen and (max-width: 325px) {
-  .navbar-brand {
-    font-size: 1rem;
-  }
+@media (max-width: 403px) {
+    .navbar-brand {
+        padding-left: 0.4rem !important;
+        margin-right: 0.15rem !important;
+        font-size: 0.8rem !important;
+    }
 }
 
 /*Needed for absolutely positioned footer*/
