@@ -5,12 +5,17 @@ import { BuildBaseUrl } from "../../urlHelperFunctions";
 import { Table, Spinner } from "react-bootstrap";
 import { Layout } from "../shared/LayoutStyledComponents";
 import "../../../Content/styles/app-style.scss";
+import ChatComponent from "../Chat/ChatComponent";
 
 const isIE = window.navigator.userAgent.indexOf("Trident") != -1;
 
 const navbarHeight = 50;
 
-class App extends React.Component<{}, any> {
+interface IProps {
+  captcha: string;
+}
+
+class App extends React.Component<IProps, any> {
   constructor(props) {
     super(props);
 
@@ -20,6 +25,7 @@ class App extends React.Component<{}, any> {
       error: null,
       loading: true,
       shouldStick: false,
+      chatIsActive: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
@@ -34,7 +40,16 @@ class App extends React.Component<{}, any> {
       window.addEventListener("scroll", this.handleScroll);
       window.addEventListener("resize", this.resizeShadow);
     }
+
     this.getGuestbookData();
+
+    axios.get("Utility/IsChatActive").then((response) => {
+      const active = response.data.success;
+
+      if (active) {
+        this.setState({ chatIsActive: true });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -97,62 +112,75 @@ class App extends React.Component<{}, any> {
   }
 
   render() {
-    const { data, loading, error, shouldStick, selected } = this.state;
-    return (
-      <Layout>
-        <h2 className="page-header">Guestbook.</h2>
-        {error ? (
-          <h4>Oops, something went wrong. Try again later</h4>
-        ) : (
-          <div className="guestbook-container">
-            {loading ? (
-              <div className="spinner-container">
-                <Spinner animation="border" />
-              </div>
-            ) : (
-              <Table>
-                <thead>
-                  <tr
-                    id="sticky-table-header"
-                    className={`${shouldStick ? "sticky-table-header" : ""}`}
-                  >
-                    <th>Name</th>
-                    <th>Message</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data &&
-                    data.map((x, index) => (
-                      <tr
-                        key={index}
-                        className={index === selected ? "selected" : ""}
-                      >
-                        <td>{x.name}</td>
-                        <td
-                          title={x.message}
-                          onClick={() => this.handleSelect(index)}
-                        >
-                          {x.message}
-                        </td>
-                        <td>
-                          {new Date(x.date).toDateString().split(/ (.+)/)[1]}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </Table>
-            )}
+    const {
+      data,
+      loading,
+      error,
+      shouldStick,
+      selected,
+      chatIsActive,
+    } = this.state;
 
-            <div
-              id="sticky-header-box-shadow"
-              className={shouldStick ? "visible" : ""}
-            />
-          </div>
-        )}
-      </Layout>
+    const { captcha } = this.props;
+
+    return (
+      <>
+        <Layout>
+          <h2 className="page-header">Guestbook.</h2>
+          {error ? (
+            <h4>Oops, something went wrong. Try again later</h4>
+          ) : (
+            <div className="guestbook-container">
+              {loading ? (
+                <div className="spinner-container">
+                  <Spinner animation="border" />
+                </div>
+              ) : (
+                <Table>
+                  <thead>
+                    <tr
+                      id="sticky-table-header"
+                      className={`${shouldStick ? "sticky-table-header" : ""}`}
+                    >
+                      <th>Name</th>
+                      <th>Message</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data &&
+                      data.map((x, index) => (
+                        <tr
+                          key={index}
+                          className={index === selected ? "selected" : ""}
+                        >
+                          <td>{x.name}</td>
+                          <td
+                            title={x.message}
+                            onClick={() => this.handleSelect(index)}
+                          >
+                            {x.message}
+                          </td>
+                          <td>
+                            {new Date(x.date).toDateString().split(/ (.+)/)[1]}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              )}
+
+              <div
+                id="sticky-header-box-shadow"
+                className={shouldStick ? "visible" : ""}
+              />
+            </div>
+          )}
+        </Layout>
+        {chatIsActive && <ChatComponent captcha={captcha} />}
+      </>
     );
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App {...window.MODEL} />, document.getElementById("app"));

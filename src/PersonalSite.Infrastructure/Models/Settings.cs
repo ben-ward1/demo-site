@@ -10,5 +10,6 @@ namespace PersonalSite.Infrastructure.Models
         public string CaptchaUrl { get; set; }
         public string CaptchaSiteKey { get; set; }
         public string CaptchaSecretKey { get; set; }
+        public string ChatModKey { get; set; }
     }
 }

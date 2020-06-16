@@ -1,4 +1,5 @@
 ﻿@using Web.Helpers
+@model string
 
 @{
     ViewBag.Title = "About";
@@ -7,6 +8,8 @@
 @section head {
     @EntryPointHelper.StyleEntryPoint("~/Scripts/react/Home/About/app.tsx")
 }
+
+<script>var MODEL=@Html.Raw(Model)</script>
 
 <div id="app" />
 

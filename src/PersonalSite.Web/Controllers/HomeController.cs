@@ -42,14 +42,14 @@ namespace Web.Controllers
         {
             ViewBag.Message = "This is a demo site showing off some of the technologies I develop with. See below for more info.";
 
-            return View();
+            return View(model: new { captcha = _settings.Value.CaptchaSiteKey}.ToIdiomaticJson());
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View(model: new { captcha = _settings.Value.CaptchaSiteKey }.ToIdiomaticJson());
         }
 
         [HttpGet]
