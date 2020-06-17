@@ -139,12 +139,13 @@ export const RemovePopoverListeners = (
   }
 };
 
-export const ToggleChatIconBorder = (makeVisible: boolean) => {
+export const ToggleChatIconBorder = (makeVisible: boolean, active: boolean) => {
   const els = document.getElementsByClassName("chat-icon-container");
+  const color = active ? "green" : "lightgray";
 
   for (let i = 0; i < els.length; i++) {
     (els[i] as HTMLElement).style["background-color"] = makeVisible
-      ? "green"
+      ? color
       : "#222";
   }
 };

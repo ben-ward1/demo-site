@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as signalR from "@microsoft/signalr";
+import axios from "axios";
+import { BuildBaseUrl } from "../../urlHelperFunctions";
 import ChatNameInput from "./ChatNameInput";
 import ChatToggle from "./ChatToggle";
 import ChatSC from "./ChatStyledComponents";
@@ -22,7 +24,6 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { Popover } from "../shared/Popover";
 import { Select, MenuItem, Collapse } from "@material-ui/core";
-import { BuildBaseUrl } from "../../urlHelperFunctions";
 
 library.add(faWindowClose, faUser, faComment);
 
@@ -41,6 +42,7 @@ interface IProps {
 }
 
 interface IState {
+  chatActive: boolean;
   chatOpen: boolean;
   name: string;
   popoverIsOpen: boolean;
@@ -48,6 +50,7 @@ interface IState {
   messages: Array<Message>;
   isMod: boolean;
   selectedUser?: User;
+  loadingChat: boolean;
 }
 
 class ChatComponent extends React.Component<IProps, IState> {
@@ -57,6 +60,7 @@ class ChatComponent extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
+      chatActive: false,
       chatOpen: false,
       name: "",
       popoverIsOpen: false,
@@ -64,7 +68,10 @@ class ChatComponent extends React.Component<IProps, IState> {
       messages: [],
       isMod: false,
       selectedUser: undefined,
+      loadingChat: true,
     };
+
+    axios.defaults.baseURL = BuildBaseUrl();
 
     this.connection = new signalR.HubConnectionBuilder()
       .withUrl(BuildBaseUrl() + "chatHub")
@@ -80,6 +87,38 @@ class ChatComponent extends React.Component<IProps, IState> {
     this.getUsersCallback = this.getUsersCallback.bind(this);
     this.modCallback = this.modCallback.bind(this);
     this.selectUser = this.selectUser.bind(this);
+  }
+
+  componentDidMount() {
+    document.getElementById("chatWindowContainer")!.style.display = "none";
+
+    window.addEventListener("resize", () => {
+      SizeWindow();
+    });
+
+    this.showPopover();
+
+    axios
+      .get("Utility/IsChatActive")
+      .then((response) => {
+        const active = response.data.success;
+
+        if (active) {
+          this.setState({ chatActive: true });
+        }
+      })
+      .then(() => {
+        this.setState({ loadingChat: false });
+      });
+  }
+
+  componentDidUpdate() {
+    SizeWindow();
+  }
+
+  componentWillUnmount() {
+    this.connection.stop();
+    RemovePopoverListeners(this.togglePopover);
   }
 
   messageCallback(msg: Message) {
@@ -116,25 +155,6 @@ class ChatComponent extends React.Component<IProps, IState> {
     this.setState({ isMod });
   }
 
-  componentDidMount() {
-    document.getElementById("chatWindowContainer")!.style.display = "none";
-
-    window.addEventListener("resize", () => {
-      SizeWindow();
-    });
-
-    this.showPopover();
-  }
-
-  componentDidUpdate() {
-    SizeWindow();
-  }
-
-  componentWillUnmount() {
-    this.connection.stop();
-    RemovePopoverListeners(this.togglePopover);
-  }
-
   isPopoverVisible() {
     const body = document.getElementsByTagName("body")[0];
     const chatIsOpen = body.classList.contains("chat-open");
@@ -150,7 +170,7 @@ class ChatComponent extends React.Component<IProps, IState> {
     this.setState({ popoverIsOpen: true }, () => {
       setTimeout(() => {
         this.setState({ popoverIsOpen: false });
-        ToggleChatIconBorder(false);
+        ToggleChatIconBorder(false, this.state.chatActive);
         AddPopoverListeners(this.togglePopover);
       }, 6000);
     });
@@ -158,7 +178,7 @@ class ChatComponent extends React.Component<IProps, IState> {
 
   togglePopover(makeVisible: boolean) {
     this.setState({ popoverIsOpen: makeVisible });
-    ToggleChatIconBorder(makeVisible);
+    ToggleChatIconBorder(makeVisible, this.state.chatActive);
   }
 
   enterChatCallback(name: string) {
@@ -215,7 +235,16 @@ class ChatComponent extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { name, chatOpen, messages, users, selectedUser, isMod } = this.state;
+    const {
+      chatActive,
+      name,
+      chatOpen,
+      messages,
+      users,
+      selectedUser,
+      isMod,
+      loadingChat,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -330,23 +359,32 @@ class ChatComponent extends React.Component<IProps, IState> {
             />
           )}
         </ChatSC.WindowContainer>
-        <ChatToggle clickCallback={this.openChat} />
-        <div
-          style={{
-            // TODO: this positioning is dependent on chat icon
-            position: "fixed",
-            top: "46px",
-            right: "47px",
-            zIndex: 1222,
-          }}
-        >
-          <Collapse in={this.isPopoverVisible()}>
-            <Popover
-              id="chat-toggle-popover"
-              message="Ben is online! Click here to chat."
-            />
-          </Collapse>
-        </div>
+        {!loadingChat && (
+          <>
+            <ChatToggle chatActive={chatActive} clickCallback={this.openChat} />
+            <div
+              style={{
+                // TODO: this positioning is dependent on chat icon
+                position: "fixed",
+                top: "46px",
+                right: "47px",
+                zIndex: 1222,
+              }}
+            >
+              <Collapse in={this.isPopoverVisible()}>
+                <Popover
+                  id="chat-toggle-popover"
+                  message={
+                    chatActive
+                      ? "Ben is online! Click here to chat."
+                      : "Ben is offline right now. Check back later if you'd like to chat."
+                  }
+                  active={chatActive}
+                />
+              </Collapse>
+            </div>
+          </>
+        )}
       </React.Fragment>
     );
   }

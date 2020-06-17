@@ -85,7 +85,6 @@ interface IState {
   showModal: boolean;
   numPages: number;
   scale: number;
-  chatIsActive;
 }
 
 class App extends React.Component<IProps, IState> {
@@ -96,23 +95,12 @@ class App extends React.Component<IProps, IState> {
       showModal: false,
       numPages: 0,
       scale: getScale(),
-      chatIsActive: false,
     };
 
     this.handleShowModal = this.handleShowModal.bind(this);
 
     window.addEventListener("resize", () => {
       this.setState({ scale: getScale() });
-    });
-  }
-
-  componentDidMount() {
-    axios.get("Utility/IsChatActive").then((response) => {
-      const active = response.data.success;
-
-      if (active) {
-        this.setState({ chatIsActive: true });
-      }
     });
   }
 
@@ -127,7 +115,7 @@ class App extends React.Component<IProps, IState> {
   };
 
   render() {
-    const { showModal, numPages, scale, chatIsActive } = this.state;
+    const { showModal, numPages, scale } = this.state;
     const { captcha } = this.props;
 
     return (
@@ -187,7 +175,7 @@ class App extends React.Component<IProps, IState> {
             </Button>
           </Modal>
         </Layout>
-        {chatIsActive && <ChatComponent captcha={captcha} />}
+        {captcha && <ChatComponent captcha={captcha} />}
       </>
     );
   }

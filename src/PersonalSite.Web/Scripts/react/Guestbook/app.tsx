@@ -25,7 +25,6 @@ class App extends React.Component<IProps, any> {
       error: null,
       loading: true,
       shouldStick: false,
-      chatIsActive: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
@@ -42,14 +41,6 @@ class App extends React.Component<IProps, any> {
     }
 
     this.getGuestbookData();
-
-    axios.get("Utility/IsChatActive").then((response) => {
-      const active = response.data.success;
-
-      if (active) {
-        this.setState({ chatIsActive: true });
-      }
-    });
   }
 
   componentWillUnmount() {
@@ -112,14 +103,7 @@ class App extends React.Component<IProps, any> {
   }
 
   render() {
-    const {
-      data,
-      loading,
-      error,
-      shouldStick,
-      selected,
-      chatIsActive,
-    } = this.state;
+    const { data, loading, error, shouldStick, selected } = this.state;
 
     const { captcha } = this.props;
 
@@ -177,7 +161,7 @@ class App extends React.Component<IProps, any> {
             </div>
           )}
         </Layout>
-        {chatIsActive && <ChatComponent captcha={captcha} />}
+        {captcha && <ChatComponent captcha={captcha} />}
       </>
     );
   }

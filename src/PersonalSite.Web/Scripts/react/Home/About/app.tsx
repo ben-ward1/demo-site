@@ -13,34 +13,16 @@ interface IProps {
   captcha: string;
 }
 
-interface IState {
-  chatIsActive: boolean;
-}
-
-class App extends React.Component<IProps, IState> {
+class App extends React.Component<IProps, {}> {
   constructor(props) {
     super(props);
-
-    this.state = {
-      chatIsActive: false,
-    };
 
     axios.defaults.baseURL = BuildBaseUrl();
   }
 
-  componentDidMount() {
-    axios.get("Utility/IsChatActive").then((response) => {
-      const active = response.data.success;
-
-      if (active) {
-        this.setState({ chatIsActive: true });
-      }
-    });
-  }
-
   render() {
-    const { chatIsActive } = this.state;
     const { captcha } = this.props;
+
     return (
       <React.Fragment>
         <Layout>
@@ -61,7 +43,7 @@ class App extends React.Component<IProps, IState> {
             </a>
           </Footer>
         </Layout>
-        {chatIsActive && <ChatComponent captcha={captcha} />}
+        {captcha && <ChatComponent captcha={captcha} />}
       </React.Fragment>
     );
   }

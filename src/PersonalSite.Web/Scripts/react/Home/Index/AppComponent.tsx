@@ -22,8 +22,6 @@ interface IProps {
 
 interface IState {
   notificationIsOpen: boolean;
-  chatIsActive: boolean;
-  popoverIsOpen: boolean;
 }
 
 // TODO: Add IE support to header notification
@@ -35,23 +33,11 @@ class AppComponent extends React.Component<IProps, IState> {
 
     this.state = {
       notificationIsOpen: true,
-      chatIsActive: false,
-      popoverIsOpen: false,
     };
 
     axios.defaults.baseURL = BuildBaseUrl();
 
     this.closeNotification = this.closeNotification.bind(this);
-  }
-
-  componentDidMount() {
-    axios.get("Utility/IsChatActive").then((response) => {
-      const active = response.data.success;
-
-      if (active) {
-        this.setState({ chatIsActive: true });
-      }
-    });
   }
 
   closeNotification() {
@@ -69,7 +55,7 @@ class AppComponent extends React.Component<IProps, IState> {
 
   render() {
     const { firstView, captcha, blog } = this.props;
-    const { notificationIsOpen, chatIsActive, popoverIsOpen } = this.state;
+    const { notificationIsOpen } = this.state;
 
     return (
       <>
@@ -84,7 +70,7 @@ class AppComponent extends React.Component<IProps, IState> {
             />
           )}
         </Layout>
-        {chatIsActive && <ChatComponent captcha={captcha} />}
+        {captcha && <ChatComponent captcha={captcha} />}
       </>
     );
   }
