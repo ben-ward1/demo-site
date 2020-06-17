@@ -32,10 +32,10 @@ namespace PersonalSite.Infrastructure.Chat
             else
             {
                 var target = GetTargetForMod(targetId);
-                var userMsg = $"{Mods[Context.ConnectionId]} says : {message}";
+                var userMsg = $"{Mods[Context.ConnectionId]} says: {message}";
 
                 var modMsg = !string.IsNullOrWhiteSpace(target)
-                    ? $"{user} says to {Users[target]} : {message}"
+                    ? $"to {Users[target]}: {message}"
                     : userMsg;
 
                 await Clients.Caller.SendAsync("ReceiveMessage", user, modMsg);

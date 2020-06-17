@@ -5,6 +5,7 @@ import { BuildBaseUrl } from "../../urlHelperFunctions";
 import ChatNameInput from "./ChatNameInput";
 import ChatToggle from "./ChatToggle";
 import ChatSC from "./ChatStyledComponents";
+import { ChatMessage } from "./ChatMessage";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
@@ -305,28 +306,14 @@ class ChatComponent extends React.Component<IProps, IState> {
               >
                 {messages &&
                   messages.map((m, i) => {
+                    const important = m.type === "system" && isMod;
+
                     return (
-                      <p key={`chat-message-${i}`}>
-                        {m.type === "system" ? (
-                          <i>{m.content}</i>
-                        ) : (
-                          <>
-                            <b>
-                              {m.content.substring(
-                                0,
-                                m.content.indexOf(":") + 1
-                              )}
-                            </b>
-                            <span>
-                              {" " +
-                                m.content.substring(
-                                  m.content.indexOf(":") + 2,
-                                  m.content.length
-                                )}
-                            </span>
-                          </>
-                        )}
-                      </p>
+                      <ChatMessage
+                        important={important}
+                        key={`chat-message-${i}`}
+                        message={m}
+                      />
                     );
                   })}
               </ChatSC.MessageBoard>
