@@ -96,8 +96,6 @@ class ChatComponent extends React.Component<IProps, IState> {
       SizeWindow();
     });
 
-    this.showPopover();
-
     axios
       .get("Utility/IsChatActive")
       .then((response) => {
@@ -108,7 +106,9 @@ class ChatComponent extends React.Component<IProps, IState> {
         }
       })
       .then(() => {
-        this.setState({ loadingChat: false });
+        this.setState({ loadingChat: false }, () => {
+          this.showPopover();
+        });
       });
   }
 
