@@ -16,9 +16,9 @@ export const RegisterEvents = (
   getUsersCallback: (users: Array<User>) => void,
   modCallback: (isMod: boolean) => void
 ) => {
-  connection.on("ReceiveMessage", (user: string, message: string) => {
+  connection.on("ReceiveMessage", (type: string, message: string) => {
     const msg: Message = {
-      type: "user",
+      type: type,
       content: message,
     };
 
@@ -146,7 +146,7 @@ export const ToggleChatIconBorder = (makeVisible: boolean, active: boolean) => {
   for (let i = 0; i < els.length; i++) {
     (els[i] as HTMLElement).style["background-color"] = makeVisible
       ? color
-      : "#222";
+      : "inherit";
   }
 };
 

@@ -108,7 +108,11 @@ class ChatComponent extends React.Component<IProps, IState> {
       })
       .then(() => {
         this.setState({ loadingChat: false }, () => {
-          this.showPopover();
+          if (this.state.chatActive) {
+            this.showPopover();
+          }
+
+          AddPopoverListeners(this.togglePopover);
         });
       });
   }
@@ -168,11 +172,12 @@ class ChatComponent extends React.Component<IProps, IState> {
   }
 
   showPopover() {
+    ToggleChatIconBorder(true, this.state.chatActive);
+
     this.setState({ popoverIsOpen: true }, () => {
       setTimeout(() => {
         this.setState({ popoverIsOpen: false });
         ToggleChatIconBorder(false, this.state.chatActive);
-        AddPopoverListeners(this.togglePopover);
       }, 6000);
     });
   }

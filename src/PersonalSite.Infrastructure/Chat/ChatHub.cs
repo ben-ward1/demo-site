@@ -27,7 +27,7 @@ namespace PersonalSite.Infrastructure.Chat
                 message = $"{user} says: {message}";
                 var clients = GetRecipients(targetId);
 
-                await Clients.Clients(clients).SendAsync("ReceiveMessage", user, message);
+                await Clients.Clients(clients).SendAsync("ReceiveMessage", "user", message);
             }
             else
             {
@@ -38,11 +38,11 @@ namespace PersonalSite.Infrastructure.Chat
                     ? $"to {Users[target]}: {message}"
                     : userMsg;
 
-                await Clients.Caller.SendAsync("ReceiveMessage", user, modMsg);
+                await Clients.Caller.SendAsync("ReceiveMessage", "user", modMsg);
 
                 if (!string.IsNullOrWhiteSpace(target))
                 {
-                    await Clients.Client(target).SendAsync("ReceiveMessage", user, userMsg);
+                    await Clients.Client(target).SendAsync("ReceiveMessage", "user", userMsg);
                 }
             }
         }
@@ -86,6 +86,11 @@ namespace PersonalSite.Infrastructure.Chat
                 if (mod != null)
                 {
                     await mod.SendAsync("ReceiveNewUser", id, user);
+                }
+                else
+                {
+                    var msg = "Ben is not online right now. Feel free to check back later if you'd like to chat.";
+                    await Clients.Caller.SendAsync("ReceiveMessage", "system", msg);
                 }
             }
         }

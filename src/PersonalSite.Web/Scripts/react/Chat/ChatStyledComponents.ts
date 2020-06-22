@@ -8,7 +8,6 @@ const WindowContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  //min-height: 100vh;
   background: rgb(241, 241, 241);
   padding: 1rem;
 

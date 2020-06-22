@@ -42,11 +42,10 @@ class ChatToggle extends React.Component<IProps, {}> {
 
   render() {
     const { clickCallback, chatActive } = this.props;
-    const color = chatActive ? "green" : "lightgray";
 
     return (
       <ChatTogglePortal>
-        <ChatIconContainer color={color} className="chat-icon-container">
+        <ChatIconContainer className="chat-icon-container">
           <ChatIconPadding>
             {chatActive ? (
               <GreenBadge
