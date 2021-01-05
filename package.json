@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.9.7",
     "@types/react-google-recaptcha": "^1.1.2",
     "@types/styled-components": "^5.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "react": "^16.8.0",
     "react-bootstrap": "^1.0.0",
     "react-dom": "^16.8.0",
